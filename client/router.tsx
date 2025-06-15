@@ -10,6 +10,7 @@ import LogCave from './components/forms/LogCave'
 import UserProfilePage from './components/profile page/UserProfilePage'
 import Dashboard from './components/Dashboard'
 import Explore from './components/Explore'
+import LogPage from './components/LogPage'
 
 const routes = createRoutesFromElements(
   <Route path="/" element={<App />}>
@@ -23,6 +24,9 @@ const routes = createRoutesFromElements(
 
     {/* User profile with dynamic username param */}
     <Route path="user/:username" element={<UserProfilePage />} />
+        <Route path="user/:username/log/:logId" element={<LogPage log={undefined} />} />
+
+
     <Route path='explore' element={<Explore />} />
   </Route>
 )

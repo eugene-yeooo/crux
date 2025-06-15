@@ -1,13 +1,14 @@
+import { Link } from "react-router"
+
 export default function LogCard({ log }) {
   
   const labelStyle = 'font-semibold'
 
   console.log(log.media)
-
   
   return (
     <div className="rounded-lg shadow p-4 bg-white space-y-2">
-      <h3 className="text-xl font-bold">{log.objectiveName}</h3>
+      <Link to={`/user/${log.username}/log/${log.id}`}><h3 className="text-xl font-bold">{log.objectiveName}</h3></Link>
       {log.title && <p className="text-md text-gray-800 italic">{log.title}</p>}
       <p>{log.location}</p>
       <p className="text-sm">{log.date}</p>
