@@ -20,7 +20,7 @@ router.get('/users/:username/log/:logId', async (req, res) => {
   try {
     const { username, logId } = req.params
     const log = await db.getLogById(username, Number(logId))
-    res.json({ log })
+    res.json(log)
   } catch (err) {
     console.error(err)
     res.status(500).json({ message: 'Error fetching log' })

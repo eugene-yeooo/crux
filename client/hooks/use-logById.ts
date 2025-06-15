@@ -9,7 +9,7 @@ export default function useLogById(username: string, logId: number) {
     queryKey: ['log', logId],
     queryFn: async () => {
       const res = await request.get(`${rootURL}/users/${username}/log/${logId}`)
-      return res.body as { log: Log }
+      return res.body as Log
     }
   })
 }

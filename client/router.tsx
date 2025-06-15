@@ -24,7 +24,7 @@ const routes = createRoutesFromElements(
 
     {/* User profile with dynamic username param */}
     <Route path="user/:username" element={<UserProfilePage />} />
-        <Route path="user/:username/log/:logId" element={<LogPage log={undefined} />} />
+        <Route path="user/:username/log/:logId" element={<LogPage />} />
 
 
     <Route path='explore' element={<Explore />} />

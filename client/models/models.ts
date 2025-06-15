@@ -19,6 +19,14 @@ export interface User {
 }
 
 export interface Log {
+  media: [{
+    caption: string,
+    type: string,
+    url: string,
+  }]
+  notes: any
+  details: any
+  objectiveName: string
   id: number
   user_id: number
   type: 'climb' | 'canyon' | 'cave' | 'dive'
