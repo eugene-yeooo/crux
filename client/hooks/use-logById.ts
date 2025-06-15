@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query"
 import request from "superagent"
+import { Log } from "../models/models"
 
 const rootURL = new URL('/api/v1', document.baseURI)
 
@@ -8,7 +9,7 @@ export default function useLogById(username: string, logId: number) {
     queryKey: ['log', logId],
     queryFn: async () => {
       const res = await request.get(`${rootURL}/users/${username}/log/${logId}`)
-      return res.body
+      return res.body as { log: Log }
     }
   })
 }

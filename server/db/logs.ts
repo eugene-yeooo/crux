@@ -52,3 +52,8 @@ export async function getLogsByUsername(username: string) {
 
   return fullLogs
 }
+
+export async function getLogById(username: string, logId: number) {
+  return await connection('logs')
+}
+
