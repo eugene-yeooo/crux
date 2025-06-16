@@ -26,7 +26,7 @@ export interface Log {
     type: string,
     url: string,
   }]
-  notes: any
+  notes: string
   details: any
   objectiveName: string
   id: number

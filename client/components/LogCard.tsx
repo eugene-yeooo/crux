@@ -1,17 +1,21 @@
 import { Link } from "react-router"
+import { format } from 'date-fns'
 
 export default function LogCard({ log }) {
   
   const labelStyle = 'font-semibold'
 
   console.log(log.media)
+
+  
+  const formattedDate = format(new Date(log.date), 'dd MMM yyyy')
   
   return (
     <div className="rounded-lg shadow p-4 bg-white space-y-1">
       <Link to={`/user/${log.username}/log/${log.id}`}><h3 className="text-xl font-bold">{log.objectiveName}</h3></Link>
       {log.title && <p className="text-md text-gray-800 italic">{log.title}</p>}
-      <p>{log.location}</p>
-      <p className="text-sm">{log.date}</p>
+      <p className="font-mono tracking-tight">{log.location}</p>
+      <p className="text-sm font-mono ">{formattedDate}</p>
       
        
       
@@ -22,7 +26,6 @@ export default function LogCard({ log }) {
           {log.type === 'cave' && (
             <>
               <p><span className={labelStyle}>Team:</span> {log.details['trip-companions']}</p>
-              
             </>
           )}
 
@@ -60,7 +63,7 @@ export default function LogCard({ log }) {
 
        {/* Media files */}
       {log.media && log.media.length > 0 && (
-        <div className="flex flex-wrap gap-4 mt-2">
+        <div className="flex flex-wrap gap-4 mt-2 pt-2">
           {log.media.slice(0, 2).map((file, i) =>
             file.type === 'photo' ? (
               <img

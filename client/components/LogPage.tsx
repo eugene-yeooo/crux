@@ -1,6 +1,7 @@
 import { Link, useParams } from 'react-router'
 import useLogById from '../hooks/use-logById'
 import { useEffect } from 'react'
+import { format } from 'date-fns'
 
 export default function LogPage() {
   const { username, logId } = useParams()
@@ -10,13 +11,14 @@ export default function LogPage() {
     window.scrollTo(0, 0)
   }, [])
 
+  const formattedDate = log && format(new Date(log.date), 'dd MMM yyyy')
+
   const labelStyle = 'font-semibold'
 
   if (isLoading) return <p>Loading...</p>
   if (error || !log) return <p>Error loading log.</p>
 
   // console.log('log:', log)
-  console.log('isLoading:', isLoading, 'error:', error, 'log:', log)
 
   return (
     <div className="relative rounded-lg shadow p-6 bg-white space-y-2 max-w-4xl mx-auto">
@@ -25,8 +27,8 @@ export default function LogPage() {
         <div className='mb-6'>
           <h1 className="text-2xl font-bold">{log.objectiveName}</h1>
           {log.title && <p className="text-md text-gray-800 italic">{log.title}</p>}
-          <p className="text-gray-600">{log.location}</p>
-          <p className="text-sm text-gray-500">{log.date}</p>
+          <p className="text-gray-600 font-mono">{log.location}</p>
+          <p className="text-sm text-gray-500 font-mono">{formattedDate}</p>
         </div>
         
        {/* User info  */}
@@ -46,7 +48,7 @@ export default function LogPage() {
 
       {/* Log Details */}
       {log.details && (
-        <div className="border-t pt-4 mt-4 text-sm text-gray-700 space-y-2">
+        <div className="border-t pt-4 mt-4 text-sm text-gray-700 space-y-2 font-mono tracking-tighter">
           {log.type === 'cave' && (
             <>
               <p><span className={labelStyle}>Team:</span> {log.details['trip-companions']}</p>
@@ -82,7 +84,7 @@ export default function LogPage() {
 
       {/* Notes */}
       {log.notes && (
-        <p className="text-sm text-gray-700">
+        <p className="text-sm text-gray-700 font-mono tracking-tighter">
           <span className={labelStyle}>Notes:</span> <br /> <span className=''>{log.notes}</span>
         </p>
       )}
@@ -91,7 +93,7 @@ export default function LogPage() {
       
       {/* Media */}
       {log.media && log.media.length > 0 && (
-        <div className="flex flex-wrap gap-4 gap-y-10">
+        <div className="flex flex-wrap gap-4 gap-y-12">
           {log.media.map((file, i) => (
             <div key={i} className="items-center">
               {file.type === 'photo' && (
