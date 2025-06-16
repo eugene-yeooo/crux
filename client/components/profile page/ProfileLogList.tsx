@@ -1,11 +1,7 @@
 import { Log } from '../../models/models'
 import LogCard from '../LogCard'
 
-export default function LogList({
-  logs,
-}: {
-  logs: Log[]
-}) {
+export default function LogList({ logs }: { logs: Log[] }) {
   if (logs.length === 0) {
     return (
       <div className="bg-white shadow-lg rounded-lg p-6 max-w-4xl mx-auto my-2">

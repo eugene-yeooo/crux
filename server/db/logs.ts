@@ -1,3 +1,4 @@
+import { json } from 'stream/consumers'
 import connection from './connection'
 
 export async function getLogsByUsername(username: string) {
@@ -52,3 +53,36 @@ export async function getLogsByUsername(username: string) {
 
   return fullLogs
 }
+
+export async function getLogById(username: string, logId: number) {
+  const baseLog =  await connection('logs')
+    .join('users', 'users.id', 'logs.user_id')
+    .leftJoin('media', 'logs.id', 'media.log-id')
+    .where('users.username', username)
+    .andWhere('logs.id', logId)
+    .select('logs.*', 'users.username', 'users.avatar_url', connection.raw(`COALESCE(json_group_array(json_object('url', media.url, 'type', media.type, 'caption', media.caption)), '[]') as media`))
+    .groupBy('logs.id')
+    .first()
+
+  let details // subtable details
+
+  switch (baseLog.type) {
+    case 'cave':
+      details = await connection('log-caves').where('log_id', logId).first()
+      break
+    case 'climb':
+      details = await connection('log-climbs').where('log_id', logId).first()
+      break
+    case 'canyon':
+      details = await connection('log-canyons').where('log_id', logId).first()
+      break
+    // add more log types here
+    default:
+      break
+  }
+
+  const fullLog = {...baseLog, media: JSON.parse(baseLog.media), details, }
+
+  return fullLog
+}
+

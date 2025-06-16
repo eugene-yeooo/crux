@@ -15,4 +15,16 @@ router.get('/users/:username/logs', async (req, res) => {
   }
 })
 
+// GET /api/users/:username/log/:logId
+router.get('/users/:username/log/:logId', async (req, res) => {
+  try {
+    const { username, logId } = req.params
+    const log = await db.getLogById(username, Number(logId))
+    res.json(log)
+  } catch (err) {
+    console.error(err)
+    res.status(500).json({ message: 'Error fetching log' })
+  }
+})
+
 export default router
