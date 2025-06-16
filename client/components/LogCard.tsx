@@ -7,7 +7,7 @@ export default function LogCard({ log }) {
   console.log(log.media)
   
   return (
-    <div className="rounded-lg shadow p-4 bg-white space-y-2">
+    <div className="rounded-lg shadow p-4 bg-white space-y-1">
       <Link to={`/user/${log.username}/log/${log.id}`}><h3 className="text-xl font-bold">{log.objectiveName}</h3></Link>
       {log.title && <p className="text-md text-gray-800 italic">{log.title}</p>}
       <p>{log.location}</p>
@@ -18,20 +18,11 @@ export default function LogCard({ log }) {
 
       {/* Subtable-specific details */}
       {log.details && (
-        <div className="border-t pt-2 mt-2 text-sm text-gray-700 space-y-1">
+        <div className="text-sm text-gray-700 space-y-1">
           {log.type === 'cave' && (
             <>
-              <p><span className={labelStyle}>Trip Companions:</span> {log.details['trip-companions']}</p>
-              <p><span className={labelStyle}>Duration:</span> {log.details.duration} hrs</p>
-              <p><span className={labelStyle}>Route Style:</span> {log.details['route-style']}</p>
-              <p><span className={labelStyle}>Technical Style:</span> 
-                {Array.isArray(log.details?.['tech-style']) ? 
-                log.details['tech-style'].join(', ')
-                : typeof log.details?.['tech-style'] === 'string'
-                  ? JSON.parse(log.details['tech-style']).join(', ')
-                  : ''}
-              </p>
-              {/* parses json */}
+              <p><span className={labelStyle}>Team:</span> {log.details['trip-companions']}</p>
+              
             </>
           )}
 
@@ -65,16 +56,12 @@ export default function LogCard({ log }) {
           )} */}
         </div>
       )}
-      {log.notes && (
-        <p className="text-sm text-gray-700">
-          <span className={labelStyle}>Notes:</span> {log.notes}
-        </p>
-      )}
+      
 
        {/* Media files */}
       {log.media && log.media.length > 0 && (
         <div className="flex flex-wrap gap-4 mt-2">
-          {log.media.map((file, i) =>
+          {log.media.slice(0, 2).map((file, i) =>
             file.type === 'photo' ? (
               <img
                 key={i}

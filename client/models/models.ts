@@ -19,6 +19,8 @@ export interface User {
 }
 
 export interface Log {
+  username: string
+  avatar_url?: string | undefined
   media: [{
     caption: string,
     type: string,
