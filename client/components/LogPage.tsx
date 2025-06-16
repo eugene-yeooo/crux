@@ -2,6 +2,7 @@ import { Link, useParams } from 'react-router'
 import useLogById from '../hooks/use-logById'
 import { useEffect } from 'react'
 import { format } from 'date-fns'
+import { Pencil } from 'lucide-react';
 
 export default function LogPage() {
   const { username, logId } = useParams()
@@ -25,11 +26,16 @@ export default function LogPage() {
       {/* Header */}
       
         <div className='mb-6'>
-          <h1 className="text-2xl font-bold">{log.objectiveName}</h1>
+          <div className='flex'>
+            <h1 className="text-2xl font-bold">{log.objectiveName}</h1>
+            <Pencil size={20} className='m-1.5 mx-2 text-gray-300 hover:text-black'/>
+          </div>
           {log.title && <p className="text-md text-gray-800 italic">{log.title}</p>}
           <p className="text-gray-600 font-mono">{log.location}</p>
           <p className="text-sm text-gray-500 font-mono">{formattedDate}</p>
         </div>
+
+        
         
        {/* User info  */}
         <div className="absolute top-0 right-6 flex items-center gap-4 px-4 py-3">
