@@ -1,3 +1,4 @@
 export { default as useUserProfile } from './use-user-profile'
 export { default as useUserLogs } from './use-user-logs'
-export { default as useLogById } from './use-logById'
+export { default as useLogById } from './use-log-by-id'
+export { default as useDeleteLog } from './use-delete-log'

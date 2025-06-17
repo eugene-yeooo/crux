@@ -1,18 +1,22 @@
-import { Link, useParams } from 'react-router'
-import useLogById from '../hooks/use-logById'
+import { Link, useNavigate, useParams } from 'react-router'
+import { useLogById } from '../../hooks/api'
 import { useEffect, useRef, useState } from 'react'
 import { format } from 'date-fns'
 import { Pencil } from 'lucide-react';
 import LogDropdownMenu from './DropdownLogPage';
+import { useDeleteLog } from '../../hooks/api';
+import ConfirmDelete from './ConfirmDelete';
 
 export default function LogPage() {
   const { username, logId } = useParams()
   const [logMenu, setLogMenu] = useState(false)
+  const [showConfirm, setShowConfirm] = useState(false)
   const { data: log, isLoading, error } = useLogById(username!, Number(logId))
   const menuRef = useRef<HTMLDivElement>(null)
   const labelStyle = 'font-semibold'
   const formattedDate = log && format(new Date(log.date), 'dd MMM yyyy')
-
+  const deleteLog = useDeleteLog()
+  const navigate = useNavigate()
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -32,20 +36,20 @@ export default function LogPage() {
       document.removeEventListener('mousedown', handleClickOutside)
     }
   }, [logMenu])
-
-  
-
   
   if (isLoading) return <p>Loading...</p>
   if (error || !log) return <p>Error loading log.</p>
 
   const toggleMenu = () => setLogMenu(!logMenu)
-  
-
- 
 
   const handleDelete = () => {
-    // delete function here
+    deleteLog.mutate(log.id)
+    navigate(`/user/${log.username}`)
+  }
+
+  const handleCancel = () => {
+    setShowConfirm(false)
+    
     setLogMenu(false)
   }
 
@@ -61,7 +65,7 @@ export default function LogPage() {
               <button onClick={toggleMenu} className="ml-3 p-1 rounded hover:bg-gray-200">
                 <Pencil size={20} className="text-gray-400 hover:text-black" />
               </button>
-              {logMenu && <LogDropdownMenu ref={menuRef} logId={log.id} onDelete={handleDelete} />}
+              {logMenu && <LogDropdownMenu ref={menuRef} logId={log.id} onDelete={() => setShowConfirm(true)} />}
             </div>
 
           </div>
@@ -70,7 +74,8 @@ export default function LogPage() {
           <p className="text-sm text-gray-500 font-mono">{formattedDate}</p>
         </div>
 
-        
+      {showConfirm && (<ConfirmDelete onDelete={handleDelete} onCancel={handleCancel} />)}
+
         
        {/* User info  */}
         <div className="absolute top-0 right-6 flex items-center gap-4 px-4 py-3">

@@ -27,4 +27,16 @@ router.get('/users/:username/log/:logId', async (req, res) => {
   }
 })
 
+// GET /api/delete-log/:logId
+router.delete('/delete-log/:logId', async (req, res) => {
+  try {
+    const id = Number(req.params.logId)
+    await db.deleteLogById(id)
+    res.status(200).json({ message: 'Log deleted successfully' })
+  } catch (err) {
+    console.error(err)
+    res.status(500).json({error: 'Error deleting log'})
+  }
+})
+
 export default router
