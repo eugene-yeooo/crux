@@ -1,6 +1,4 @@
-import { json } from 'stream/consumers'
 import connection from './connection'
-import { get } from 'http'
 
 export async function getLogsByUsername(username: string) {
   // Step 1: Fetch logs + user + grouped media URLs
@@ -91,7 +89,5 @@ export async function getLogById(username: string, logId: number) {
 // ------------- DELETE ---------------- //
 
 export async function deleteLogById(id: number) {
-  
-    return await connection('logs').where('logs.id', id).delete()
-  
+  return await connection('logs').where({ id }).del()
 }

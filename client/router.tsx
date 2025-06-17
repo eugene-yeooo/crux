@@ -11,10 +11,16 @@ import UserProfilePage from './components/profile page/UserProfilePage'
 import Dashboard from './components/Dashboard'
 import Explore from './components/Explore'
 import LogPage from './components/log page/LogPage'
+import LoginPage from './components/LoginPage'
 
 const routes = createRoutesFromElements(
+ <>
+
+  <Route path="login" element={<LoginPage />} />
+  
   <Route path="/" element={<App />}>
     <Route index element={<Dashboard />} />
+    
     <Route path="log-nav" element={<NavLog />} />
       <Route path="log-nav/log-cave" element={<LogCave />} />
       {/* <Route path="log-climb" element={<LogClimb />} />
@@ -30,6 +36,8 @@ const routes = createRoutesFromElements(
     
     <Route path='explore' element={<Explore />} />
   </Route>
+
+  </> 
 )
 
 const router = createBrowserRouter(routes)
