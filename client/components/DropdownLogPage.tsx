@@ -1,14 +1,15 @@
 import { Link } from 'react-router'
 import { Edit3, Trash2 } from 'lucide-react'
+import { forwardRef } from 'react'
 
 interface Props {
   logId: number
   onDelete: () => void
 }
 
-export default function LogDropdownMenu({ logId, onDelete }: Props) {
+function LogDropdownMenu({ logId, onDelete }: Props, ref: React.Ref<HTMLDivElement>) {
   return (
-    <div className="absolute top-6 left-28 z-10 bg-white border shadow rounded w-40 py-2">
+    <div ref={ref} className="absolute top-6 left-64 bg-white border shadow rounded w-40 py-2">
       <Link
         to={`/edit/${logId}`}
         className="flex items-center px-4 py-2 text-sm hover:bg-gray-100"
@@ -24,3 +25,5 @@ export default function LogDropdownMenu({ logId, onDelete }: Props) {
     </div>
   )
 }
+
+export default forwardRef(LogDropdownMenu)

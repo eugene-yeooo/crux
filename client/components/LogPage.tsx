@@ -1,6 +1,6 @@
 import { Link, useParams } from 'react-router'
 import useLogById from '../hooks/use-logById'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { format } from 'date-fns'
 import { Pencil } from 'lucide-react';
 import LogDropdownMenu from './DropdownLogPage';
@@ -9,38 +9,61 @@ export default function LogPage() {
   const { username, logId } = useParams()
   const [logMenu, setLogMenu] = useState(false)
   const { data: log, isLoading, error } = useLogById(username!, Number(logId))
+  const menuRef = useRef<HTMLDivElement>(null)
+  const labelStyle = 'font-semibold'
+  const formattedDate = log && format(new Date(log.date), 'dd MMM yyyy')
+
 
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [])
 
-  const formattedDate = log && format(new Date(log.date), 'dd MMM yyyy')
+  // handles clicking out of log dropdown menu
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setLogMenu(false)
+      }
+    }
+    if (logMenu) {
+      document.addEventListener('mousedown', handleClickOutside)
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [logMenu])
 
-  const labelStyle = 'font-semibold'
+  
 
+  
   if (isLoading) return <p>Loading...</p>
   if (error || !log) return <p>Error loading log.</p>
 
   const toggleMenu = () => setLogMenu(!logMenu)
+  
 
-   const handleDelete = () => {
-    console.log('Delete logic for log:', log?.id)
+ 
+
+  const handleDelete = () => {
+    // delete function here
     setLogMenu(false)
   }
 
   return (
     <div className="relative rounded-lg shadow p-6 bg-white space-y-2 max-w-4xl mx-auto">
-      {/* Header */}
       
+      {/* Header */}
         <div className='mb-6'>
           <div className='flex'>
             <h1 className="text-2xl font-bold">{log.objectiveName}</h1>
+            
             <div>
               <button onClick={toggleMenu} className="ml-3 p-1 rounded hover:bg-gray-200">
                 <Pencil size={20} className="text-gray-400 hover:text-black" />
               </button>
-              {logMenu && <LogDropdownMenu logId={log.id} onDelete={handleDelete} />}
+              {logMenu && <LogDropdownMenu ref={menuRef} logId={log.id} onDelete={handleDelete} />}
             </div>
+
           </div>
           {log.title && <p className="text-md text-gray-800 italic">{log.title}</p>}
           <p className="text-gray-600 font-mono">{log.location}</p>
