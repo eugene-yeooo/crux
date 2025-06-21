@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
   createRoot(document.getElementById('app') as HTMLElement).render(
     <Auth0Provider
     domain="crux.au.auth0.com"
-    clientId="PlQMbOl16o8EuHUpHF7O0tgbrSedvYSb"
+    clientId="WOhagWYUkMRh2GvCY8LjwvyAjey4ISpP"
     authorizationParams={{
       redirect_uri: window.location.origin,
       audience: 'https://crux/api',
