@@ -15,23 +15,34 @@ export default function Header() {
     return loginWithRedirect()
   }
 
-  const buttonStyle = "opacity-0 translate-y-5 px-6 py-3 rounded-xl bg-gradient-to-l from-[#45a3a1] to-[#95a3a1] text-brandBlack font-semibold shadow-md hover:brightness-125 transition"
+  const buttonStyle = "px-4 py-2 ml-auto rounded-xl bg-gradient-to-l from-[#45a3a1] to-[#95a3a1] text-brandBlack font-semibold shadow-md brightness-100 hover:brightness-125 transition"
   
   return (
     <header className="relative flex items-center justify-center py-6 mb-6 bg-brandBlack">
       <h1 className="text-6xl font-bold text-mono text-brandPrimary tracking-wide bg-gradient-to-l from-[#65a3a1] to-[#95a3a1] bg-clip-text text-transparent -translate-y-2">crux</h1>
 
-      <div className="absolute top-32">
+      <div className="absolute bottom-3 right-6">
         <IfAuthenticated>
-          <button className={buttonStyle} onClick={handleSignOut}>Sign out</button>
-          {user && (
-            <img
-              src={user?.picture}
-              alt={user?.given_name}
-              referrerPolicy="no-referrer"
-            />
-          )}
-          {user && <p>Signed in as: {user?.nickname}</p>}
+           <div className="flex items-center gap-4 flex-col">
+              {user && (
+                <div className="flex items-center gap-3">
+                  <p className="text-white font-medium text-md">
+                    {user.nickname}
+                  </p>
+                  <img
+                    src={user.picture}
+                    alt={user.given_name}
+                    referrerPolicy="no-referrer"
+                    className="w-16 h-16 rounded-full border-2 border-brandPrimary shadow"
+                  />
+                  
+                </div>
+              )}
+
+              <button className={buttonStyle} onClick={handleSignOut}>
+                Sign out
+              </button>
+            </div>
         </IfAuthenticated>
         <IfNotAuthenticated>
           <button className={buttonStyle} onClick={handleSignIn}>Sign in</button>
