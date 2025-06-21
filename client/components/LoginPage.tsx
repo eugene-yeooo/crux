@@ -1,12 +1,18 @@
 import { useEffect, useRef } from "react"
 import { gsap } from "gsap"
 import { ScrambleTextPlugin } from "gsap/ScrambleTextPlugin"
+import { useAuth0 } from "@auth0/auth0-react"
+import { useNavigate } from "react-router"
 
 gsap.registerPlugin(ScrambleTextPlugin)
 
 export default function LoginPage() {
   const titleRef = useRef<HTMLHeadingElement>(null)
-  const buttonRef = useRef<HTMLButtonElement>(null)
+  const loginButtonRef = useRef<HTMLButtonElement>(null)
+  const exploreButtonRef = useRef<HTMLButtonElement>(null)
+  const navigate = useNavigate()
+  const { loginWithRedirect } = useAuth0()
+
 
   useEffect(() => {
     const tl = gsap.timeline()
@@ -17,7 +23,7 @@ export default function LoginPage() {
       {
         opacity: 1,
         y: 0,
-        duration: 2.5,
+        duration: 3.2,
         ease: "power3.out",
         scrambleText: {
           text: "crux",
@@ -27,10 +33,15 @@ export default function LoginPage() {
         },
       }
     ).fromTo(
-      buttonRef.current,
+      loginButtonRef.current,
       { y: 20, opacity: 0 },
       { y: 0, opacity: 1, duration: 2, ease: "power3.out" },
       "-=2"
+    ).fromTo(
+      exploreButtonRef.current,
+      { y: 20, opacity: 0 },
+      { y: 0, opacity: 1, duration: 2, ease: "power3.out" },
+      "-=1.3"
     )
   }, [])
 
@@ -53,15 +64,23 @@ export default function LoginPage() {
         <h1
           ref={titleRef}
           onMouseEnter={scramble}
-          className="text-9xl font-bold tracking-wider bg-gradient-to-l from-[#55a3a1] to-[#95a3a1] bg-clip-text text-transparent inline-block font-mono min-w-[12ch] text-center"
+          className="text-[10rem] font-bold tracking-wider bg-gradient-to-l from-[#55a3a1] to-[#95a3a1] bg-clip-text text-transparent inline-block font-mono min-w-[12ch] text-center"
         >
           crux
         </h1>
         <button
-          ref={buttonRef}
-          className="opacity-0 translate-y-5 px-6 py-3 rounded-xl bg-gradient-to-l from-[#45a3a1] to-[#95a3a1] text-brandBlack font-semibold shadow-md hover:brightness-125 transition"
+          ref={loginButtonRef}
+          onClick={() => loginWithRedirect()}
+          className="opacity-0 translate-y-5 px-8 py-3 rounded-xl bg-gradient-to-l from-[#45a3a1] to-[#95a3a1] text-brandBlack font-semibold shadow-md hover:brightness-125 transition"
         >
           Login
+        </button>
+        <button
+          ref={exploreButtonRef}
+          onClick={() => navigate('/explore')}
+          className="opacity-0 translate-y-5 px-6 py-3 rounded-xl bg-gradient-to-l from-[#45a3a1] to-[#95a3a1] text-brandBlack font-semibold shadow-md hover:brightness-125 transition"
+        >
+          Explore
         </button>
       </div>
     </div>

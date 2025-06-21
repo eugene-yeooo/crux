@@ -36,6 +36,7 @@ const routes = createRoutesFromElements(
     {/* <Route path='edit/:logId' element={<EditLog />} /> */}
     
     <Route path='explore' element={<Explore />} />
+
   </Route>
 
   </> 
