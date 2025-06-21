@@ -12,6 +12,7 @@ import Dashboard from './components/Dashboard'
 import Explore from './components/Explore'
 import LogPage from './components/log page/LogPage'
 import LoginPage from './components/LoginPage'
+import ProtectedRoute from './components/utilities/ProtectedRoute'
 
 const routes = createRoutesFromElements(
  <>
@@ -21,12 +22,12 @@ const routes = createRoutesFromElements(
   <Route path="/" element={<App />}>
     <Route index element={<Dashboard />} />
     
-    <Route path="log-nav" element={<NavLog />} />
-      <Route path="log-nav/log-cave" element={<LogCave />} />
+    <Route path="log-nav" element={<ProtectedRoute><NavLog /></ProtectedRoute>} />
+    <Route path="log-nav/log-cave" element={<ProtectedRoute><LogCave /></ProtectedRoute>} />
+
       {/* <Route path="log-climb" element={<LogClimb />} />
       <Route path="log-canyon" element={<LogCanyon />} />
       <Route path="log-dive" element={<LogDive />} /> */}
-    
 
     {/* User profile with dynamic username param */}
     <Route path="user/:username" element={<UserProfilePage />} />
