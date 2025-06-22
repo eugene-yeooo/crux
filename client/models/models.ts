@@ -1,12 +1,15 @@
-export interface CaveLog {
-  logId: number
+export interface CaveLogFormData {
+  title: string
   objectiveName: string
-  caveDate: number
-  tripCompanions: string
-  caveLocation: string
-  tripDuration: number
-  tripNotes: string
+  date: string
+  companions: string
+  location: string
+  technicalStyle: string[]
+  routeStyle: string
+  duration: string
+  notes: string
 }
+
 
 export interface User {
   id: number

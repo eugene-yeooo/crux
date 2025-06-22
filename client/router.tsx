@@ -6,13 +6,14 @@ import {
 
 import App from './components/App'
 import NavLog from './components/forms/NavLog'
-import LogCave from './components/forms/LogCave'
+import CaveLogNew from './components/forms/CaveLogNew'
 import UserProfilePage from './components/profile page/UserProfilePage'
 import Dashboard from './components/Dashboard'
 import Explore from './components/Explore'
 import LogPage from './components/log page/LogPage'
 import LoginPage from './components/LoginPage'
 import ProtectedRoute from './components/utilities/ProtectedRoute'
+
 
 const routes = createRoutesFromElements(
  <>
@@ -23,7 +24,7 @@ const routes = createRoutesFromElements(
     <Route index element={<Dashboard />} />
     
     <Route path="log-nav" element={<ProtectedRoute><NavLog /></ProtectedRoute>} />
-    <Route path="log-nav/log-cave" element={<ProtectedRoute><LogCave /></ProtectedRoute>} />
+    <Route path="log-nav/log-cave" element={<ProtectedRoute><CaveLogNew /></ProtectedRoute>} />
 
       {/* <Route path="log-climb" element={<LogClimb />} />
       <Route path="log-canyon" element={<LogCanyon />} />

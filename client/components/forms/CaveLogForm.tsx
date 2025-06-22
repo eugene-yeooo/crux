@@ -2,20 +2,32 @@ import { useState } from 'react'
 import Select from 'react-select'
 import SubmitButton from './SubmitButton'
 import MediaUpload from './MediaUpload'
+import { CaveLogFormData } from '../../models/models'
 
-export default function AddCave() {
+type CaveLogFormProps = {
+  initialData?: Partial<CaveLogFormData>
+  onSubmit: (formData: CaveLogFormData, mediaFiles: File[]) => Promise<void>
+  submitLabel?: string
+}
+
+export default function CaveLogForm({
+  initialData,
+  onSubmit,
+  submitLabel = 'Log Cave',
+}: CaveLogFormProps) {
+
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [formState, setFormState] = useState({
-    title: '',
-    objectiveName: '',
-    date: '',
-    companions: '',
-    location: '',
-    technicalStyle: [''],
-    routeStyle: 'throughTrip',
-    duration: '',
-    notes: '',
-  })
+  const [formState, setFormState] = useState(() => ({
+    title: initialData?.title || '',
+    objectiveName: initialData?.objectiveName || '',
+    date: initialData?.date || '',
+    companions: initialData?.companions || '',
+    location: initialData?.location || '',
+    technicalStyle: initialData?.technicalStyle || [''],
+    routeStyle: initialData?.routeStyle || 'throughTrip',
+    duration: initialData?.duration || '',
+    notes: initialData?.notes || '',
+  }))
 
   const [mediaFiles, setMediaFiles] = useState<File[]>([])
 
@@ -44,7 +56,7 @@ export default function AddCave() {
     setIsSubmitting(true)
 
     try {
-      // Your submit logic here
+      await onSubmit(formState, mediaFiles)
     } catch (error) {
       console.error('Submit error:', error)
     } finally {
@@ -190,7 +202,7 @@ export default function AddCave() {
         <MediaUpload labelStyle={labelStyle} mediaFiles={mediaFiles} setMediaFiles={setMediaFiles} />
 
         <div className="text-center">
-          <SubmitButton loading={isSubmitting}>Log Cave</SubmitButton>
+          <SubmitButton loading={isSubmitting}>{submitLabel}</SubmitButton>
         </div>
       </form>
     </div>
