@@ -6,6 +6,7 @@ import { Pencil } from 'lucide-react';
 import LogDropdownMenu from './DropdownLogPage';
 import { useDeleteLog } from '../../hooks/api';
 import ConfirmDelete from './ConfirmDelete';
+import { useAuth0 } from '@auth0/auth0-react';
 
 export default function LogPage() {
   const { username, logId } = useParams()
@@ -17,6 +18,7 @@ export default function LogPage() {
   const formattedDate = log && format(new Date(log.date), 'dd MMM yyyy')
   const deleteLog = useDeleteLog()
   const navigate = useNavigate()
+  const { isAuthenticated } = useAuth0()
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -61,12 +63,12 @@ export default function LogPage() {
           <div className='flex'>
             <h1 className="text-2xl font-bold">{log.objectiveName}</h1>
             
-            <div>
+          {isAuthenticated && (<div>
               <button onClick={toggleMenu} className="ml-3 p-1 rounded hover:bg-gray-200" aria-label='Edit log'>
                 <Pencil size={20} className="text-gray-400 hover:text-black" />
               </button>
               {logMenu && <LogDropdownMenu ref={menuRef} logId={log.id} onDelete={() => setShowConfirm(true)} />}
-            </div>
+            </div>)}
 
           </div>
           {log.title && <p className="text-md text-gray-800 italic">{log.title}</p>}
