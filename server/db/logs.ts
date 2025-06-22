@@ -59,7 +59,7 @@ export async function getLogById(username: string, logId: number) {
     .leftJoin('media', 'logs.id', 'media.log-id')
     .where('users.username', username)
     .andWhere('logs.id', logId)
-    .select('logs.*', 'users.username', 'users.avatar_url', connection.raw(`COALESCE(json_group_array(json_object('url', media.url, 'type', media.type, 'caption', media.caption)), '[]') as media`))
+    .select('logs.*', 'users.username', 'users.avatar_url', 'users.auth0_id', connection.raw(`COALESCE(json_group_array(json_object('url', media.url, 'type', media.type, 'caption', media.caption)), '[]') as media`))
     .groupBy('logs.id')
     .first()
 

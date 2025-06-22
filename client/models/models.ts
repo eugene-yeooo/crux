@@ -22,6 +22,7 @@ export interface User {
 }
 
 export interface Log {
+  auth0_id: string
   username: string
   avatar_url?: string | undefined
   media: [{

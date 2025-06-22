@@ -18,7 +18,9 @@ export default function LogPage() {
   const formattedDate = log && format(new Date(log.date), 'dd MMM yyyy')
   const deleteLog = useDeleteLog()
   const navigate = useNavigate()
-  const { isAuthenticated } = useAuth0()
+  const { isAuthenticated, user } = useAuth0()
+  
+  const isOwner = isAuthenticated && log?.auth0_id === user?.sub //checks if user is authorized to edit log
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -63,7 +65,7 @@ export default function LogPage() {
           <div className='flex'>
             <h1 className="text-2xl font-bold">{log.objectiveName}</h1>
             
-          {isAuthenticated && (<div>
+          {isOwner && (<div>
               <button onClick={toggleMenu} className="ml-3 p-1 rounded hover:bg-gray-200" aria-label='Edit log'>
                 <Pencil size={20} className="text-gray-400 hover:text-black" />
               </button>
