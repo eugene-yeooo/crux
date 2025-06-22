@@ -1,5 +1,8 @@
 import express from 'express'
 import * as db from '../db/logs'
+import ensureUserExists from '../middleware/ensureUserExists'
+import checkJWT from '../middleware/auth.config'
+import knex from '../db/connection'
 
 const router = express.Router()
 
@@ -37,6 +40,37 @@ router.delete('/delete-log/:logId', async (req, res) => {
     console.error(err)
     res.status(500).json({error: 'Error deleting log'})
   }
+})
+
+// GET /api/update-log/:logId
+router.patch('/api/update-log/:logId', checkJWT, ensureUserExists, async (req, res) => {
+  const logId = Number(req.params.logId)
+  const { core, media, cave, climb, canyon, alpine, dive } = req.body // add more types here
+  const trx = await knex.transaction()
+
+  try {
+    await db.updateLogCore(logId, core, trx)
+    
+    const type = core.type
+
+    if (type === 'cave' && cave) {
+      await db.updateLogCave(logId, cave, trx)
+    }
+    // add more types here
+
+    if (media?.length) {
+      // media function here 
+    }
+
+    await trx.commit()
+    res.sendStatus(200)
+
+  } catch (err) {
+    await trx.rollback()
+    console.error(err)
+    return res.status(500).json({ message: 'Failed to update log' })
+  }
+
 })
 
 export default router

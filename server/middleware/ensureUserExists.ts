@@ -2,7 +2,7 @@ import { getUserByAuthId } from '../db/users'
 import connection from '../db/connection'
 import { Request, Response, NextFunction } from 'express'
 
-export async function ensureUserExists(req: Request, res: Response, next: NextFunction) {
+export default async function ensureUserExists(req: Request, res: Response, next: NextFunction) {
   const auth0Id = req.auth?.sub
 
   const fullName = `${req.auth?.given_name ?? ''} ${req.auth?.family_name ?? ''}`.trim() || 'Unknown'
