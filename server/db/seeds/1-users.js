@@ -8,7 +8,7 @@ export async function seed(knex) {
       id: 1,
       auth0_id: "google-oauth2|114236890951684480861",
       name: 'Eugene Yeo',
-      username: 'eugeneyeooo',
+      username: 'eugeneyeoooo',
       email: 'eugeneyeoooo@gmail.com',
       avatar_url: 'https://lh3.googleusercontent.com/a/ACg8ocJ6d6Vh75QK5oaCnk2kdoRFUcB_7XZtRkqyHw6buZJA95WVZrPO=s96-c',
       bio: 'First user in the system.',
