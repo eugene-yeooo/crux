@@ -4,7 +4,7 @@ import cors, { CorsOptions } from 'cors'
 
 import userRoutes from './routes/users.ts'
 import logRoutes from './routes/logs.ts'
-import checkJwt from './middleware/auth.config.ts'
+// import checkJwt from './middleware/auth.config.ts'
 
 const server = express()
 
@@ -14,7 +14,7 @@ server.use(cors('*' as CorsOptions))
 server.use('/api/v1/users', userRoutes)
 server.use('/api/v1', logRoutes)
 server.use('/uploads', express.static(Path.resolve('uploads'))) // for serving web-accessible media URLs
-server.use('/api/protected', checkJwt)
+// server.use('/api/protected', checkJwt)
 
 
 
