@@ -23,6 +23,7 @@ router.get('/users/:username/log/:logId', async (req, res) => {
   try {
     const { username, logId } = req.params
     const log = await db.getLogById(username, Number(logId))
+  
     res.json(log)
   } catch (err) {
     console.error(err)
@@ -43,7 +44,7 @@ router.delete('/delete-log/:logId', async (req, res) => {
 })
 
 // GET /api/update-log/:logId
-router.patch('/api/update-log/:logId', checkJWT, ensureUserExists, async (req, res) => {
+router.patch('/update-log/:logId', checkJWT, async (req, res) => {
   const logId = Number(req.params.logId)
   const { core, media, cave, climb, canyon, alpine, dive, hike, roadtrip, other } = req.body // add more types here
   const trx = await knex.transaction()

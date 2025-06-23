@@ -56,7 +56,7 @@ export default function LogPage() {
     
     setLogMenu(false)
   }
-
+  console.log(log.details)
   return (
     <div className="relative rounded-lg shadow p-6 bg-white space-y-2 max-w-4xl mx-auto">
       
@@ -103,7 +103,7 @@ export default function LogPage() {
             <>
               <p><span className={labelStyle}>Team:</span> {log.details['trip-companions']}</p>
               <p><span className={labelStyle}>Duration:</span> {log.details.duration} hrs</p>
-              <p><span className={labelStyle}>Route Style:</span> {log.details['route-style']}</p>
+              <p><span className={labelStyle}>Route Style:</span> {log.details['route-style'] === 'inOut' ? 'In/Out' : 'Through-trip'}</p>
               <p><span className={labelStyle}>Technical Style: </span> 
                 {Array.isArray(log.details?.['tech-style']) ? 
                 log.details['tech-style'].join(', ')
