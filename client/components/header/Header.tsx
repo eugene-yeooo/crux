@@ -1,8 +1,7 @@
 import { useAuth0 } from "@auth0/auth0-react"
 import { IfAuthenticated, IfNotAuthenticated } from "../utilities/Authenticated"
-import { useRef, useState } from "react"
-import { Menu } from 'lucide-react';
 import DropdownHeader from "./DropdownHeader";
+import { Link } from "react-router";
 
 export default function Header() {
   
@@ -25,12 +24,13 @@ export default function Header() {
                     {user.nickname}
                   </p>
                   
+                  <Link to={`user/${user.nickname}`}>
                   <img
                     src={user.picture}
                     alt={user.given_name}
                     referrerPolicy="no-referrer"
                     className="w-16 h-16 rounded-full border-2 border-brandPrimary shadow"
-                  />
+                  /></ Link>
                   <DropdownHeader />
                 </div>
               )}
