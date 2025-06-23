@@ -1,35 +1,85 @@
-import { Link, useParams } from 'react-router'
-import useLogById from '../hooks/use-logById'
-import { useEffect } from 'react'
+import { Link, useNavigate, useParams } from 'react-router'
+import { useLogById } from '../../hooks/api'
+import { useEffect, useRef, useState } from 'react'
 import { format } from 'date-fns'
+import { Pencil } from 'lucide-react';
+import LogDropdownMenu from './DropdownLogPage';
+import { useDeleteLog } from '../../hooks/api';
+import ConfirmDelete from './ConfirmDelete';
+import { useAuth0 } from '@auth0/auth0-react';
 
 export default function LogPage() {
   const { username, logId } = useParams()
+  const [logMenu, setLogMenu] = useState(false)
+  const [showConfirm, setShowConfirm] = useState(false)
   const { data: log, isLoading, error } = useLogById(username!, Number(logId))
+  const menuRef = useRef<HTMLDivElement>(null)
+  const labelStyle = 'font-semibold'
+  const formattedDate = log && format(new Date(log.date), 'dd MMM yyyy')
+  const deleteLog = useDeleteLog()
+  const navigate = useNavigate()
+  const { isAuthenticated, user } = useAuth0()
+  
+  const isOwner = isAuthenticated && log?.auth0_id === user?.sub //checks if user is authorized to edit log
 
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [])
 
-  const formattedDate = log && format(new Date(log.date), 'dd MMM yyyy')
-
-  const labelStyle = 'font-semibold'
-
+  // handles clicking out of log dropdown menu
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setLogMenu(false)
+      }
+    }
+    if (logMenu) {
+      document.addEventListener('mousedown', handleClickOutside)
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [logMenu])
+  
   if (isLoading) return <p>Loading...</p>
   if (error || !log) return <p>Error loading log.</p>
 
-  // console.log('log:', log)
+  const toggleMenu = () => setLogMenu(!logMenu)
 
+  const handleDelete = () => {
+    deleteLog.mutate(log.id)
+    navigate(`/user/${log.username}`)
+  }
+
+  const handleCancel = () => {
+    setShowConfirm(false)
+    
+    setLogMenu(false)
+  }
+  console.log(log.details)
   return (
     <div className="relative rounded-lg shadow p-6 bg-white space-y-2 max-w-4xl mx-auto">
-      {/* Header */}
       
+      {/* Header */}
         <div className='mb-6'>
-          <h1 className="text-2xl font-bold">{log.objectiveName}</h1>
+          <div className='flex'>
+            <h1 className="text-2xl font-bold">{log.objectiveName}</h1>
+            
+          {isOwner && (<div>
+              <button onClick={toggleMenu} className="ml-3 p-1 rounded hover:bg-gray-200" aria-label='Edit log'>
+                <Pencil size={20} className="text-gray-400 hover:text-black" />
+              </button>
+              {logMenu && <LogDropdownMenu ref={menuRef} logId={log.id} onInitDelete={() => setShowConfirm(true)} />}
+            </div>)}
+
+          </div>
           {log.title && <p className="text-md text-gray-800 italic">{log.title}</p>}
           <p className="text-gray-600 font-mono">{log.location}</p>
           <p className="text-sm text-gray-500 font-mono">{formattedDate}</p>
         </div>
+
+      {showConfirm && (<ConfirmDelete onDelete={handleDelete} onCancel={handleCancel} />)}
+
         
        {/* User info  */}
         <div className="absolute top-0 right-6 flex items-center gap-4 px-4 py-3">
@@ -53,7 +103,7 @@ export default function LogPage() {
             <>
               <p><span className={labelStyle}>Team:</span> {log.details['trip-companions']}</p>
               <p><span className={labelStyle}>Duration:</span> {log.details.duration} hrs</p>
-              <p><span className={labelStyle}>Route Style:</span> {log.details['route-style']}</p>
+              <p><span className={labelStyle}>Route Style:</span> {log.details['route-style'] === 'inOut' ? 'In/Out' : 'Through-trip'}</p>
               <p><span className={labelStyle}>Technical Style: </span> 
                 {Array.isArray(log.details?.['tech-style']) ? 
                 log.details['tech-style'].join(', ')

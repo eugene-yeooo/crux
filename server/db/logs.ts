@@ -1,4 +1,4 @@
-import { json } from 'stream/consumers'
+import { Knex } from 'knex'
 import connection from './connection'
 
 export async function getLogsByUsername(username: string) {
@@ -60,7 +60,7 @@ export async function getLogById(username: string, logId: number) {
     .leftJoin('media', 'logs.id', 'media.log-id')
     .where('users.username', username)
     .andWhere('logs.id', logId)
-    .select('logs.*', 'users.username', 'users.avatar_url', connection.raw(`COALESCE(json_group_array(json_object('url', media.url, 'type', media.type, 'caption', media.caption)), '[]') as media`))
+    .select('logs.*', 'users.username', 'users.avatar_url', 'users.auth0_id', connection.raw(`COALESCE(json_group_array(json_object('url', media.url, 'type', media.type, 'caption', media.caption)), '[]') as media`))
     .groupBy('logs.id')
     .first()
 
@@ -86,3 +86,24 @@ export async function getLogById(username: string, logId: number) {
   return fullLog
 }
 
+
+// ------------- DELETE ---------------- //
+
+export async function deleteLogById(id: number) {
+  return await connection('logs').where({ id }).del()
+}
+
+// -------------- EDIT ----------------- //
+
+export function updateLogCore(id: number, coreData: unknown, trx: Knex.Transaction) {
+  return trx('logs').where({ id }).update(coreData)
+}
+
+export async function updateLogCave(logId: number, caveData: unknown, trx: Knex.Transaction) {
+  return trx('log-caves').where({ log_id: logId }).update(caveData)
+}
+
+// export async function replaceMedia(logId: number, mediaArray: any[]) {
+//   await connection('media').where({ log_id: logId }).del()
+//   return connection('media').insert(mediaArray.map((m) => ({ ...m, log_id: logId })))
+// }

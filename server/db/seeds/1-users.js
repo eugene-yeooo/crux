@@ -1,0 +1,75 @@
+export async function seed(knex) {
+  // Deletes ALL existing entries
+  await knex('users').del()
+
+  // Inserts seed entries
+  await knex('users').insert([
+    {
+      id: 1,
+      auth0_id: "google-oauth2|114236890951684480861",
+      name: 'Eugene Yeo',
+      username: 'eugeneyeoooo',
+      email: 'eugeneyeoooo@gmail.com',
+      avatar_url: 'https://lh3.googleusercontent.com/a/ACg8ocJ6d6Vh75QK5oaCnk2kdoRFUcB_7XZtRkqyHw6buZJA95WVZrPO=s96-c',
+      bio: 'First user in the system.',
+      country: 'New Zealand',
+      created_at: new Date(),
+      updated_at: new Date(),
+    },
+    // {
+    //   id: 2,
+    //   name: 'Alice Johnson',
+    //   username: 'alicej',
+    //   email: 'alice@example.com',
+    //   avatar_url: 'https://example.com/avatars/alice.jpg',
+    //   bio: 'Adventure seeker and rock climber.',
+    //   country: 'USA',
+    //   created_at: new Date(),
+    //   updated_at: new Date(),
+    // },
+    // {
+    //   id: 3,
+    //   name: 'Bob Smith',
+    //   username: 'bob_smith',
+    //   email: 'bob@example.com',
+    //   avatar_url: 'https://example.com/avatars/bob.jpg',
+    //   bio: 'Diving enthusiast and photographer.',
+    //   country: 'Australia',
+    //   created_at: new Date(),
+    //   updated_at: new Date(),
+    // },
+    // {
+    //   id: 4,
+    //   name: 'Carmen Lee',
+    //   username: 'carmen_lee',
+    //   email: 'carmen@example.com',
+    //   avatar_url: null,
+    //   bio: 'Exploring caves one trip at a time.',
+    //   country: 'Singapore',
+    //   created_at: new Date(),
+    //   updated_at: new Date(),
+    // },
+    // {
+    //   id: 5,
+    //   name: 'David Kim',
+    //   username: 'davekim',
+    //   email: 'david@example.com',
+    //   avatar_url: 'https://example.com/avatars/david.jpg',
+    //   bio: null,
+    //   country: 'South Korea',
+    //   created_at: new Date(),
+    //   updated_at: new Date(),
+    // },
+    // {
+    //   id: 6,
+    //   name: 'Eva Green',
+    //   username: 'evag',
+    //   email: 'eva@example.com',
+    //   avatar_url: null,
+    //   bio: 'Lover of canyoning and the outdoors.',
+    //   country: 'New Zealand',
+    //   created_at: new Date(),
+    //   updated_at: new Date(),
+    // },
+  ])
+}
