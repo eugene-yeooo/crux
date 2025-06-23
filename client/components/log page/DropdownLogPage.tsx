@@ -5,10 +5,10 @@ import { useAuth0 } from '@auth0/auth0-react'
 
 interface Props {
   logId: number
-  onDelete: () => void
+  onInitDelete: () => void
 }
 
-function LogDropdownMenu({ logId, onDelete }: Props, ref: React.Ref<HTMLDivElement>) {
+function LogDropdownMenu({ logId, onInitDelete }: Props, ref: React.Ref<HTMLDivElement>) {
   
   const { user } = useAuth0()
   
@@ -22,7 +22,7 @@ function LogDropdownMenu({ logId, onDelete }: Props, ref: React.Ref<HTMLDivEleme
       </Link>
       <button
         className="flex items-center px-4 py-2 text-sm text-red-600 hover:bg-red-50 w-full text-left"
-        onClick={onDelete}
+        onClick={onInitDelete}
       >
         <Trash2 size={16} className="mr-2" /> Delete
       </button>

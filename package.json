@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "@auth0/auth0-react": "^2.3.0",
+    "@radix-ui/react-dropdown-menu": "^2.1.15",
     "cloudinary": "^1.41.3",
     "cors": "^2.8.5",
     "date-fns": "^4.1.0",

@@ -45,7 +45,7 @@ router.delete('/delete-log/:logId', async (req, res) => {
 // GET /api/update-log/:logId
 router.patch('/api/update-log/:logId', checkJWT, ensureUserExists, async (req, res) => {
   const logId = Number(req.params.logId)
-  const { core, media, cave, climb, canyon, alpine, dive } = req.body // add more types here
+  const { core, media, cave, climb, canyon, alpine, dive, hike, roadtrip, other } = req.body // add more types here
   const trx = await knex.transaction()
 
   try {
@@ -56,6 +56,9 @@ router.patch('/api/update-log/:logId', checkJWT, ensureUserExists, async (req, r
     if (type === 'cave' && cave) {
       await db.updateLogCave(logId, cave, trx)
     }
+    // if (type === 'climb' && climb) {
+    //   await db.updateLogClimb(logId, climb, trx)
+    // }
     // add more types here
 
     if (media?.length) {
