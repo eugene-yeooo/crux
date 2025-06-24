@@ -14,7 +14,7 @@ export async function up(knex) {
       .onDelete('CASCADE')
       .onUpdate('CASCADE')
     table.string('type').notNullable() // e.g. 'climb', 'dive', 'canyon', 'cave'
-    table.string('objectiveName').notNullable()
+    table.string('objective').notNullable()
     table.string('title')
     table.text('notes')
     table.string('location')

@@ -11,14 +11,14 @@ export default function EditCaveLog() {
   // flatten log object before passing into form
   const cleanInitialData: CaveLogFormData = {
   title: logData?.title ?? '',
-  objectiveName: logData?.objectiveName ?? '',
+  objective: logData?.objective ?? '',
   location: logData?.location ?? '',
   date: logData?.date ?? '',
   notes: logData?.notes ?? '',
-  companions: logData?.details?.['trip-companions'] ?? '',
+  team: logData?.details?.team ?? '',
   duration: logData?.details?.duration?.toString() ?? '',
-  technicalStyle: JSON.parse(logData?.details?.['tech-style'] ?? '[]'),
-  routeStyle: (logData?.details?.['route-style']?.toLowerCase() === 'in/out') ? 'inOut' : 'throughTrip',
+  tech_style: JSON.parse(logData?.details?.tech_style ?? '[]'),
+  route_style: (logData?.details?.route_style?.toLowerCase() === 'in/out') ? 'inOut' : 'throughTrip',
 }
   
   const handleUpdate = async (formData: CaveLogFormData, files: File[]) => {
@@ -28,7 +28,7 @@ export default function EditCaveLog() {
 
     const core = {
       title: formData.title,
-      objectiveName: formData.objectiveName,
+      objective: formData.objective,
       location: formData.location,
       date: formData.date,
       type: 'cave',
@@ -36,10 +36,10 @@ export default function EditCaveLog() {
     }
 
     const cave = {
-      'trip-companions': formData.companions,
+      'team': formData.team,
       duration: formData.duration,
-      'tech-style': JSON.stringify(formData.technicalStyle),
-      'route-style': formData.routeStyle,
+      'tech_style': JSON.stringify(formData.tech_style),
+      'route_style': formData.route_style,
     }
 
     await updateLog.mutateAsync({

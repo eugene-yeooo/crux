@@ -3,7 +3,7 @@
  * @returns { Promise<void> }
  */
 export async function up(knex) {
-  return knex.schema.createTable('log-caves', (table) => {
+  return knex.schema.createTable('log_caves', (table) => {
     table
       .integer('log_id')
       .unsigned()
@@ -13,10 +13,10 @@ export async function up(knex) {
       .inTable('logs')
       .onDelete('CASCADE')
       .onUpdate('CASCADE')
-    table.string('trip-companions')
+    table.string('team')
     table.integer('duration')
-    table.text('tech-style').notNullable().defaultTo('[]')
-    table.string('route-style')
+    table.text('tech_style').notNullable().defaultTo('[]')
+    table.string('route_style')
   })
 }
 
@@ -25,5 +25,5 @@ export async function up(knex) {
  * @returns { Promise<void> }
  */
 export async function down(knex) {
-  return knex.schema.dropTableIfExists('log-caves')
+  return knex.schema.dropTableIfExists('log_caves')
 }

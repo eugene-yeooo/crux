@@ -5,7 +5,7 @@ export async function getLogsByUsername(username: string) {
   // Step 1: Fetch logs + user + grouped media URLs
   const baseLogs = await connection('logs')
     .join('users', 'logs.user_id', 'users.id')
-    .leftJoin('media', 'logs.id', 'media.log-id') //
+    .leftJoin('media', 'logs.id', 'media.log_id') //
     .where('users.username', username)
     .select(
       'logs.*',
@@ -23,7 +23,7 @@ export async function getLogsByUsername(username: string) {
   // const diveLogIds = baseLogs.filter(log => log.type === 'dive').map(log => log.id)
 
   // Step 3: Fetch subtable records (returns the row matching the IDs)
-  const caveLogs = await connection('log-caves').whereIn('log_id', caveLogIds)
+  const caveLogs = await connection('log_caves').whereIn('log_id', caveLogIds)
   const caveMap = Object.fromEntries(caveLogs.map(log => [log.log_id, log])) //Object.fromEntries() is a built-in JavaScript method that converts an array of key-value pairs into an object.
 
   // const climbLogs = await connection('log-climbs').whereIn('log_id', climbLogIds)
@@ -57,7 +57,7 @@ export async function getLogsByUsername(username: string) {
 export async function getLogById(username: string, logId: number) {
   const baseLog =  await connection('logs')
     .join('users', 'users.id', 'logs.user_id')
-    .leftJoin('media', 'logs.id', 'media.log-id')
+    .leftJoin('media', 'logs.id', 'media.log_id')
     .where('users.username', username)
     .andWhere('logs.id', logId)
     .select('logs.*', 'users.username', 'users.avatar_url', 'users.auth0_id', connection.raw(`COALESCE(json_group_array(json_object('url', media.url, 'type', media.type, 'caption', media.caption)), '[]') as media`))
@@ -68,13 +68,13 @@ export async function getLogById(username: string, logId: number) {
 
   switch (baseLog.type) {
     case 'cave':
-      details = await connection('log-caves').where('log_id', logId).first()
+      details = await connection('log_caves').where('log_id', logId).first()
       break
     case 'climb':
-      details = await connection('log-climbs').where('log_id', logId).first()
+      details = await connection('log_climbs').where('log_id', logId).first()
       break
     case 'canyon':
-      details = await connection('log-canyons').where('log_id', logId).first()
+      details = await connection('log_canyons').where('log_id', logId).first()
       break
     // add more log types here
     default:
@@ -100,7 +100,7 @@ export function updateLogCore(id: number, coreData: unknown, trx: Knex.Transacti
 }
 
 export async function updateLogCave(logId: number, caveData: unknown, trx: Knex.Transaction) {
-  return trx('log-caves').where({ log_id: logId }).update(caveData)
+  return trx('log_caves').where({ log_id: logId }).update(caveData)
 }
 
 // export async function replaceMedia(logId: number, mediaArray: any[]) {

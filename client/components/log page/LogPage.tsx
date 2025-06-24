@@ -63,7 +63,7 @@ export default function LogPage() {
       {/* Header */}
         <div className='mb-6'>
           <div className='flex'>
-            <h1 className="text-2xl font-bold">{log.objectiveName}</h1>
+            <h1 className="text-2xl font-bold">{log.objective}</h1>
             
           {isOwner && (<div>
               <button onClick={toggleMenu} className="ml-3 p-1 rounded hover:bg-gray-200" aria-label='Edit log'>
@@ -101,14 +101,14 @@ export default function LogPage() {
         <div className="border-t pt-4 mt-4 text-sm text-gray-700 space-y-2 font-mono tracking-tighter">
           {log.type === 'cave' && (
             <>
-              <p><span className={labelStyle}>Team:</span> {log.details['trip-companions']}</p>
+              <p><span className={labelStyle}>Team:</span> {log.details.team}</p>
               <p><span className={labelStyle}>Duration:</span> {log.details.duration} hrs</p>
-              <p><span className={labelStyle}>Route Style:</span> {log.details['route-style'] === 'inOut' ? 'In/Out' : 'Through-trip'}</p>
+              <p><span className={labelStyle}>Route Style:</span> {log.details.route_style === 'inOut' ? 'In/Out' : 'Through-trip'}</p>
               <p><span className={labelStyle}>Technical Style: </span> 
-                {Array.isArray(log.details?.['tech-style']) ? 
-                log.details['tech-style'].join(', ')
-                : typeof log.details?.['tech-style'] === 'string'
-                  ? JSON.parse(log.details['tech-style']).join(', ')
+                {Array.isArray(log.details?.tech_style) ? 
+                log.details.tech_style.join(', ')
+                : typeof log.details?.tech_style === 'string'
+                  ? JSON.parse(log.details.tech_style).join(', ')
                   : ''}
               </p>
             </>
@@ -124,7 +124,7 @@ export default function LogPage() {
           {log.type === 'canyon' && (
             <>
               <p><span className={labelStyle}>Grade:</span> {log.details.grade}</p>
-              <p><span className={labelStyle}>Trip Companions:</span> {log.details['trip-companions']}</p>
+              <p><span className={labelStyle}>Trip Companions:</span> {log.details.team}</p>
               <p><span className={labelStyle}>Flow:</span> {log.details.flow}</p>
               <p><span className={labelStyle}>Pitches:</span> {log.details.pitches}</p>
             </>

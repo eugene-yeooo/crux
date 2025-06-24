@@ -7,7 +7,7 @@ export async function up(knex) {
     table.increments('id').primary()
 
     table
-      .integer('log-id')
+      .integer('log_id')
       .unsigned()
       .notNullable()
       .references('id')
@@ -17,10 +17,10 @@ export async function up(knex) {
 
     table.string('type').notNullable() // 'photo' or 'video'
     table.string('url').notNullable()
-    table.string('thumbnail-url') // optional, for images or videos
-    table.integer('file-size')
     table.text('caption')
     table.integer('position') // for ordering media items
+    table.string('thumbnail_url') // optional, for images or videos
+    table.integer('file_size')
     table.timestamp('created_at').defaultTo(knex.fn.now())
   })
 }
