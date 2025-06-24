@@ -1,6 +1,5 @@
 import express from 'express'
 import * as db from '../db/logs'
-import ensureUserExists from '../middleware/ensureUserExists'
 import checkJWT from '../middleware/auth.config'
 import knex from '../db/connection'
 

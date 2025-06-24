@@ -37,12 +37,12 @@ export default function CaveLogForm({
   } = useForm<CaveLogFormData>({
     defaultValues: initialData || {
       title: '',
-      objectiveName: '',
+      objective: '',
       date: '',
-      companions: '',
+      team: '',
       location: '',
-      technicalStyle: [],
-      routeStyle: 'throughTrip',
+      tech_style: [],
+      route_style: 'throughTrip',
       duration: '',
       notes: '',
     },
@@ -73,7 +73,7 @@ export default function CaveLogForm({
 
           <div>
             <label htmlFor="objectiveName" className={labelStyle}>Cave Name</label>
-            <input id="objectiveName" {...register('objectiveName', { required: true })} className={inputStyle} placeholder="e.g. Harwoods Hole" />
+            <input id="objectiveName" {...register('objective', { required: true })} className={inputStyle} placeholder="e.g. Harwoods Hole" />
           </div>
 
           <div>
@@ -87,13 +87,13 @@ export default function CaveLogForm({
           </div>
 
           <div>
-            <label htmlFor="technicalStyle" className={labelStyle}>Technical Style</label>
+            <label htmlFor="tech_style" className={labelStyle}>Technical Style</label>
             <Controller
               control={control}
-              name="technicalStyle"
+              name="tech_style"
               render={({ field }) => (
                 <Select
-                  inputId="technicalStyle"
+                  inputId="tech_style"
                   {...field}
                   isMulti
                   options={techStyleOptions}
@@ -106,16 +106,16 @@ export default function CaveLogForm({
           </div>
 
           <div>
-            <label htmlFor="routeStyle" className={labelStyle}>Route Style</label>
-            <select id="routeStyle" {...register('routeStyle')} className={inputStyle}>
+            <label htmlFor="route_style" className={labelStyle}>Route Style</label>
+            <select id="route_style" {...register('route_style')} className={inputStyle}>
               <option value="throughTrip">Through-trip</option>
               <option value="inOut">In/Out</option>
             </select>
           </div>
 
           <div>
-            <label htmlFor="companions" className={labelStyle}>Trip Members</label>
-            <input id="companions" {...register('companions')} className={inputStyle} placeholder="Names or group" />
+            <label htmlFor="team" className={labelStyle}>Trip Members</label>
+            <input id="team" {...register('team')} className={inputStyle} placeholder="Names or group" />
           </div>
 
           <div>

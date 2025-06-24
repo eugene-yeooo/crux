@@ -1,11 +1,11 @@
 export interface CaveLogFormData {
   title: string
-  objectiveName: string
+  objective: string
   date: string
-  companions: string
+  team: string
   location: string
-  technicalStyle: string[]
-  routeStyle: string
+  tech_style: string[]
+  route_style: string
   duration: string
   notes: string
 }
@@ -32,7 +32,7 @@ export interface Log {
   }]
   notes: string
   details: any
-  objectiveName: string
+  objective: string
   id: number
   user_id: number
   type: 'climb' | 'canyon' | 'cave' | 'dive'

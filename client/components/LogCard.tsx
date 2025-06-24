@@ -12,7 +12,7 @@ export default function LogCard({ log }) {
   
   return (
     <div className="rounded-lg shadow p-4 bg-white space-y-1">
-      <Link to={`/user/${log.username}/log/${log.id}`}><h3 className="text-xl font-bold">{log.objectiveName}</h3></Link>
+      <Link to={`/user/${log.username}/log/${log.id}`}><h3 className="text-xl font-bold">{log.objective}</h3></Link>
       {log.title && <p className="text-md text-gray-800 italic">{log.title}</p>}
       <p className="font-mono tracking-tight">{log.location}</p>
       <p className="text-sm font-mono ">{formattedDate}</p>
@@ -25,7 +25,7 @@ export default function LogCard({ log }) {
         <div className="text-sm text-gray-700 space-y-1">
           {log.type === 'cave' && (
             <>
-              <p><span className={labelStyle}>Team:</span> {log.details['trip-companions']}</p>
+              <p><span className={labelStyle}>Team:</span> {log.details.team}</p>
             </>
           )}
 
@@ -41,7 +41,7 @@ export default function LogCard({ log }) {
           {log.type === 'canyon' && (
             <>
               <p><span className={labelStyle}>Grade:</span> {log.details.grade}</p>
-              <p><span className={labelStyle}>Trip Companions:</span> {log.details['trip-companions']}</p>
+              <p><span className={labelStyle}>Trip Companions:</span> {log.details.team}</p>
               <p><span className={labelStyle}>Flow:</span> {log.details.flow}</p>
               <p><span className={labelStyle}>Pitches:</span> {log.details.pitches}</p>
             </>
