@@ -40,7 +40,8 @@ const storage = new CloudinaryStorage({
 
       // option to include user info later:
       const username = req.user?.username || 'user1' // req.user.username needs to be present (check this later)
-      publicId = `user-${username}-${sanitizedName}-${timestamp}`
+      const logId = Number(req.params.logId) || null
+      publicId = `user-${username}-log${logId}-${sanitizedName}-${timestamp}`
     } else {
       // if no originalname, prompt warning and create a unique default
       console.warn(
@@ -51,8 +52,8 @@ const storage = new CloudinaryStorage({
     }
 
     return {
-      folder: 'uploads',
-      allowed_formats: ['jpg', 'png', 'jpeg', 'webp'],
+      folder: 'Crux media',
+      allowed_formats: ['jpg', 'png', 'jpeg', 'webp', 'mp4'],
       transformation: [{ width: 1000, crop: 'limit', fetch_format: 'auto' }],
       resource_type: 'auto',
       public_id: publicId,
@@ -62,7 +63,7 @@ const storage = new CloudinaryStorage({
 })
 
 // File type validation here (look into client side validation as well)
-const upload = multer({
+const mediaUpload = multer({
   storage,
   limits: { fileSize: 10 * 1024 * 1024 }, // limits file size to 10 MB
   fileFilter: (req, file, cb) => {
@@ -81,4 +82,4 @@ const upload = multer({
   },
 })
 
-export default upload
+export default mediaUpload

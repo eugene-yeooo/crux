@@ -2,6 +2,7 @@ import express from 'express'
 import * as db from '../db/logs'
 import checkJWT from '../middleware/auth.config'
 import knex from '../db/connection'
+import mediaUpload from '../middleware/multer.config'
 
 const router = express.Router()
 
@@ -77,18 +78,53 @@ router.delete('/delete-log/:logId', async (req, res) => {
 
 // })
 
-router.patch('/update-log/:logId', checkJWT, async (req, res) => {
+// router.patch('/update-log/:logId', checkJWT, async (req, res) => {
+//   const logId = Number(req.params.logId)
+
+//   try {
+//     await db.updateFullLog(logId, req.body)
+
+//     res.sendStatus(200)
+//   } catch (err) {
+//     console.error(err)
+//     res.status(500).json({message: 'Server failed to update log'})
+//   }
+
+// })
+
+
+router.patch('/update-log/:logId', checkJWT, mediaUpload.array('media', 10), async (req, res) => {
   const logId = Number(req.params.logId)
+  const files = req.files as Express.Multer.File[]
 
   try {
-    await db.updateFullLog(logId, req.body)
+      // Step 1: Parse any JSON fields sent via multipart/form-data
+      const data = JSON.parse(req.body.data) // assuming client sent JSON as string in a `data` field
 
-    res.sendStatus(200)
-  } catch (err) {
-    console.error(err)
-    res.status(500).json({message: 'Server failed to update log'})
+      // Step 2: Convert uploaded files into the format your DB expects
+      const uploadedMedia = files.map((file) => ({
+        url: file.path, // Cloudinary URL
+        type: file.mimetype.startsWith('image') ? 'photo' : 'video',
+        caption: null, // captions may come from another field or not be editable here
+      }))
+
+      // Step 3: Combine with any retained media (if editing)
+      const mediaPayload = {
+        retained: data.media?.retained ?? [], // e.g. [{ mediaId: 3 }]
+        added: uploadedMedia,
+      }
+
+      await db.updateFullLog(logId, {
+        ...data,
+        media: mediaPayload,
+      })
+
+      res.sendStatus(200)
+    } catch (err) {
+      console.error(err)
+      res.status(500).json({ message: 'Server failed to update log' })
+    }
   }
-
-})
+)
 
 export default router
