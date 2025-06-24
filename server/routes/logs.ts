@@ -43,35 +43,50 @@ router.delete('/delete-log/:logId', async (req, res) => {
 })
 
 // GET /api/update-log/:logId
+
+// router.patch('/update-log/:logId', checkJWT, async (req, res) => {
+//   const logId = Number(req.params.logId)
+//   const { core, media, cave, climb, canyon, alpine, dive, hike, roadtrip, other } = req.body // add more types here
+//   const trx = await knex.transaction()
+
+//   try {
+//     await db.updateLogCore(logId, core, trx)
+    
+//     const type = core.type
+
+//     if (type === 'cave' && cave) {
+//       await db.updateLogCave(logId, cave, trx)
+//     }
+//     // if (type === 'climb' && climb) {
+//     //   await db.updateLogClimb(logId, climb, trx)
+//     // }
+//     // add more types here
+
+//     if (media?.length) {
+//       // media function here 
+//     }
+
+//     await trx.commit()
+//     res.sendStatus(200)
+
+//   } catch (err) {
+//     await trx.rollback()
+//     console.error(err)
+//     return res.status(500).json({ message: 'Failed to update log' })
+//   }
+
+// })
+
 router.patch('/update-log/:logId', checkJWT, async (req, res) => {
   const logId = Number(req.params.logId)
-  const { core, media, cave, climb, canyon, alpine, dive, hike, roadtrip, other } = req.body // add more types here
-  const trx = await knex.transaction()
 
   try {
-    await db.updateLogCore(logId, core, trx)
-    
-    const type = core.type
+    await db.updateFullLog(logId, req.body)
 
-    if (type === 'cave' && cave) {
-      await db.updateLogCave(logId, cave, trx)
-    }
-    // if (type === 'climb' && climb) {
-    //   await db.updateLogClimb(logId, climb, trx)
-    // }
-    // add more types here
-
-    if (media?.length) {
-      // media function here 
-    }
-
-    await trx.commit()
     res.sendStatus(200)
-
   } catch (err) {
-    await trx.rollback()
     console.error(err)
-    return res.status(500).json({ message: 'Failed to update log' })
+    res.status(500).json({message: 'Server failed to update log'})
   }
 
 })

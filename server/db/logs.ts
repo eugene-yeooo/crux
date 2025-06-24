@@ -103,6 +103,8 @@ export async function updateLogCave(logId: number, caveData: unknown, trx: Knex.
   return trx('log_caves').where({ log_id: logId }).update(caveData)
 }
 
+//
+
 export async function updateMedia(
   logId: number, 
   mediaUpdate: { 
@@ -135,4 +137,37 @@ export async function updateMedia(
       }))
       await trx('media').insert(newRows)
     }
+}
+
+
+// combining function
+
+export async function updateFullLog(logId: number, data: any) {
+  const trx = await connection.transaction()
+
+  try {
+    await updateLogCore(logId, data.core, trx)
+
+    const type = data.core.type 
+
+    switch (type) {
+      case 'cave' :
+        if (data.cave) await updateLogCave(logId, data.cave, trx)
+        break
+      case 'climb' :
+        if (data.climb)
+        break
+      //more types here
+    }
+
+    if (data.media) {
+      await updateMedia(logId, data.media, trx)
+    }
+
+    await trx.commit()
+
+  } catch (err) {
+    await trx.rollback()
+    throw err
+  }
 }
