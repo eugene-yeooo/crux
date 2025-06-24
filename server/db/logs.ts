@@ -60,7 +60,7 @@ export async function getLogById(username: string, logId: number) {
     .leftJoin('media', 'logs.id', 'media.log_id')
     .where('users.username', username)
     .andWhere('logs.id', logId)
-    .select('logs.*', 'users.username', 'users.avatar_url', 'users.auth0_id', connection.raw(`COALESCE(json_group_array(json_object('url', media.url, 'type', media.type, 'caption', media.caption)), '[]') as media`))
+    .select('logs.*', 'users.username', 'users.avatar_url', 'users.auth0_id', connection.raw(`COALESCE(json_group_array(json_object('mediaId', media.id, 'url', media.url, 'type', media.type, 'caption', media.caption)), '[]') as media`))
     .groupBy('logs.id')
     .first()
 
@@ -103,7 +103,36 @@ export async function updateLogCave(logId: number, caveData: unknown, trx: Knex.
   return trx('log_caves').where({ log_id: logId }).update(caveData)
 }
 
-// export async function replaceMedia(logId: number, mediaArray: any[]) {
-//   await connection('media').where({ log_id: logId }).del()
-//   return connection('media').insert(mediaArray.map((m) => ({ ...m, log_id: logId })))
-// }
+export async function updateMedia(
+  logId: number, 
+  mediaUpdate: { 
+    retained: { mediaId: number }[], 
+    added: { url: string, type: string, caption: string }[] 
+  },
+  trx: Knex.Transaction
+) {
+
+    // delete media that has not been retained:
+    const existing = await trx('media').where({logId}).select('id')
+
+    const existingIds = existing.map((m) => m.id)
+
+    const retainedIds = mediaUpdate.retained.map((m) => m.mediaId)
+
+    const idsToDelete = existingIds.filter((id) => !retainedIds.includes(id))
+
+    if (idsToDelete.length) {
+      await trx('media').whereIn('id', idsToDelete).delete()
+    }
+
+    // add new media
+    if (mediaUpdate.added.length) {
+      const newRows = mediaUpdate.added.map((m) => ({
+        log_id: logId,
+        url: m.url,
+        type: m.type,
+        caption: m.caption ?? null
+      }))
+      await trx('media').insert(newRows)
+    }
+}

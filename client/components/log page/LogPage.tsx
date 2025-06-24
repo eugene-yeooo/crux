@@ -22,6 +22,8 @@ export default function LogPage() {
   
   const isOwner = isAuthenticated && log?.auth0_id === user?.sub //checks if user is authorized to edit log
 
+  console.log(log)
+
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [])
