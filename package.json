@@ -42,12 +42,14 @@
     "lucide-react": "^0.516.0",
     "multer": "^2.0.1",
     "multer-storage-cloudinary": "^4.0.0",
-    "p5": "^2.0.3",
+    "p5": "^1.11.8",
     "react-hook-form": "^7.58.1",
     "react-select": "^5.10.1",
+    "react-tsparticles": "^2.12.2",
     "sqlite3": "^5.1.7",
     "superagent": "^10.2.1",
-    "three": "^0.178.0",
+    "three": "^0.135.0",
+    "tsparticles": "^3.8.1",
     "vanta": "^0.5.24"
   },
   "devDependencies": {

@@ -1,32 +1,35 @@
 import { useEffect, useRef } from 'react'
-import TOPOLOGY from 'vanta/dist/vanta.topology.min'
-import p5 from 'p5'
+import * as THREE from 'three'
+import NET from 'vanta/dist/vanta.net.min'
+import 'p5' // Required for Vanta.NET
 
-export default function VantaTopology() {
+export default function VantaNet() {
   const vantaRef = useRef<HTMLDivElement | null>(null)
   const effectRef = useRef<any>(null)
 
   useEffect(() => {
-    const TOPO_EFFECT = (TOPOLOGY as any).default || TOPOLOGY
+    const NET_EFFECT = (NET as any).default || NET
 
     if (!effectRef.current && vantaRef.current) {
       try {
-        effectRef.current = TOPO_EFFECT({
+        effectRef.current = NET_EFFECT({
           el: vantaRef.current,
-          p5: p5,
+          THREE,
           mouseControls: true,
           touchControls: true,
           gyroControls: false,
-          minHeight: 200.0,
-          minWidth: 200.0,
-          scale: 10.0,
-          scaleMobile: 1.0,
+          minHeight: 200,
+          minWidth: 200,
           color: 0x63b8a7,
-          // backgroundColor: 0xd9d9d9,
           backgroundColor: 0x1b1d1d,
+          scale: 1.0,
+          scaleMobile: 1.0,
+          points: 11.0,
+          maxDistance: 15.0,
+          spacing: 10.0,
         })
       } catch (err) {
-        console.error('[VANTA.TOPOLOGY] Init error:', err)
+        console.error('[VANTA.NET] Init error:', err)
       }
     }
 
