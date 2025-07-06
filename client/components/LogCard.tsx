@@ -65,7 +65,7 @@ export default function LogCard({ log }) {
       {log.media && log.media.length > 0 && (
         <div className="flex flex-wrap gap-4 mt-2 pt-2">
           {log.media.slice(0, 2).map((file, i) =>
-            file.type === 'photo' ? (
+            file.type === 'image' ? (
               <img
                 key={i}
                 src={file.url}

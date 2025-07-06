@@ -58,7 +58,7 @@ export default function LogPage() {
     
     setLogMenu(false)
   }
-  console.log(log.details)
+  
   return (
     <div className="relative rounded-lg shadow p-6 bg-white space-y-2 max-w-4xl mx-auto">
       
@@ -148,7 +148,7 @@ export default function LogPage() {
         <div className="flex flex-wrap gap-4 gap-y-12">
           {log.media.map((file, i) => (
             <div key={i} className="items-center">
-              {file.type === 'photo' && (
+              {file.type === 'image' && (
                 <img
                   src={file.url}
                   alt={file.caption || `Media ${i + 1}`}

@@ -12,7 +12,7 @@ export async function seed(knex) {
   await knex('media').insert([
     {
       'log_id': log.id,
-      type: 'photo',
+      type: 'image',
       url: '/uploads/brewster/DSC00607.avif',
       'thumbnail_url': null,
       'file_size': null,
@@ -22,7 +22,7 @@ export async function seed(knex) {
     },
     {
       'log_id': log.id,
-      type: 'photo',
+      type: 'image',
       url: '/uploads/brewster/DSC00187.avif',
       'thumbnail_url': null,
       'file_size': null,
@@ -32,7 +32,7 @@ export async function seed(knex) {
     },
     {
       'log_id': log.id,
-      type: 'photo',
+      type: 'image',
       url: '/uploads/brewster/DSC00926.avif',
       'thumbnail_url': null,
       'file_size': null,
@@ -72,7 +72,7 @@ export async function seed(knex) {
     },
     {
       'log_id': log.id,
-      type: 'photo',
+      type: 'image',
       url: '/uploads/brewster/DSC00804.avif',
       'thumbnail_url': null,
       'file_size': null,

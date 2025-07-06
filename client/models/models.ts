@@ -8,6 +8,7 @@ export interface CaveLogFormData {
   route_style: string
   duration: string
   notes: string
+  media: File
 }
 
 
@@ -26,6 +27,7 @@ export interface Log {
   username: string
   avatar_url?: string | undefined
   media: [{
+    mediaId: number,
     caption: string,
     type: string,
     url: string,
@@ -54,4 +56,42 @@ export interface ProfileDetails {
     avatar_url?: string
     bio?: string
   }
+}
+
+export type ExistingMedia = {
+  mediaId: number
+  url: string
+  type: string
+  caption: string | null
+}
+
+export type NewMedia = {
+  file: File
+  caption: string | null
+}
+
+export interface MediaUploadProps {
+  labelStyle: string
+  retainedMedia: ExistingMedia[]
+  setRetainedMedia: React.Dispatch<React.SetStateAction<ExistingMedia[]>>
+  newMediaFiles: NewMedia[]
+  setNewMediaFiles: React.Dispatch<React.SetStateAction<NewMedia[]>>
+}
+
+export type MediaUpdate = {
+  retained: { mediaId: number }[]
+  added: {
+    file: File
+    type: string
+    caption: string | null
+  }[]
+}
+
+export type CaveLogFormProps = {
+  initialData?: Partial<CaveLogFormData>
+  onSubmit: (formData: CaveLogFormData, mediaFiles: MediaUpdate) => Promise<void>
+  submitLabel?: string
+  retainedMedia: ExistingMedia[]
+  setRetainedMedia: React.Dispatch<React.SetStateAction<ExistingMedia[]>>
+  // also for newMediaFiles, if needed
 }

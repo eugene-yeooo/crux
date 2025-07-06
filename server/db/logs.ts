@@ -115,7 +115,7 @@ export async function updateMedia(
 ) {
 
     // delete media that has not been retained:
-    const existing = await trx('media').where({logId}).select('id')
+    const existing = await trx('media').where('log_id', logId).select('id')
 
     const existingIds = existing.map((m) => m.id)
 
@@ -141,7 +141,6 @@ export async function updateMedia(
 
 
 // combining function
-
 export async function updateFullLog(logId: number, data: any) {
   const trx = await connection.transaction()
 

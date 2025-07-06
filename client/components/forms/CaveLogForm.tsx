@@ -2,14 +2,9 @@ import { useForm, Controller } from 'react-hook-form'
 import Select from 'react-select'
 import SubmitButton from './SubmitButton'
 import MediaUpload from './MediaUpload'
-import { CaveLogFormData } from '../../models/models'
+import { CaveLogFormData, CaveLogFormProps, ExistingMedia, NewMedia } from '../../models/models'
 import { useState } from 'react'
 
-type CaveLogFormProps = {
-  initialData?: Partial<CaveLogFormData>
-  onSubmit: (formData: CaveLogFormData, mediaFiles: File[]) => Promise<void>
-  submitLabel?: string
-}
 
 const techStyleOptions = [
   { value: 'SRT', label: 'SRT' },
@@ -25,9 +20,17 @@ export default function CaveLogForm({
   initialData,
   onSubmit,
   submitLabel = 'Log Cave',
+  retainedMedia,
+  setRetainedMedia,
 }: CaveLogFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [mediaFiles, setMediaFiles] = useState<File[]>([])
+  const [newMediaFiles, setNewMediaFiles] = useState<NewMedia[]>([])
+  // const [retainedMedia, setRetainedMedia] = useState<ExistingMedia[]>(
+  // Array.isArray(initialData?.media) && initialData.media.every((m) => 'mediaId' in m)
+  //   ? (initialData.media as ExistingMedia[])
+  //   : []
+  // ) // checks that media is an array and that every item has a media ID
+console.log(initialData)
 
   const {
     register,
@@ -50,10 +53,17 @@ export default function CaveLogForm({
 
   // console.log('initialData', initialData)
 
-  const onFormSubmit = async (data: CaveLogFormData) => {
+  const onFormSubmit = async (data: CaveLogFormData) => {  
     setIsSubmitting(true)
     try {
-      await onSubmit(data, mediaFiles)
+      await onSubmit(data, {
+        retained: retainedMedia.map((m) => ({ mediaId: m.mediaId })),
+        added: newMediaFiles.map((media) => ({
+          file: media.file,
+          type: media.file.type.startsWith('image') ? 'photo' : 'video',
+          caption: media.caption ?? null,
+        })),
+      })
     } catch (err) {
       console.error('Error submitting form', err)
     } finally {
@@ -129,8 +139,14 @@ export default function CaveLogForm({
           <textarea id="notes" {...register('notes')} rows={4} className="w-full p-2 border rounded-md resize-none" placeholder="Route description, entrance name, SRT, etc." />
         </div>
 
-        <MediaUpload labelStyle={labelStyle} mediaFiles={mediaFiles} setMediaFiles={setMediaFiles} />
-
+        <MediaUpload
+          labelStyle={labelStyle}
+          retainedMedia={retainedMedia}
+          setRetainedMedia={setRetainedMedia}
+          newMediaFiles={newMediaFiles}
+          setNewMediaFiles={setNewMediaFiles}
+        />
+        
         <div className="text-center">
           <SubmitButton loading={isSubmitting}>{submitLabel}</SubmitButton>
         </div>

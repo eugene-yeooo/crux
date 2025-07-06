@@ -10,12 +10,18 @@ export default function useUpdateLog() {
   const { getAccessTokenSilently } = useAuth0()
   const navigate = useNavigate()
   const { username } = useParams()
-  console.log(username)
+  
   return useMutation({
-    mutationFn: async ({id, data}: {id: number, data: string | object }) => {
+    mutationFn: async ({ id, data }: { id: number; data: string | object | FormData }) => {
       const token = await getAccessTokenSilently()
-      // console.log('Access token:', token)
-      await request.patch(`${rootURL}/update-log/${id}`).set('Authorization', `Bearer ${token}`).send(data)
+      const req = request.patch(`${rootURL}/update-log/${id}`).set('Authorization', `Bearer ${token}`)
+
+      if (data instanceof FormData) {
+        await req.send(data)
+      } else {
+        await req.set('Content-Type', 'application/json').send(data)
+      }
+
       return id
     },
     onSuccess: (id) => {

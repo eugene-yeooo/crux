@@ -78,6 +78,7 @@ router.delete('/delete-log/:logId', async (req, res) => {
 
 // })
 
+// THIS ONE WORKS:
 // router.patch('/update-log/:logId', checkJWT, async (req, res) => {
 //   const logId = Number(req.params.logId)
 
@@ -104,7 +105,7 @@ router.patch('/update-log/:logId', checkJWT, mediaUpload.array('media', 10), asy
       // Step 2: Convert uploaded files into the format your DB expects
       const uploadedMedia = files.map((file) => ({
         url: file.path, // Cloudinary URL
-        type: file.mimetype.startsWith('image') ? 'photo' : 'video',
+        type: file.mimetype.startsWith('image') ? 'image' : 'video',
         caption: null, // captions may come from another field or not be editable here
       }))
 
