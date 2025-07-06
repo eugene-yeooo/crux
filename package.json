@@ -42,10 +42,13 @@
     "lucide-react": "^0.516.0",
     "multer": "^2.0.1",
     "multer-storage-cloudinary": "^4.0.0",
+    "p5": "^2.0.3",
     "react-hook-form": "^7.58.1",
     "react-select": "^5.10.1",
     "sqlite3": "^5.1.7",
-    "superagent": "^10.2.1"
+    "superagent": "^10.2.1",
+    "three": "^0.178.0",
+    "vanta": "^0.5.24"
   },
   "devDependencies": {
     "@devacademy/eslint-config": "^1.10.1",
@@ -61,6 +64,7 @@
     "@types/react-dom": "^18.0.11",
     "@types/superagent": "^8.1.1",
     "@types/supertest": "^6.0.2",
+    "@types/three": "^0.178.0",
     "@vitejs/plugin-react": "^4.2.1",
     "autoprefixer": "^10.4.18",
     "esbuild": "^0.18.19",
