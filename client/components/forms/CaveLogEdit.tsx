@@ -77,7 +77,7 @@ export default function EditCaveLog() {
       }
     })
 
-    console.log(mediaFiles.retained)
+    // console.log(mediaFiles.retained)
     
 
     form.append('data', JSON.stringify({ core, cave, media: { retained: mediaFiles.retained, added } }))

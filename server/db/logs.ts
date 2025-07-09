@@ -108,12 +108,12 @@ export async function updateLogCave(logId: number, caveData: unknown, trx: Knex.
 export async function updateMedia(
   logId: number, 
   mediaUpdate: { 
-    retained: { mediaId: number }[], 
+    retained: { mediaId: number, caption: string }[], 
     added: { url: string, type: string, caption: string }[] 
   },
   trx: Knex.Transaction
 ) {
-
+    
     // delete media that has not been retained:
     const existing = await trx('media').where('log_id', logId).select('id')
 
@@ -126,7 +126,15 @@ export async function updateMedia(
     if (idsToDelete.length) {
       await trx('media').whereIn('id', idsToDelete).delete()
     }
+    
 
+    // update captions
+      for (const m of mediaUpdate.retained) {
+        await trx('media')
+          .where({ id: m.mediaId })
+          .update({ caption: m.caption })
+      }
+        
     // add new media
     if (mediaUpdate.added.length) {
       const newRows = mediaUpdate.added.map((m) => ({

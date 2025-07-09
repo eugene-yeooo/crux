@@ -117,6 +117,8 @@ router.patch('/update-log/:logId', checkJWT, mediaUpload.array('media'), async (
         added: uploadedMedia,
       }
 
+      console.log(mediaPayload)
+
       await db.updateFullLog(logId, {
         ...data,
         media: mediaPayload,
