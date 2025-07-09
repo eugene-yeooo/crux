@@ -26,7 +26,7 @@ export default function EditCaveLog() {
   }
 }, [logData])
 
-  // console.log(retainedMedia)
+  
  
   
   // Prepare initial form data, flattening nested details and tech_style parsing
@@ -77,14 +77,15 @@ export default function EditCaveLog() {
       }
     })
 
+    console.log(mediaFiles.retained)
     
-    console.log(added)
 
     form.append('data', JSON.stringify({ core, cave, media: { retained: mediaFiles.retained, added } }))
-    mediaFiles.added.forEach((file) => {
-      form.append('media', file) // field name matches multer config
+    mediaFiles.added.forEach((fileWrapper) => {
+      form.append('media', fileWrapper.file) // fileWrapper contains .file: File
     })
 
+    
     await updateLog.mutateAsync({ id, data: form })
 
     // console.log('Updating log', logId, formData, mediaFiles)

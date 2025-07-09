@@ -15,15 +15,15 @@ export default function VantaTopology() {
           el: vantaRef.current,
           p5: p5,
           mouseControls: true,
-          touchControls: true,
-          gyroControls: false,
-          minHeight: 200.0,
-          minWidth: 200.0,
-          scale: 1.0,
-          scaleMobile: 1.0,
+  touchControls: true,
+  gyroControls: false,
+  minHeight: 200.00,
+  minWidth: 200.00,
+  scale: 1.00,
+  scaleMobile: 1.00,
           color: 0x63b8a7,
-          backgroundColor: 0xd9d9d9,
-          // backgroundColor: 0x1b1d1d,
+          // backgroundColor: 0xd9d9d9,
+          backgroundColor: 0x1b1d1d,
         })
       } catch (err) {
         console.error('[VANTA.TOPOLOGY] Init error:', err)

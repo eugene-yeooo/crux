@@ -15,7 +15,7 @@ export default function useUpdateLog() {
     mutationFn: async ({ id, data }: { id: number; data: string | object | FormData }) => {
       const token = await getAccessTokenSilently()
       const req = request.patch(`${rootURL}/update-log/${id}`).set('Authorization', `Bearer ${token}`)
-
+      // console.log(data)
       if (data instanceof FormData) {
         await req.send(data)
       } else {

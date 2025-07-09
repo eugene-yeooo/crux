@@ -57,7 +57,7 @@ export default function CaveLogForm({
     setIsSubmitting(true)
     try {
       await onSubmit(data, {
-        retained: retainedMedia.map((m) => ({ mediaId: m.mediaId })),
+        retained: retainedMedia.map((m) => ({ mediaId: m.mediaId, caption: m.caption ?? null, })),
         added: newMediaFiles.map((media) => ({
           file: media.file,
           type: media.file.type.startsWith('image') ? 'photo' : 'video',

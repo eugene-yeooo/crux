@@ -97,6 +97,8 @@ router.delete('/delete-log/:logId', async (req, res) => {
 router.patch('/update-log/:logId', checkJWT, mediaUpload.array('media'), async (req, res) => {
   const logId = Number(req.params.logId)
   const files = req.files as Express.Multer.File[]
+  console.log(req.files); // multer should populate this
+
 
   try {
       // Step 1: Parse any JSON fields sent via multipart/form-data
