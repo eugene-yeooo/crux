@@ -5,7 +5,7 @@ export default function LogCard({ log }) {
   
   const labelStyle = 'font-semibold'
 
-  console.log(log.media)
+  // console.log(log.media)
 
   
   const formattedDate = format(new Date(log.date), 'dd MMM yyyy')

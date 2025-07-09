@@ -137,6 +137,10 @@ export async function updateMedia(
       }))
       await trx('media').insert(newRows)
     }
+
+    console.log('added:', mediaUpdate.added)
+    console.log('deleted:', idsToDelete)
+    
 }
 
 

@@ -18,7 +18,7 @@ export default function NavMain() {
     const iconStyle = "mr-2"
 
   return (
-    <nav className="bg-white p-0 rounded-lg shadow-lg w-full border">
+    <nav className="bg-white rounded-lg shadow-lg w-full">
       <div className="flex flex-col space-y-2">
         <NavLink to="/log-nav" className={navLinkClass}><Send size={19} className={iconStyle} />Log a send</NavLink>
         {isAuthenticated && (

@@ -26,7 +26,7 @@ export default function EditCaveLog() {
   }
 }, [logData])
 
-  console.log(retainedMedia)
+  // console.log(retainedMedia)
  
   
   // Prepare initial form data, flattening nested details and tech_style parsing
@@ -64,11 +64,21 @@ export default function EditCaveLog() {
       route_style: formData.route_style,
     }
 
-     const added = mediaFiles.added.map((file) => ({
-      url: '', // Don't assign URL yet — server/cloudinary will handle it
-      type: file.type.startsWith('image') ? 'photo' : 'video',
-      caption: file.caption ?? null,
-    }))
+    const added = mediaFiles.added.map((file) => {
+      const extension = file.file.name.split('.').pop()?.toLowerCase() ?? ''
+      const isImage =
+        file.type.startsWith('image') ||
+        ['jpg', 'jpeg', 'png', 'webp', 'gif'].includes(extension)
+
+      return {
+        url: '', // Don't assign URL yet — server/cloudinary will handle it
+        type: isImage ? 'photo' : 'video',
+        caption: file.caption ?? null,
+      }
+    })
+
+    
+    console.log(added)
 
     form.append('data', JSON.stringify({ core, cave, media: { retained: mediaFiles.retained, added } }))
     mediaFiles.added.forEach((file) => {

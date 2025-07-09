@@ -2,7 +2,7 @@ import { useForm, Controller } from 'react-hook-form'
 import Select from 'react-select'
 import SubmitButton from './SubmitButton'
 import MediaUpload from './MediaUpload'
-import { CaveLogFormData, CaveLogFormProps, ExistingMedia, NewMedia } from '../../models/models'
+import { CaveLogFormData, CaveLogFormProps, NewMedia } from '../../models/models'
 import { useState } from 'react'
 
 
@@ -30,7 +30,7 @@ export default function CaveLogForm({
   //   ? (initialData.media as ExistingMedia[])
   //   : []
   // ) // checks that media is an array and that every item has a media ID
-console.log(initialData)
+// console.log(initialData)
 
   const {
     register,
