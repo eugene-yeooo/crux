@@ -43,6 +43,42 @@ router.delete('/delete-log/:logId', async (req, res) => {
   }
 })
 
+
+// POST /api/create-log
+router.patch('/create-log', checkJWT, mediaUpload.array('media'), async (req, res) => {
+  
+  const files = req.files as Express.Multer.File[]
+  console.log(req.files); // multer should populate this
+
+
+  try {
+      // Step 1: Parse any JSON fields sent via multipart/form-data
+      const data = JSON.parse(req.body.data) // assuming client sent JSON as string in a `data` field
+
+      // Step 2: Convert uploaded files into the format your DB expects
+      const uploadedMedia = files.map((file) => ({
+        url: file.path, // Cloudinary URL
+        type: file.mimetype.startsWith('image') ? 'image' : 'video',
+        caption: null,
+      }))
+
+
+      console.log(uploadedMedia)
+
+      await db.addFullLog({
+        ...data,
+        media: uploadedMedia,
+      })
+
+      res.sendStatus(200)
+    } catch (err) {
+      console.error(err)
+      res.status(500).json({ message: 'Server failed to create new log' })
+    }
+  }
+)
+
+
 // GET /api/update-log/:logId
 
 // router.patch('/update-log/:logId', checkJWT, async (req, res) => {
