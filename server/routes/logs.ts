@@ -65,12 +65,12 @@ router.patch('/create-log', checkJWT, mediaUpload.array('media'), async (req, re
 
       console.log(uploadedMedia)
 
-      await db.addFullLog({
+      const logId = await db.addFullLog({
         ...data,
         media: uploadedMedia,
-      })
+      })  
 
-      res.sendStatus(200)
+      res.status(201).json({ id: logId })
     } catch (err) {
       console.error(err)
       res.status(500).json({ message: 'Server failed to create new log' })
