@@ -25,12 +25,6 @@ export default function CaveLogForm({
 }: CaveLogFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [newMediaFiles, setNewMediaFiles] = useState<NewMedia[]>([])
-  // const [retainedMedia, setRetainedMedia] = useState<ExistingMedia[]>(
-  // Array.isArray(initialData?.media) && initialData.media.every((m) => 'mediaId' in m)
-  //   ? (initialData.media as ExistingMedia[])
-  //   : []
-  // ) // checks that media is an array and that every item has a media ID
-// console.log(initialData)
 
   const {
     register,

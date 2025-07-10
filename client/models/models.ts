@@ -8,7 +8,7 @@ export interface CaveLogFormData {
   route_style: string
   duration: string
   notes: string
-  media: File
+  media: NewMedia[]
 }
 
 
@@ -89,7 +89,7 @@ export type MediaUpdate = {
 
 export type CaveLogFormProps = {
   initialData?: Partial<CaveLogFormData>
-  onSubmit: (formData: CaveLogFormData, mediaFiles: MediaUpdate) => Promise<void>
+  onSubmit: (formData: CaveLogFormData, mediaFiles: NewMedia[]) => Promise<void>
   submitLabel?: string
   retainedMedia: ExistingMedia[]
   setRetainedMedia: React.Dispatch<React.SetStateAction<ExistingMedia[]>>
