@@ -135,10 +135,13 @@ router.patch('/update-log/:logId', checkJWT, mediaUpload.array('media'), async (
   const files = req.files as Express.Multer.File[]
   console.log(req.files); // multer should populate this
 
+  const { core } = JSON.parse(req.body.data)
+  core.user_id = req.user?.id // override anything the client tried to send
 
   try {
       // Step 1: Parse any JSON fields sent via multipart/form-data
       const data = JSON.parse(req.body.data) // assuming client sent JSON as string in a `data` field
+      
 
       // Step 2: Convert uploaded files into the format your DB expects
       const uploadedMedia = files.map((file) => ({

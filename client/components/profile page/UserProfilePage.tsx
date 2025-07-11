@@ -18,6 +18,8 @@ export default function UserProfilePage() {
     isLoading: loadingProfile,
     error: profileError,
   } = useUserProfile(username)
+  
+  // console.log(profileData)
 
   const {
     data: logData,

@@ -2,7 +2,7 @@ import { useForm, Controller } from 'react-hook-form'
 import Select from 'react-select'
 import SubmitButton from './SubmitButton'
 import MediaUpload from './MediaUpload'
-import { CaveLogFormData, CaveLogFormProps, NewMedia } from '../../models/models'
+import { CaveLogFormData, CaveLogFormProps, MediaUpdate, NewMedia } from '../../models/models'
 import { useState } from 'react'
 
 
@@ -50,20 +50,32 @@ export default function CaveLogForm({
   const onFormSubmit = async (data: CaveLogFormData) => {  
     setIsSubmitting(true)
     try {
-      await onSubmit(data, {
-        retained: retainedMedia.map((m) => ({ mediaId: m.mediaId, caption: m.caption ?? null, })),
-        added: newMediaFiles.map((media) => ({
-          file: media.file,
-          type: media.file.type.startsWith('image') ? 'photo' : 'video',
-          caption: media.caption ?? null,
-        })),
+      const added = newMediaFiles.map(({ file, caption }) => {
+        const extension = file.name.split('.').pop()?.toLowerCase() ?? ''
+        const isImage =
+          file.type.startsWith('image') ||
+          ['jpg', 'jpeg', 'png', 'webp', 'gif'].includes(extension)
+
+        return {
+          file,
+          type: isImage ? 'image' : 'video',
+          caption: caption ?? null,
+        }
       })
+
+      const mediaUpdate: MediaUpdate = {
+        retained: retainedMedia.map(m => ({ mediaId: m.mediaId, caption: m.caption })),
+        added,
+      }
+
+      await onSubmit(data, mediaUpdate)
     } catch (err) {
       console.error('Error submitting form', err)
     } finally {
       setIsSubmitting(false)
     }
   }
+
 
   return (
     <div className="bg-white rounded-xl shadow-md p-6 max-w-3xl mx-10 mb-6">

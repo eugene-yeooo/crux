@@ -2,7 +2,7 @@ import { useParams } from 'react-router'
 import { useState, useEffect } from 'react'
 import CaveLogForm from './CaveLogForm'
 import { useLogById, useUpdateLog } from '../../hooks/api'
-import { CaveLogFormData, ExistingMedia, MediaUpdate } from '../../models/models'
+import { CaveLogFormData, ExistingMedia, MediaUpdate, NewMedia } from '../../models/models'
 
 export default function EditCaveLog() {
   const { username, logId } = useParams()
@@ -64,26 +64,27 @@ export default function EditCaveLog() {
       route_style: formData.route_style,
     }
 
-    const added = mediaFiles.added.map((file) => {
-      const extension = file.file.name.split('.').pop()?.toLowerCase() ?? ''
-      const isImage =
-        file.type.startsWith('image') ||
-        ['jpg', 'jpeg', 'png', 'webp', 'gif'].includes(extension)
+    // const added = newMediaFiles.map(({ file, caption }) => {
+    //   const extension = file.name.split('.').pop()?.toLowerCase() ?? ''
+    //   const isImage =
+    //     file.type.startsWith('image') ||
+    //     ['jpg', 'jpeg', 'png', 'webp', 'gif'].includes(extension)
 
-      return {
-        url: '', // Don't assign URL yet — server/cloudinary will handle it
-        type: isImage ? 'photo' : 'video',
-        caption: file.caption ?? null,
-      }
-    })
+    //   return {
+    //     file, // for uploading
+    //     type: isImage ? 'photo' : 'video',
+    //     caption: caption ?? null,
+    //   }
+    // })
 
     // console.log(mediaFiles.retained)
     
 
-    form.append('data', JSON.stringify({ core, cave, media: { retained: mediaFiles.retained, added } }))
-    mediaFiles.added.forEach((fileWrapper) => {
-      form.append('media', fileWrapper.file) // fileWrapper contains .file: File
-    })
+  form.append('data', JSON.stringify({ core, cave, media: { retained: mediaFiles.retained, added: mediaFiles.added } }))
+mediaFiles.added.forEach((fileWrapper) => {
+  form.append('media', fileWrapper.file) 
+})
+
 
     
     await updateLog.mutateAsync({ id, data: form })
