@@ -93,6 +93,75 @@ export async function deleteLogById(id: number) {
   return await connection('logs').where({ id }).del()
 }
 
+
+// -------------- CREATE ---------------- //
+
+export async function addLogCore(coreData: any, trx: Knex.Transaction) {
+  const [id] = await trx('logs').insert(coreData).returning('id')
+  return typeof id === 'object' ? id.id : id
+}
+
+
+export async function addLogCave(logId: number, caveData: any, trx: Knex.Transaction) {
+  return trx('log_caves').insert({
+    log_id: logId,
+    ...caveData,
+  })
+}
+
+// add more log types here
+
+export async function addMedia(
+  logId: number,
+  media: { url: string; type: string; caption: string | null }[],
+  trx: Knex.Transaction
+) {
+  if (!media.length) return
+
+  const formatted = media.map((m) => ({
+    log_id: logId,
+    url: m.url,
+    type: m.type,
+    caption: m.caption,
+  }))
+
+  await trx('media').insert(formatted)
+}
+
+
+export async function addFullLog(data: any) {
+  const trx = await connection.transaction()
+
+  try {
+    const logId = await addLogCore(data.core, trx)
+
+    const type = data.core.type
+
+    switch (type) {
+      case 'cave':
+        if (data.cave) await addLogCave(logId, data.cave, trx)
+        break
+      case 'climb':
+        // Add addLogClimb logic here later
+        break
+      // More types...
+    }
+
+    if (data.media?.length) {
+      await addMedia(logId, data.media, trx)
+    }
+
+    await trx.commit()
+    return logId
+  } catch (err) {
+    await trx.rollback()
+    throw err
+  }
+}
+
+
+
+
 // -------------- EDIT ----------------- //
 
 export function updateLogCore(id: number, coreData: unknown, trx: Knex.Transaction) {
@@ -103,7 +172,7 @@ export async function updateLogCave(logId: number, caveData: unknown, trx: Knex.
   return trx('log_caves').where({ log_id: logId }).update(caveData)
 }
 
-//
+// add more log types here
 
 export async function updateMedia(
   logId: number, 

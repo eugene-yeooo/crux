@@ -62,9 +62,9 @@ export default function MediaUpload({
 
             {retainedMedia.map((media, idx) => (
               <div key={idx} className="relative">
-  <div className="aspect-square w-full border rounded overflow-hidden bg-gray-100">
+              <div className="aspect-square w-full border rounded overflow-hidden bg-gray-100">
 
-                  {media.type.startsWith("image") ? (
+                  {(media.type ?? '').startsWith("image") ? (
                     <img src={media.url} className="w-full h-full object-cover" />
                   ) : (
                     <video className="w-full h-full object-cover" controls muted>
@@ -100,7 +100,7 @@ export default function MediaUpload({
             {newMediaFiles.map((media, idx) => (
               <div key={idx} className="relative w-32">
                 <div className="w-40 h-40 border rounded overflow-hidden bg-gray-100">
-                  {media.file.type.startsWith("image") ? (
+                  {(media.file.type ?? '').startsWith("image") ? (
                     <img src={URL.createObjectURL(media.file)} className="w-full h-full object-cover" />
                   ) : (
                     <video className="w-full h-full object-cover" controls muted>

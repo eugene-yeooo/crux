@@ -8,7 +8,7 @@ export interface CaveLogFormData {
   route_style: string
   duration: string
   notes: string
-  media: File
+  media: NewMedia[]
 }
 
 
@@ -93,5 +93,6 @@ export type CaveLogFormProps = {
   submitLabel?: string
   retainedMedia: ExistingMedia[]
   setRetainedMedia: React.Dispatch<React.SetStateAction<ExistingMedia[]>>
-  // also for newMediaFiles, if needed
+  newMediaFiles: NewMedia[]
+  setNewMediaFiles: React.Dispatch<React.SetStateAction<NewMedia[]>>
 }
