@@ -11,12 +11,12 @@ export default function useCreateLog() {
   const navigate = useNavigate()
   const { user } = useAuth0()
   const username = user?.nickname
-  console.log(username)
+  
 
   return useMutation({
     mutationFn: async (data: string | object | FormData) => {
       const token = await getAccessTokenSilently()
-      const req = request.patch(`${rootURL}/create-log`).set('Authorization', `Bearer ${token}`)
+      const req = request.post(`${rootURL}/create-log`).set('Authorization', `Bearer ${token}`)
 
       const res = data instanceof FormData
         ? await req.send(data)

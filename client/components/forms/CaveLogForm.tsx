@@ -68,6 +68,8 @@ export default function CaveLogForm({
         added,
       }
 
+      // console.log(mediaUpdate)
+
       await onSubmit(data, mediaUpdate)
     } catch (err) {
       console.error('Error submitting form', err)

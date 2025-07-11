@@ -79,6 +79,11 @@ const mediaUpload = multer({
     } else {
       cb(new Error('Unsupported file type. Allowed types: jpg, png, webp, mp4')) // Reject file
     }
+
+    if (file.fieldname.startsWith('media-')) {
+      cb(null, true)
+    }
+  
   },
 })
 

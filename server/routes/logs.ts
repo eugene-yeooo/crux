@@ -45,24 +45,26 @@ router.delete('/delete-log/:logId', async (req, res) => {
 
 
 // POST /api/create-log
-router.patch('/create-log', checkJWT, mediaUpload.array('media'), async (req, res) => {
+router.post('/create-log', checkJWT, mediaUpload.any(), async (req, res) => {
   
   const files = req.files as Express.Multer.File[]
-  console.log(req.files); // multer should populate this
+  console.log(req.files)
 
 
   try {
       // Step 1: Parse any JSON fields sent via multipart/form-data
-      const data = JSON.parse(req.body.data) // assuming client sent JSON as string in a `data` field
-      const mediaAdded = data.media.added
+      const data = JSON.parse(req.body.data)
+      const mediaMetadata = data.media ?? []
 
       // Step 2: Convert uploaded files into the format your DB expects
-      const uploadedMedia = files.map((file, i) => ({
-        url: file.path,
-        type: file.mimetype.startsWith('image') ? 'image' : 'video',
-        caption: mediaAdded[i]?.caption ?? null,
-      }))
-
+      const uploadedMedia = (req.files as Express.Multer.File[]).map((file) => {
+        const meta = mediaMetadata.find((m: any) => m.id === file.fieldname)
+        return {
+          url: file.path,
+          type: file.mimetype.startsWith('image') ? 'image' : 'video',
+          caption: meta?.caption ?? null,
+        }
+      })
 
       console.log(uploadedMedia)
 
@@ -81,56 +83,6 @@ router.patch('/create-log', checkJWT, mediaUpload.array('media'), async (req, re
 
 
 // GET /api/update-log/:logId
-
-// router.patch('/update-log/:logId', checkJWT, async (req, res) => {
-//   const logId = Number(req.params.logId)
-//   const { core, media, cave, climb, canyon, alpine, dive, hike, roadtrip, other } = req.body // add more types here
-//   const trx = await knex.transaction()
-
-//   try {
-//     await db.updateLogCore(logId, core, trx)
-    
-//     const type = core.type
-
-//     if (type === 'cave' && cave) {
-//       await db.updateLogCave(logId, cave, trx)
-//     }
-//     // if (type === 'climb' && climb) {
-//     //   await db.updateLogClimb(logId, climb, trx)
-//     // }
-//     // add more types here
-
-//     if (media?.length) {
-//       // media function here 
-//     }
-
-//     await trx.commit()
-//     res.sendStatus(200)
-
-//   } catch (err) {
-//     await trx.rollback()
-//     console.error(err)
-//     return res.status(500).json({ message: 'Failed to update log' })
-//   }
-
-// })
-
-// THIS ONE WORKS:
-// router.patch('/update-log/:logId', checkJWT, async (req, res) => {
-//   const logId = Number(req.params.logId)
-
-//   try {
-//     await db.updateFullLog(logId, req.body)
-
-//     res.sendStatus(200)
-//   } catch (err) {
-//     console.error(err)
-//     res.status(500).json({message: 'Server failed to update log'})
-//   }
-
-// })
-
-
 router.patch('/update-log/:logId', checkJWT, mediaUpload.array('media'), async (req, res) => {
   const logId = Number(req.params.logId)
   const files = req.files as Express.Multer.File[]

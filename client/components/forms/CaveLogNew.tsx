@@ -38,25 +38,30 @@ export default function LogCave() {
       route_style: formData.route_style,
     }
 
-    const media = mediaFiles.added.map(({ file, caption }) => {
+    const media = mediaFiles.added.map(({ file, caption }, index) => {
       const extension = file.name.split('.').pop()?.toLowerCase() ?? ''
-      const isImage =
-        file.type.startsWith('image') ||
-        ['jpg', 'jpeg', 'png', 'webp', 'gif'].includes(extension)
+      const isImage = file.type.startsWith('image') || ['jpg', 'jpeg', 'png', 'webp', 'gif'].includes(extension)
 
       return {
+        id: `media-${index}`, // give each item a known ID
         url: '',
         type: isImage ? 'photo' : 'video',
         caption: caption ?? null,
       }
     })
 
+    // console.log(media)
+
+    
+
+    // Append each file for multer to process
+    mediaFiles.added.forEach((media, index) => {
+      data.append(`media-${index}`, media.file) // match the name with the ID above
+    })
 
     // JSON data as a single stringified field
     data.append('data', JSON.stringify({ core, cave, media }))
-
-    // Append each file for multer to process
-    newMediaFiles.forEach(({file}) => data.append('media', file))
+    
 
     // Call hook's mutateAsync to send the request
     await createLog.mutateAsync(data)
