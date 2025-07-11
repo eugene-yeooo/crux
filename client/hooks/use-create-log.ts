@@ -9,7 +9,9 @@ export default function useCreateLog() {
   const qc = useQueryClient()
   const { getAccessTokenSilently } = useAuth0()
   const navigate = useNavigate()
-  const { username } = useParams()
+  const { user } = useAuth0()
+  const username = user?.nickname
+  console.log(username)
 
   return useMutation({
     mutationFn: async (data: string | object | FormData) => {

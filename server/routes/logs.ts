@@ -54,12 +54,13 @@ router.patch('/create-log', checkJWT, mediaUpload.array('media'), async (req, re
   try {
       // Step 1: Parse any JSON fields sent via multipart/form-data
       const data = JSON.parse(req.body.data) // assuming client sent JSON as string in a `data` field
+      const mediaAdded = data.media.added
 
       // Step 2: Convert uploaded files into the format your DB expects
-      const uploadedMedia = files.map((file) => ({
-        url: file.path, // Cloudinary URL
+      const uploadedMedia = files.map((file, i) => ({
+        url: file.path,
         type: file.mimetype.startsWith('image') ? 'image' : 'video',
-        caption: null,
+        caption: mediaAdded[i]?.caption ?? null,
       }))
 
 
@@ -141,13 +142,13 @@ router.patch('/update-log/:logId', checkJWT, mediaUpload.array('media'), async (
   try {
       // Step 1: Parse any JSON fields sent via multipart/form-data
       const data = JSON.parse(req.body.data) // assuming client sent JSON as string in a `data` field
-      
+      const mediaAdded = data.media.added
 
       // Step 2: Convert uploaded files into the format your DB expects
-      const uploadedMedia = files.map((file) => ({
-        url: file.path, // Cloudinary URL
+      const uploadedMedia = files.map((file, i) => ({
+        url: file.path,
         type: file.mimetype.startsWith('image') ? 'image' : 'video',
-        caption: null, // captions may come from another field or not be editable here
+        caption: mediaAdded[i]?.caption ?? null,
       }))
 
       // Step 3: Combine with any retained media (if editing)
@@ -156,7 +157,7 @@ router.patch('/update-log/:logId', checkJWT, mediaUpload.array('media'), async (
         added: uploadedMedia,
       }
 
-      console.log(mediaPayload)
+      
 
       await db.updateFullLog(logId, {
         ...data,

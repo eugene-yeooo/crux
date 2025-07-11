@@ -25,8 +25,6 @@ export default function EditCaveLog() {
     setRetainedMedia(formatted)
   }
 }, [logData])
-
-  
  
   
   // Prepare initial form data, flattening nested details and tech_style parsing
@@ -63,33 +61,17 @@ export default function EditCaveLog() {
       tech_style: JSON.stringify(formData.tech_style),
       route_style: formData.route_style,
     }
-
-    // const added = newMediaFiles.map(({ file, caption }) => {
-    //   const extension = file.name.split('.').pop()?.toLowerCase() ?? ''
-    //   const isImage =
-    //     file.type.startsWith('image') ||
-    //     ['jpg', 'jpeg', 'png', 'webp', 'gif'].includes(extension)
-
-    //   return {
-    //     file, // for uploading
-    //     type: isImage ? 'photo' : 'video',
-    //     caption: caption ?? null,
-    //   }
-    // })
-
-    // console.log(mediaFiles.retained)
     
 
-  form.append('data', JSON.stringify({ core, cave, media: { retained: mediaFiles.retained, added: mediaFiles.added } }))
-mediaFiles.added.forEach((fileWrapper) => {
-  form.append('media', fileWrapper.file) 
-})
-
-
+    form.append('data', JSON.stringify({ core, cave, media: { retained: mediaFiles.retained, added: mediaFiles.added } }))
+    
+    mediaFiles.added.forEach((fileWrapper) => {
+      form.append('media', fileWrapper.file) 
+    })
     
     await updateLog.mutateAsync({ id, data: form })
 
-    // console.log('Updating log', logId, formData, mediaFiles)
+    console.log('Updating log', logId, formData, mediaFiles)
   }
 
 

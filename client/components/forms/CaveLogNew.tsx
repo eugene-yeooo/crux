@@ -13,7 +13,7 @@ export default function LogCave() {
 
   const {data} = useUserProfile(user?.nickname)
   const userId = data?.user.id
-  console.log(userId)
+  // console.log(userId)
 
 
   const handleCreate = async (formData: CaveLogFormData, mediaFiles: MediaUpdate) => {

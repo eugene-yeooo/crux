@@ -62,7 +62,7 @@ export default function CaveLogForm({
           caption: caption ?? null,
         }
       })
-
+      
       const mediaUpdate: MediaUpdate = {
         retained: retainedMedia.map(m => ({ mediaId: m.mediaId, caption: m.caption })),
         added,
