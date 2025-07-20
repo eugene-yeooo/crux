@@ -1,53 +1,51 @@
-import { useForm, Controller } from 'react-hook-form'
-import Select from 'react-select'
+import { useForm } from 'react-hook-form'
 import SubmitButton from './SubmitButton'
 import MediaUpload from './MediaUpload'
-import { CaveLogFormData, CaveLogFormProps, MediaUpdate, NewMedia } from '../../models/models'
+import { ClimbLogFormData, ClimbLogFormProps, MediaUpdate, NewMedia } from '../../models/models'
 import { useState } from 'react'
 
 
-const techStyleOptions = [
-  { value: 'SRT', label: 'SRT' },
-  { value: 'Pull-through', label: 'Pull-through' },
-  { value: 'Cave Dive', label: 'Cave Dive' },
-  { value: 'Non-technical', label: 'Non-technical' },
-]
+// const techStyleOptions = [
+//   { value: 'SRT', label: 'SRT' },
+//   { value: 'Pull-through', label: 'Pull-through' },
+//   { value: 'Non-technical', label: 'Non-technical' },
+// ]
 
 const labelStyle = 'block mb-1 font-medium'
 const inputStyle = 'w-full p-1.5 border rounded-md'
 
-export default function CaveLogForm({
+export default function ClimbLogForm({
   initialData,
   onSubmit,
-  submitLabel = 'Log Cave',
+  submitLabel = 'Log Climb',
   retainedMedia,
   setRetainedMedia,
-}: CaveLogFormProps) {
+}: ClimbLogFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [newMediaFiles, setNewMediaFiles] = useState<NewMedia[]>([])
 
   const {
     register,
     handleSubmit,
-    control,
+    // control,
     // formState: { errors }, // optional
-  } = useForm<CaveLogFormData>({
+  } = useForm<ClimbLogFormData>({
     defaultValues: initialData || {
       title: '',
       objective: '',
+      grade: '',
       date: '',
       team: '',
       location: '',
-      tech_style: [],
-      route_style: 'throughTrip',
-      duration: '',
+      route_style: '',
+      attempts: '',
       notes: '',
     },
   })
 
   // console.log('initialData', initialData)
 
-  const onFormSubmit = async (data: CaveLogFormData) => {  
+  const onFormSubmit = async (data: ClimbLogFormData) => {  
     setIsSubmitting(true)
     try {
       const added = newMediaFiles.map(({ file, caption }) => {
@@ -127,7 +125,7 @@ export default function CaveLogForm({
 
           <div>
             <label htmlFor="attempts" className={labelStyle}>Number of Attempts</label>
-            <input id="attempts" type="number" min={1} {...register('duration', { required: true })} className={inputStyle} placeholder="e.g. 5" />
+            <input id="attempts" type="number" min={1} {...register('attempts', { required: true })} className={inputStyle} placeholder="e.g. 5" />
           </div>
         </div>
 
