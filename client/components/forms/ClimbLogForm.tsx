@@ -104,7 +104,7 @@ export default function ClimbLogForm({
 
           <div>
             <label htmlFor="location" className={labelStyle}>Location</label>
-            <input id="location" {...register('location', { required: true })} className={inputStyle} placeholder="e.g. Golden Bay" />
+            <input id="location" {...register('location', { required: true })} className={inputStyle} placeholder="e.g. Little Babylon" />
           </div>
 
 
