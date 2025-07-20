@@ -39,6 +39,8 @@ export default function ClimbLogForm({
       location: '',
       route_style: '',
       attempts: '',
+      send: '',
+      height: '',
       notes: '',
     },
   })
@@ -124,9 +126,25 @@ export default function ClimbLogForm({
           </div>
 
           <div>
+            <label htmlFor="send" className={labelStyle}>Did you send?</label>
+            <select id="send" {...register('send', { required: true })} className={inputStyle}>
+              <option value="onsight">👁️ Onsight</option>
+              <option value="flash">🗲 Flash</option>
+              <option value="redpoint">🔴 Redpoint</option>
+              <option value="DNS">🙃 Did not send</option>
+            </select>
+          </div>
+
+          <div>
             <label htmlFor="attempts" className={labelStyle}>Number of Attempts</label>
             <input id="attempts" type="number" min={1} {...register('attempts', { required: true })} className={inputStyle} placeholder="e.g. 5" />
           </div>
+
+          <div>
+            <label htmlFor="height" className={labelStyle}>Height &#40;meters&#41;</label>
+            <input id="height" type="number" min={1} {...register('height', { required: true })} className={inputStyle} placeholder="e.g. 20" />
+          </div>
+        
         </div>
 
         <div>

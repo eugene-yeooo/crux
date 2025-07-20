@@ -107,6 +107,8 @@ export interface ClimbLogFormData {
   location: string
   route_style: string
   attempts: string
+  send: string
+  height: string
   notes: string
   media: NewMedia[]
 }
