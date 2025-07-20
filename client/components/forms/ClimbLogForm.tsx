@@ -1,0 +1,153 @@
+import { useForm, Controller } from 'react-hook-form'
+import Select from 'react-select'
+import SubmitButton from './SubmitButton'
+import MediaUpload from './MediaUpload'
+import { CaveLogFormData, CaveLogFormProps, MediaUpdate, NewMedia } from '../../models/models'
+import { useState } from 'react'
+
+
+const techStyleOptions = [
+  { value: 'SRT', label: 'SRT' },
+  { value: 'Pull-through', label: 'Pull-through' },
+  { value: 'Cave Dive', label: 'Cave Dive' },
+  { value: 'Non-technical', label: 'Non-technical' },
+]
+
+const labelStyle = 'block mb-1 font-medium'
+const inputStyle = 'w-full p-1.5 border rounded-md'
+
+export default function CaveLogForm({
+  initialData,
+  onSubmit,
+  submitLabel = 'Log Cave',
+  retainedMedia,
+  setRetainedMedia,
+}: CaveLogFormProps) {
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [newMediaFiles, setNewMediaFiles] = useState<NewMedia[]>([])
+
+  const {
+    register,
+    handleSubmit,
+    control,
+    // formState: { errors }, // optional
+  } = useForm<CaveLogFormData>({
+    defaultValues: initialData || {
+      title: '',
+      objective: '',
+      date: '',
+      team: '',
+      location: '',
+      tech_style: [],
+      route_style: 'throughTrip',
+      duration: '',
+      notes: '',
+    },
+  })
+
+  // console.log('initialData', initialData)
+
+  const onFormSubmit = async (data: CaveLogFormData) => {  
+    setIsSubmitting(true)
+    try {
+      const added = newMediaFiles.map(({ file, caption }) => {
+        const extension = file.name.split('.').pop()?.toLowerCase() ?? ''
+        const isImage =
+          file.type.startsWith('image') ||
+          ['jpg', 'jpeg', 'png', 'webp', 'gif'].includes(extension)
+
+        return {
+          file,
+          type: isImage ? 'image' : 'video',
+          caption: caption ?? null,
+        }
+      })
+      
+      const mediaUpdate: MediaUpdate = {
+        retained: retainedMedia.map(m => ({ mediaId: m.mediaId, caption: m.caption })),
+        added,
+      }
+
+      // console.log(mediaUpdate)
+
+      await onSubmit(data, mediaUpdate)
+    } catch (err) {
+      console.error('Error submitting form', err)
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
+
+  return (
+    <div className="bg-white rounded-xl shadow-md p-6 max-w-3xl mx-10 mb-6">
+      <h1 className="text-2xl font-bold text-brandBlack text-center mb-6">Log a Cave</h1>
+      <form onSubmit={handleSubmit(onFormSubmit)} className="space-y-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* <div>
+            <label htmlFor="title" className={labelStyle}>Title</label>
+            <input id="title" {...register('title')} className={inputStyle} placeholder="For different trips, same objective" />
+          </div> */}
+
+          <div>
+            <label htmlFor="objectiveName" className={labelStyle}>Route Name</label>
+            <input id="objectiveName" {...register('objective', { required: true })} className={inputStyle} placeholder="e.g. Ravages of Time" />
+          </div>
+
+          <div>
+            <label htmlFor="grade" className={labelStyle}>Grade</label>
+            <input id="grade" {...register('grade', { required: true })} className={inputStyle} placeholder="e.g. 25 or 5.12b or 7b" />
+          </div>
+
+          <div>
+            <label htmlFor="date" className={labelStyle}>Date</label>
+            <input id="date" type="date" {...register('date', { required: true })} className={inputStyle} />
+          </div>
+
+          <div>
+            <label htmlFor="location" className={labelStyle}>Location</label>
+            <input id="location" {...register('location', { required: true })} className={inputStyle} placeholder="e.g. Golden Bay" />
+          </div>
+
+
+
+          <div>
+            <label htmlFor="route_style" className={labelStyle}>Route Style</label>
+            <select id="route_style" {...register('route_style', { required: true })} className={inputStyle}>
+              <option value="sport">Sport</option>
+              <option value="trad">Trad</option>
+              <option value="boulder">Boulder</option>
+            </select>
+          </div>
+
+          <div>
+            <label htmlFor="team" className={labelStyle}>Belayer&#40;s&#41;</label>
+            <input id="team" {...register('team')} className={inputStyle} placeholder="Names" />
+          </div>
+
+          <div>
+            <label htmlFor="attempts" className={labelStyle}>Number of Attempts</label>
+            <input id="attempts" type="number" min={1} {...register('duration', { required: true })} className={inputStyle} placeholder="e.g. 5" />
+          </div>
+        </div>
+
+        <div>
+          <label htmlFor="notes" className={labelStyle}>Notes</label>
+          <textarea id="notes" {...register('notes')} rows={4} className="w-full p-2 border rounded-md resize-none" placeholder="Route description, connies, choss, etc." />
+        </div>
+
+        <MediaUpload
+          labelStyle={labelStyle}
+          retainedMedia={retainedMedia}
+          setRetainedMedia={setRetainedMedia}
+          newMediaFiles={newMediaFiles}
+          setNewMediaFiles={setNewMediaFiles}
+        />
+        
+        <div className="text-center">
+          <SubmitButton loading={isSubmitting}>{submitLabel}</SubmitButton>
+        </div>
+      </form>
+    </div>
+  )
+}

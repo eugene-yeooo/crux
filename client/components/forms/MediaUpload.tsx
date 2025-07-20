@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import { MediaUploadProps } from "../../models/models"
 
 export default function MediaUpload({
