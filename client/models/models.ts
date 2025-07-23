@@ -106,7 +106,7 @@ export type CaveLogFormProps = {
 export interface ClimbLogFormData {
   title: string
   objective: string
-  grade: string
+  grade: string | number
   date: string
   team: string
   location: string
@@ -115,7 +115,7 @@ export interface ClimbLogFormData {
   send: string
   height: string
   notes: string
-  media: NewMedia[]
+  media: NewMedia[] | ExistingMedia[]
 }
 
 export type ClimbLogFormProps = {
@@ -124,6 +124,5 @@ export type ClimbLogFormProps = {
   submitLabel?: string
   retainedMedia: ExistingMedia[]
   setRetainedMedia: React.Dispatch<React.SetStateAction<ExistingMedia[]>>
-  newMediaFiles: NewMedia[]
-  setNewMediaFiles: React.Dispatch<React.SetStateAction<NewMedia[]>>
+
 }
