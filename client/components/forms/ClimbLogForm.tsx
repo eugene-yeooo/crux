@@ -81,7 +81,7 @@ export default function ClimbLogForm({
 
   return (
     <div className="bg-white rounded-xl shadow-md p-6 max-w-3xl mx-10 mb-6">
-      <h1 className="text-2xl font-bold text-brandBlack text-center mb-6">Log a Cave</h1>
+      <h1 className="text-2xl font-bold text-brandBlack text-center mb-6">Log a Climb</h1>
       <form onSubmit={handleSubmit(onFormSubmit)} className="space-y-5">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* <div>
@@ -110,7 +110,7 @@ export default function ClimbLogForm({
             </select>
           </div>
 
-    <div>
+          <div>
             <label htmlFor="height" className={labelStyle}>Height &#40;meters&#41;</label>
             <input id="height" type="number" min={1} {...register('height', { required: true })} className={inputStyle} placeholder="e.g. 20" />
           </div>
