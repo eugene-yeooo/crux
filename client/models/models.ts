@@ -1,17 +1,4 @@
-export interface CaveLogFormData {
-  title: string
-  objective: string
-  date: string
-  team: string
-  location: string
-  tech_style: string[]
-  route_style: string
-  duration: string
-  notes: string
-  media: NewMedia[]
-}
-
-
+// --------------- USERS -------------- //
 export interface User {
   id: number
   name: string
@@ -21,6 +8,21 @@ export interface User {
   bio?: string
   country: string
 }
+
+export interface Props {
+  userId: number
+}
+
+export interface ProfileDetails {
+  user: {
+    name: string
+    username: string
+    avatar_url?: string
+    bio?: string
+  }
+}
+
+// ------------- LOGS & MEDIA ----------- //
 
 export interface Log {
   auth0_id: string
@@ -45,18 +47,6 @@ export interface Log {
   grade?: string | number
 }
 
-export interface Props {
-  userId: number
-}
-
-export interface ProfileDetails {
-  user: {
-    name: string
-    username: string
-    avatar_url?: string
-    bio?: string
-  }
-}
 
 export type ExistingMedia = {
   mediaId: number
@@ -87,14 +77,29 @@ export type MediaUpdate = {
   }[]
 }
 
+
+// ------------- CAVING ---------------- //
+export interface CaveLogFormData {
+  title: string
+  objective: string
+  date: string
+  team: string
+  location: string
+  tech_style: string[]
+  route_style: string
+  duration: string
+  notes: string
+  media: NewMedia[] | ExistingMedia[]
+}
+
 export type CaveLogFormProps = {
   initialData?: Partial<CaveLogFormData>
   onSubmit: (formData: CaveLogFormData, mediaFiles: MediaUpdate) => Promise<void>
   submitLabel?: string
   retainedMedia: ExistingMedia[]
   setRetainedMedia: React.Dispatch<React.SetStateAction<ExistingMedia[]>>
-  newMediaFiles: NewMedia[]
-  setNewMediaFiles: React.Dispatch<React.SetStateAction<NewMedia[]>>
+  // newMediaFiles: NewMedia[]
+  // setNewMediaFiles: React.Dispatch<React.SetStateAction<NewMedia[]>>
 }
 
 // ----------- CLIMBING ---------- //
