@@ -14,6 +14,7 @@ import LogPage from './components/log page/LogPage'
 import LoginPage from './components/LoginPage'
 import ProtectedRoute from './components/utilities/ProtectedRoute'
 import CaveLogEdit from './components/forms/CaveLogEdit'
+import ClimbLogNew from './components/forms/ClimbLogNew'
 
 
 const routes = createRoutesFromElements(
@@ -26,6 +27,7 @@ const routes = createRoutesFromElements(
     
     <Route path="log-nav" element={<ProtectedRoute><NavLog /></ProtectedRoute>} />
     <Route path="log-nav/log-cave" element={<ProtectedRoute><CaveLogNew /></ProtectedRoute>} />
+    <Route path="log-nav/log-climb" element={<ProtectedRoute><ClimbLogNew /></ProtectedRoute>} />
 
       {/* <Route path="log-climb" element={<LogClimb />} />
       <Route path="log-canyon" element={<LogCanyon />} />

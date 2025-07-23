@@ -1,10 +1,10 @@
 import { useParams } from 'react-router'
 import { useState, useEffect } from 'react'
-import CaveLogForm from './CaveLogForm'
+import ClimbLogForm from './ClimbLogForm'
 import { useLogById, useUpdateLog } from '../../hooks/api'
-import { CaveLogFormData, ExistingMedia, MediaUpdate } from '../../models/models'
+import { ClimbLogFormData, ExistingMedia, MediaUpdate } from '../../models/models'
 
-export default function EditCaveLog() {
+export default function EditClimbLog() {
   const { username, logId } = useParams()
   const { data: logData, isLoading } = useLogById(username!, Number(logId))
   const updateLog = useUpdateLog()
@@ -28,20 +28,22 @@ export default function EditCaveLog() {
  
   
   // Prepare initial form data, flattening nested details and tech_style parsing
-  const cleanInitialData: CaveLogFormData = {
+  const cleanInitialData: ClimbLogFormData = {
     title: logData?.title ?? '',
     objective: logData?.objective ?? '',
     location: logData?.location ?? '',
     date: logData?.date ?? '',
     notes: logData?.notes ?? '',
     team: logData?.details?.team ?? '',
-    duration: logData?.details?.duration?.toString() ?? '',
-    tech_style: JSON.parse(logData?.details?.tech_style ?? '[]'),
+    attempts: logData?.details?.duration?.toString() ?? '',
     route_style: (logData?.details?.route_style?.toLowerCase() === 'in/out') ? 'inOut' : 'throughTrip',
     media: retainedMedia, // media is handled separately via retainedMedia state and new files
+    grade: logData?.grade ?? '',
+    send: logData?.details.send ?? '',
+    height: logData?.details.height ?? '',
   }
 
-  const handleUpdate = async (formData: CaveLogFormData, mediaFiles: MediaUpdate) => {
+  const handleUpdate = async (formData: ClimbLogFormData, mediaFiles: MediaUpdate) => {
     if (!logId || !logData) return
     const form = new FormData()
     const id = Number(logId)
@@ -51,19 +53,21 @@ export default function EditCaveLog() {
       objective: formData.objective,
       location: formData.location,
       date: formData.date,
-      type: 'cave',
+      type: 'climb',
       notes: formData.notes,
     }
 
-    const cave = {
-      team: formData.team,
-      duration: formData.duration,
-      tech_style: JSON.stringify(formData.tech_style),
+    const climb = {
+      grade: formData.grade,
       route_style: formData.route_style,
+      send: formData.send,
+      team: formData.team,
+      attempts: formData.attempts,
+      height: formData.height,      
     }
     
 
-    form.append('data', JSON.stringify({ core, cave, media: { retained: mediaFiles.retained, added: mediaFiles.added } }))
+    form.append('data', JSON.stringify({ core, climb, media: { retained: mediaFiles.retained, added: mediaFiles.added } }))
     
     mediaFiles.added.forEach((fileWrapper) => {
       form.append('media', fileWrapper.file) 
@@ -78,7 +82,7 @@ export default function EditCaveLog() {
   if (isLoading || !logData) return <p>Loading log...</p>
 
   return (
-    <CaveLogForm
+    <ClimbLogForm
       initialData={cleanInitialData}
       onSubmit={handleUpdate}
       submitLabel="Update Log"
