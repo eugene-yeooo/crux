@@ -96,17 +96,7 @@ export default function ClimbLogForm({
 
           <div>
             <label htmlFor="grade" className={labelStyle}>Grade</label>
-            <input id="grade" {...register('grade', { required: true })} className={inputStyle} placeholder="e.g. 25 or 5.12b or 7b" />
-          </div>
-
-          <div>
-            <label htmlFor="date" className={labelStyle}>Date</label>
-            <input id="date" type="date" {...register('date', { required: true })} className={inputStyle} />
-          </div>
-
-          <div>
-            <label htmlFor="location" className={labelStyle}>Location</label>
-            <input id="location" {...register('location', { required: true })} className={inputStyle} placeholder="e.g. Little Babylon" />
+            <input id="grade" {...register('grade', { required: true })} className={inputStyle} placeholder="e.g. 25 / 5.12b / 7b" />
           </div>
 
 
@@ -120,10 +110,23 @@ export default function ClimbLogForm({
             </select>
           </div>
 
-          <div>
-            <label htmlFor="team" className={labelStyle}>Belayer&#40;s&#41;</label>
-            <input id="team" {...register('team')} className={inputStyle} placeholder="Names" />
+    <div>
+            <label htmlFor="height" className={labelStyle}>Height &#40;meters&#41;</label>
+            <input id="height" type="number" min={1} {...register('height', { required: true })} className={inputStyle} placeholder="e.g. 20" />
           </div>
+
+
+          <div>
+            <label htmlFor="date" className={labelStyle}>Date</label>
+            <input id="date" type="date" {...register('date', { required: true })} className={inputStyle} />
+          </div>
+
+          <div>
+            <label htmlFor="location" className={labelStyle}>Location</label>
+            <input id="location" {...register('location', { required: true })} className={inputStyle} placeholder="e.g. Little Babylon" />
+          </div>
+
+
 
           <div>
             <label htmlFor="send" className={labelStyle}>Did you send?</label>
@@ -140,9 +143,12 @@ export default function ClimbLogForm({
             <input id="attempts" type="number" min={1} {...register('attempts', { required: true })} className={inputStyle} placeholder="e.g. 5" />
           </div>
 
+
+
+          
           <div>
-            <label htmlFor="height" className={labelStyle}>Height &#40;meters&#41;</label>
-            <input id="height" type="number" min={1} {...register('height', { required: true })} className={inputStyle} placeholder="e.g. 20" />
+            <label htmlFor="team" className={labelStyle}>Belayer&#40;s&#41;</label>
+            <input id="team" {...register('team')} className={inputStyle} placeholder="Names" />
           </div>
         
         </div>
