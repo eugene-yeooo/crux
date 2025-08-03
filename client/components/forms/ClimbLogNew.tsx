@@ -1,4 +1,4 @@
-import { useCreateLog, useGetUserByAuthId, useUserProfile } from '../../hooks/api'
+import { useCreateLog, useUserProfile } from '../../hooks/api'
 import { ClimbLogFormData, MediaUpdate, NewMedia } from '../../models/models'
 import { useState } from 'react'
 import { useAuth0 } from '@auth0/auth0-react'
@@ -36,6 +36,9 @@ export default function LogClimb() {
       attempts: formData.attempts,
       route_style: formData.route_style,
       team: formData.team,
+      pitches: formData.pitches,
+      send: formData.send,
+      height: formData.height,
     }
 
     const media = mediaFiles.added.map(({ file, caption }, index) => {

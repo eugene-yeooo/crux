@@ -38,7 +38,7 @@ export default function ClimbLogForm({
       team: '',
       location: '',
       route_style: '',
-      attempts: '',
+      attempts: 1,
       send: '',
       height: '',
       pitches: 1,

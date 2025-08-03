@@ -15,6 +15,7 @@ import LoginPage from './components/LoginPage'
 import ProtectedRoute from './components/utilities/ProtectedRoute'
 import CaveLogEdit from './components/forms/CaveLogEdit'
 import ClimbLogNew from './components/forms/ClimbLogNew'
+import ClimbLogEdit from './components/forms/ClimbLogEdit'
 
 
 const routes = createRoutesFromElements(
@@ -36,7 +37,7 @@ const routes = createRoutesFromElements(
     {/* User profile with dynamic username param */}
     <Route path="user/:username" element={<UserProfilePage />} />
         <Route path="user/:username/log/:logId" element={<LogPage />} />
-        <Route path="user/:username/log/:logId/edit" element={<CaveLogEdit />} />
+        <Route path="user/:username/log/:logId/edit" element={<ClimbLogEdit />} />
         {/* will need conditional for log type */}
     
     {/* <Route path='edit/:logId' element={<EditLog />} /> */}

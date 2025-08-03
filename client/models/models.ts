@@ -112,7 +112,7 @@ export interface ClimbLogFormData {
   team: string
   location: string
   route_style: string
-  attempts: string
+  attempts: number
   send: string
   height: string
   pitches: number

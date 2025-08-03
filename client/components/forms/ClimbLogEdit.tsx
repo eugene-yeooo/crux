@@ -41,6 +41,7 @@ export default function EditClimbLog() {
     grade: logData?.grade ?? '',
     send: logData?.details.send ?? '',
     height: logData?.details.height ?? '',
+    pitches: logData?.details.pitches ?? '',
   }
 
   const handleUpdate = async (formData: ClimbLogFormData, mediaFiles: MediaUpdate) => {
@@ -64,6 +65,7 @@ export default function EditClimbLog() {
       team: formData.team,
       attempts: formData.attempts,
       height: formData.height,      
+      pitches: formData.pitches,      
     }
     
 
