@@ -107,6 +107,8 @@ export default function ClimbLogForm({
             <select id="route_style" {...register('route_style', { required: true })} className={inputStyle}>
               <option value="sport">Sport</option>
               <option value="trad">Trad</option>
+              <option value="sport multi-pitch">Sport Multi-pitch</option>
+              <option value="trad multi-pitch">Trad Multi-pitch</option>
               <option value="boulder">Boulder</option>
             </select>
           </div>
