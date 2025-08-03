@@ -17,6 +17,7 @@ export async function up(knex) {
     table.string('send')
     table.string('route_style')
     table.integer('height')
+    table.integer('pitches')
     table.integer('attempts')
     table.string('team')
   })
