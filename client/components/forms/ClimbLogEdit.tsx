@@ -35,10 +35,10 @@ export default function EditClimbLog() {
     date: logData?.date ?? '',
     notes: logData?.notes ?? '',
     team: logData?.details?.team ?? '',
-    attempts: logData?.details?.duration?.toString() ?? '',
+    attempts: logData?.details?.attempts ?? '',
     route_style: logData?.details?.route_style,
     media: retainedMedia, // media is handled separately via retainedMedia state and new files
-    grade: logData?.grade ?? '',
+    grade: logData?.details.grade ?? '',
     send: logData?.details.send ?? '',
     height: logData?.details.height ?? '',
     pitches: logData?.details.pitches ?? '',
