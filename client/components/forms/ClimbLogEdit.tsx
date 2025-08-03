@@ -35,12 +35,13 @@ export default function EditClimbLog() {
     date: logData?.date ?? '',
     notes: logData?.notes ?? '',
     team: logData?.details?.team ?? '',
-    attempts: logData?.details?.duration?.toString() ?? '',
-    route_style: (logData?.details?.route_style?.toLowerCase() === 'in/out') ? 'inOut' : 'throughTrip',
+    attempts: logData?.details?.attempts ?? '',
+    route_style: logData?.details?.route_style,
     media: retainedMedia, // media is handled separately via retainedMedia state and new files
-    grade: logData?.grade ?? '',
+    grade: logData?.details.grade ?? '',
     send: logData?.details.send ?? '',
     height: logData?.details.height ?? '',
+    pitches: logData?.details.pitches ?? '',
   }
 
   const handleUpdate = async (formData: ClimbLogFormData, mediaFiles: MediaUpdate) => {
@@ -64,6 +65,7 @@ export default function EditClimbLog() {
       team: formData.team,
       attempts: formData.attempts,
       height: formData.height,      
+      pitches: formData.pitches,      
     }
     
 

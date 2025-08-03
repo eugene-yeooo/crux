@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Knex } from 'knex'
 import connection from './connection'
 
@@ -17,7 +18,7 @@ export async function getLogsByUsername(username: string) {
 
   // Step 2: Collect log IDs by type (returns an array)
   const caveLogIds = baseLogs.filter(log => log.type === 'cave').map(log => log.id)
-  // const climbLogIds = baseLogs.filter(log => log.type === 'climb').map(log => log.id)
+  const climbLogIds = baseLogs.filter(log => log.type === 'climb').map(log => log.id)
   // const canyonLogIds = baseLogs.filter(log => log.type === 'canyon').map(log => log.id)
   // const alpineLogIds = baseLogs.filter(log => log.type === 'alpine').map(log => log.id)
   // const diveLogIds = baseLogs.filter(log => log.type === 'dive').map(log => log.id)
@@ -26,8 +27,8 @@ export async function getLogsByUsername(username: string) {
   const caveLogs = await connection('log_caves').whereIn('log_id', caveLogIds)
   const caveMap = Object.fromEntries(caveLogs.map(log => [log.log_id, log])) //Object.fromEntries() is a built-in JavaScript method that converts an array of key-value pairs into an object.
 
-  // const climbLogs = await connection('log-climbs').whereIn('log_id', climbLogIds)
-  // const climbMap = Object.fromEntries(climbLogs.map(log => [log.log_id, log]))
+  const climbLogs = await connection('log_climbs').whereIn('log_id', climbLogIds)
+  const climbMap = Object.fromEntries(climbLogs.map(log => [log.log_id, log]))
 
   // const canyonLogs = await connection('log-canyons').whereIn('log_id', canyonLogIds)
   // const canyonMap = Object.fromEntries(canyonLogs.map(log => [log.log_id, log]))
@@ -44,7 +45,7 @@ export async function getLogsByUsername(username: string) {
     media: JSON.parse(log.media),
     details:
       log.type === 'cave' ? caveMap[log.id] ?? null
-      // : log.type === 'climb' ? climbMap[log.id] ?? null
+      : log.type === 'climb' ? climbMap[log.id] ?? null
       // : log.type === 'canyon' ? canyonMap[log.id] ?? null
       // : log.type === 'alpine' ? alpineMap[log.id] ?? null
       // : log.type === 'dive' ? diveMap[log.id] ?? null
@@ -109,6 +110,13 @@ export async function addLogCave(logId: number, caveData: any, trx: Knex.Transac
   })
 }
 
+export async function addLogClimb(logId: number, climbData: any, trx: Knex.Transaction) {
+  return trx('log_climbs').insert({
+    log_id: logId,
+    ...climbData,
+  })
+}
+
 // add more log types here
 
 export async function addMedia(
@@ -142,7 +150,7 @@ export async function addFullLog(data: any) {
         if (data.cave) await addLogCave(logId, data.cave, trx)
         break
       case 'climb':
-        // Add addLogClimb logic here later
+        if (data.climb) await addLogClimb(logId, data.climb, trx)
         break
       // More types...
     }
@@ -170,6 +178,10 @@ export function updateLogCore(id: number, coreData: unknown, trx: Knex.Transacti
 
 export async function updateLogCave(logId: number, caveData: unknown, trx: Knex.Transaction) {
   return trx('log_caves').where({ log_id: logId }).update(caveData)
+}
+
+export async function updateLogClimb(logId: number, climbData: unknown, trx: Knex.Transaction) {
+  return trx('log_climbs').where({ log_id: logId }).update(climbData)
 }
 
 // add more log types here
@@ -235,7 +247,7 @@ export async function updateFullLog(logId: number, data: any) {
         if (data.cave) await updateLogCave(logId, data.cave, trx)
         break
       case 'climb' :
-        if (data.climb)
+        if (data.climb) await updateLogClimb(logId, data.climb, trx)
         break
       //more types here
     }

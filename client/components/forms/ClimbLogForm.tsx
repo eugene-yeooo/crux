@@ -38,9 +38,10 @@ export default function ClimbLogForm({
       team: '',
       location: '',
       route_style: '',
-      attempts: '',
+      attempts: 1,
       send: '',
       height: '',
+      pitches: 1,
       notes: '',
     },
   })
@@ -106,6 +107,8 @@ export default function ClimbLogForm({
             <select id="route_style" {...register('route_style', { required: true })} className={inputStyle}>
               <option value="sport">Sport</option>
               <option value="trad">Trad</option>
+              <option value="sport multi-pitch">Sport Multi-pitch</option>
+              <option value="trad multi-pitch">Trad Multi-pitch</option>
               <option value="boulder">Boulder</option>
             </select>
           </div>
@@ -114,6 +117,34 @@ export default function ClimbLogForm({
             <label htmlFor="height" className={labelStyle}>Height &#40;meters&#41;</label>
             <input id="height" type="number" min={1} {...register('height', { required: true })} className={inputStyle} placeholder="e.g. 20" />
           </div>
+
+
+          <div>
+            <label htmlFor="pitches" className={labelStyle}>Pitches</label>
+            <input id="pitches" type="number" min={1} {...register('pitches', { required: true })} className={inputStyle} />
+          </div>
+          
+          <div>
+            <label htmlFor="team" className={labelStyle}>Belayer&#40;s&#41;</label>
+            <input id="team" {...register('team')} className={inputStyle} placeholder="Names" />
+          </div>
+
+
+          <div>
+            <label htmlFor="send" className={labelStyle}>Did you send?</label>
+            <select id="send" {...register('send', { required: true })} className={inputStyle}>
+              <option value="👁️ Onsight">👁️ Onsight</option>
+              <option value="🗲 Flash">🗲 Flash</option>
+              <option value="🔴 Redpoint">🔴 Redpoint</option>
+              <option value="🙃 Did not send">🙃 Did not send</option>
+            </select>
+          </div>
+
+          <div>
+            <label htmlFor="attempts" className={labelStyle}>Number of Attempts</label>
+            <input id="attempts" type="number" min={1} {...register('attempts', { required: true })} className={inputStyle} placeholder="e.g. 5" />
+          </div>
+        
 
 
           <div>
@@ -126,32 +157,9 @@ export default function ClimbLogForm({
             <input id="location" {...register('location', { required: true })} className={inputStyle} placeholder="e.g. Little Babylon" />
           </div>
 
-
-
-          <div>
-            <label htmlFor="send" className={labelStyle}>Did you send?</label>
-            <select id="send" {...register('send', { required: true })} className={inputStyle}>
-              <option value="onsight">👁️ Onsight</option>
-              <option value="flash">🗲 Flash</option>
-              <option value="redpoint">🔴 Redpoint</option>
-              <option value="DNS">🙃 Did not send</option>
-            </select>
-          </div>
-
-          <div>
-            <label htmlFor="attempts" className={labelStyle}>Number of Attempts</label>
-            <input id="attempts" type="number" min={1} {...register('attempts', { required: true })} className={inputStyle} placeholder="e.g. 5" />
-          </div>
-
-
-
-          
-          <div>
-            <label htmlFor="team" className={labelStyle}>Belayer&#40;s&#41;</label>
-            <input id="team" {...register('team')} className={inputStyle} placeholder="Names" />
-          </div>
-        
         </div>
+
+        
 
         <div>
           <label htmlFor="notes" className={labelStyle}>Notes</label>
