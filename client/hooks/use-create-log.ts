@@ -1,6 +1,6 @@
 import { useAuth0 } from "@auth0/auth0-react"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { useNavigate, useParams } from "react-router"
+import { useNavigate } from "react-router"
 import request from "superagent"
 
 const rootURL = new URL(`/api/v1`, document.baseURI)
