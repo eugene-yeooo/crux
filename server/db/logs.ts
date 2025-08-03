@@ -27,7 +27,7 @@ export async function getLogsByUsername(username: string) {
   const caveLogs = await connection('log_caves').whereIn('log_id', caveLogIds)
   const caveMap = Object.fromEntries(caveLogs.map(log => [log.log_id, log])) //Object.fromEntries() is a built-in JavaScript method that converts an array of key-value pairs into an object.
 
-  const climbLogs = await connection('log-climbs').whereIn('log_id', climbLogIds)
+  const climbLogs = await connection('log_climbs').whereIn('log_id', climbLogIds)
   const climbMap = Object.fromEntries(climbLogs.map(log => [log.log_id, log]))
 
   // const canyonLogs = await connection('log-canyons').whereIn('log_id', canyonLogIds)
