@@ -134,10 +134,10 @@ export default function ClimbLogForm({
           <div>
             <label htmlFor="send" className={labelStyle}>Did you send?</label>
             <select id="send" {...register('send', { required: true })} className={inputStyle}>
-              <option value="onsight">👁️ Onsight</option>
-              <option value="flash">🗲 Flash</option>
-              <option value="redpoint">🔴 Redpoint</option>
-              <option value="DNS">🙃 Did not send</option>
+              <option value="👁️ Onsight">👁️ Onsight</option>
+              <option value="🗲 Flash">🗲 Flash</option>
+              <option value="🔴 Redpoint">🔴 Redpoint</option>
+              <option value="🙃 Did not send">🙃 Did not send</option>
             </select>
           </div>
 
