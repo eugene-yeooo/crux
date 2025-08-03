@@ -120,15 +120,14 @@ export default function ClimbLogForm({
 
 
           <div>
-            <label htmlFor="date" className={labelStyle}>Date</label>
-            <input id="date" type="date" {...register('date', { required: true })} className={inputStyle} />
+            <label htmlFor="pitches" className={labelStyle}>Pitches</label>
+            <input id="pitches" type="number" min={1} {...register('pitches', { required: true })} className={inputStyle} />
           </div>
-
+          
           <div>
-            <label htmlFor="location" className={labelStyle}>Location</label>
-            <input id="location" {...register('location', { required: true })} className={inputStyle} placeholder="e.g. Little Babylon" />
+            <label htmlFor="team" className={labelStyle}>Belayer&#40;s&#41;</label>
+            <input id="team" {...register('team')} className={inputStyle} placeholder="Names" />
           </div>
-
 
 
           <div>
@@ -145,16 +144,22 @@ export default function ClimbLogForm({
             <label htmlFor="attempts" className={labelStyle}>Number of Attempts</label>
             <input id="attempts" type="number" min={1} {...register('attempts', { required: true })} className={inputStyle} placeholder="e.g. 5" />
           </div>
-
-
-
-          
-          <div>
-            <label htmlFor="team" className={labelStyle}>Belayer&#40;s&#41;</label>
-            <input id="team" {...register('team')} className={inputStyle} placeholder="Names" />
-          </div>
         
+
+
+          <div>
+            <label htmlFor="date" className={labelStyle}>Date</label>
+            <input id="date" type="date" {...register('date', { required: true })} className={inputStyle} />
+          </div>
+
+          <div>
+            <label htmlFor="location" className={labelStyle}>Location</label>
+            <input id="location" {...register('location', { required: true })} className={inputStyle} placeholder="e.g. Little Babylon" />
+          </div>
+
         </div>
+
+        
 
         <div>
           <label htmlFor="notes" className={labelStyle}>Notes</label>
