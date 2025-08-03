@@ -36,7 +36,7 @@ export default function EditClimbLog() {
     notes: logData?.notes ?? '',
     team: logData?.details?.team ?? '',
     attempts: logData?.details?.duration?.toString() ?? '',
-    route_style: (logData?.details?.route_style?.toLowerCase() === 'in/out') ? 'inOut' : 'throughTrip',
+    route_style: logData?.details?.route_style,
     media: retainedMedia, // media is handled separately via retainedMedia state and new files
     grade: logData?.grade ?? '',
     send: logData?.details.send ?? '',
