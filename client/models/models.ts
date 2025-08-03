@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // --------------- USERS -------------- //
 export interface User {
   id: number
@@ -114,6 +115,7 @@ export interface ClimbLogFormData {
   attempts: string
   send: string
   height: string
+  pitches: number
   notes: string
   media: NewMedia[] | ExistingMedia[]
 }

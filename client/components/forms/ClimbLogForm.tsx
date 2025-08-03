@@ -41,6 +41,7 @@ export default function ClimbLogForm({
       attempts: '',
       send: '',
       height: '',
+      pitches: 1,
       notes: '',
     },
   })
