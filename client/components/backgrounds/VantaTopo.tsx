@@ -4,10 +4,10 @@ import p5 from 'p5'
 
 export default function VantaTopology() {
   const vantaRef = useRef<HTMLDivElement | null>(null)
-  const effectRef = useRef<any>(null)
+  const effectRef = useRef<unknown>(null)
 
   useEffect(() => {
-    const TOPO_EFFECT = (TOPOLOGY as any).default || TOPOLOGY
+    const TOPO_EFFECT = (TOPOLOGY).default || TOPOLOGY
 
     if (!effectRef.current && vantaRef.current) {
       try {
@@ -15,12 +15,12 @@ export default function VantaTopology() {
           el: vantaRef.current,
           p5: p5,
           mouseControls: true,
-  touchControls: true,
-  gyroControls: false,
-  minHeight: 200.00,
-  minWidth: 200.00,
-  scale: 1.00,
-  scaleMobile: 1.00,
+          touchControls: true,
+          gyroControls: false,
+          minHeight: 200.00,
+          minWidth: 200.00,
+          scale: 1.00,
+          scaleMobile: 1.00,
           color: 0x63b8a7,
           // backgroundColor: 0xd9d9d9,
           backgroundColor: 0x1b1d1d,
@@ -31,7 +31,7 @@ export default function VantaTopology() {
     }
 
     return () => {
-      effectRef.current?.destroy()
+      // effectRef.current?.destroy()
       effectRef.current = null
     }
   }, [])
