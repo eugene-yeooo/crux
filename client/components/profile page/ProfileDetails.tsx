@@ -6,7 +6,7 @@ export default function ProfileDetails({ user }: { user: User }) {
   // console.log(user.avatar_url)
   
   return (
-    <div className="bg-white shadow-md rounded-xl p-6 flex items-center gap-6 max-w-4xl mx-auto mb-6">
+    <div className="bg-white shadow-md rounded-xl p-6 flex items-center gap-6 max-w-6xl mx-auto mb-6">
       <img
         src={user.avatar_url}
         alt="avatar"
