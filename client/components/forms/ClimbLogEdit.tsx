@@ -2,7 +2,7 @@ import { useParams } from 'react-router'
 import { useState, useEffect } from 'react'
 import ClimbLogForm from './ClimbLogForm'
 import { useLogById, useUpdateLog } from '../../hooks/api'
-import { ClimbLogFormData, ExistingMedia, MediaUpdate } from '../../models/models'
+import { ClimbLogFormData, ExistingMedia, MediaUpdate, NewMedia } from '../../models/models'
 
 export default function EditClimbLog() {
   const { username, logId } = useParams()
@@ -11,7 +11,7 @@ export default function EditClimbLog() {
 
   // State for retained media (existing media user keeps)
   const [retainedMedia, setRetainedMedia] = useState<ExistingMedia[]>([])
-  
+  const [newMediaFiles, setNewMediaFiles] = useState<NewMedia[]>([])
   
   // Initialize retained media once logData is loaded
   useEffect(() => {
@@ -90,6 +90,8 @@ export default function EditClimbLog() {
       submitLabel="Update Log"
       retainedMedia={retainedMedia}
       setRetainedMedia={setRetainedMedia}
+      newMediaFiles={newMediaFiles}
+      setNewMediaFiles={setNewMediaFiles}
     />
   )
 }

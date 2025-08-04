@@ -1,15 +1,8 @@
 import { useForm } from 'react-hook-form'
 import SubmitButton from './SubmitButton'
 import MediaUpload from './MediaUpload'
-import { ClimbLogFormData, ClimbLogFormProps, MediaUpdate, NewMedia } from '../../models/models'
+import { ClimbLogFormData, ClimbLogFormProps, MediaUpdate } from '../../models/models'
 import { useState } from 'react'
-
-
-// const techStyleOptions = [
-//   { value: 'SRT', label: 'SRT' },
-//   { value: 'Pull-through', label: 'Pull-through' },
-//   { value: 'Non-technical', label: 'Non-technical' },
-// ]
 
 const labelStyle = 'block mb-1 font-medium'
 const inputStyle = 'w-full p-1.5 border rounded-md'
@@ -17,12 +10,13 @@ const inputStyle = 'w-full p-1.5 border rounded-md'
 export default function ClimbLogForm({
   initialData,
   onSubmit,
-  submitLabel = 'Log Climb',
+  submitLabel,
   retainedMedia,
   setRetainedMedia,
+  newMediaFiles,
+  setNewMediaFiles,
 }: ClimbLogFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [newMediaFiles, setNewMediaFiles] = useState<NewMedia[]>([])
 
   const {
     register,

@@ -3,9 +3,9 @@ import { Outlet } from 'react-router'
 import NavMain from './NavMain.tsx'
 import Header from './header/Header.tsx'
 import Footer from './Footer.tsx'
-import VantaNet from './backgrounds/VantaNet.tsx'
+// import VantaNet from './backgrounds/VantaNet.tsx'
 import VantaTopology from './backgrounds/VantaTopo.tsx'
-import VantaTrunk from './backgrounds/VantaTrunk.tsx'
+// import VantaTrunk from './backgrounds/VantaTrunk.tsx'
 
 function App() {
   return (
@@ -18,7 +18,7 @@ function App() {
          <div className="w-64 shrink-0">
           <NavMain />
         </div>
-       <div className="w-full max-w-4xl">
+       <div className="w-full max-w-6xl">
           <Outlet />
         </div>
       </main>

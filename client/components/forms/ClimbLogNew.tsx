@@ -73,7 +73,7 @@ export default function LogClimb() {
   return <ClimbLogForm 
     onSubmit={handleCreate} 
     submitLabel="Log Climb" 
-     retainedMedia={[]} // empty since new log has no existing media
+    retainedMedia={[]} // empty since new log has no existing media
     setRetainedMedia={() => {}} // ^same
     newMediaFiles={newMediaFiles}
     setNewMediaFiles={setNewMediaFiles}

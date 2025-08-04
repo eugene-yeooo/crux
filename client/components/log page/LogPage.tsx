@@ -60,7 +60,7 @@ export default function LogPage() {
   }
   
   return (
-    <div className="relative rounded-lg shadow p-6 bg-white space-y-2 max-w-4xl mx-auto">
+    <div className="relative rounded-lg shadow p-6 bg-white space-y-2 max-w-6xl mx-auto">
       
       {/* Header */}
         <div className='mb-6'>

@@ -2,7 +2,7 @@ import { useParams } from 'react-router'
 import { useState, useEffect } from 'react'
 import CaveLogForm from './CaveLogForm'
 import { useLogById, useUpdateLog } from '../../hooks/api'
-import { CaveLogFormData, ExistingMedia, MediaUpdate } from '../../models/models'
+import { CaveLogFormData, ExistingMedia, MediaUpdate, NewMedia } from '../../models/models'
 
 export default function EditCaveLog() {
   const { username, logId } = useParams()
@@ -11,7 +11,7 @@ export default function EditCaveLog() {
 
   // State for retained media (existing media user keeps)
   const [retainedMedia, setRetainedMedia] = useState<ExistingMedia[]>([])
-  
+  const [newMediaFiles, setNewMediaFiles] = useState<NewMedia[]>([])
   
   // Initialize retained media once logData is loaded
   useEffect(() => {
@@ -84,6 +84,8 @@ export default function EditCaveLog() {
       submitLabel="Update Log"
       retainedMedia={retainedMedia}
       setRetainedMedia={setRetainedMedia}
+      newMediaFiles={newMediaFiles}
+      setNewMediaFiles={setNewMediaFiles}
     />
   )
 }

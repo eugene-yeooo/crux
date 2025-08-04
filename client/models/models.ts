@@ -99,8 +99,8 @@ export type CaveLogFormProps = {
   submitLabel?: string
   retainedMedia: ExistingMedia[]
   setRetainedMedia: React.Dispatch<React.SetStateAction<ExistingMedia[]>>
-  // newMediaFiles: NewMedia[]
-  // setNewMediaFiles: React.Dispatch<React.SetStateAction<NewMedia[]>>
+  newMediaFiles: NewMedia[]
+  setNewMediaFiles: React.Dispatch<React.SetStateAction<NewMedia[]>>
 }
 
 // ----------- CLIMBING ---------- //
@@ -126,5 +126,6 @@ export type ClimbLogFormProps = {
   submitLabel?: string
   retainedMedia: ExistingMedia[]
   setRetainedMedia: React.Dispatch<React.SetStateAction<ExistingMedia[]>>
-
+  newMediaFiles: NewMedia[]
+  setNewMediaFiles: React.Dispatch<React.SetStateAction<NewMedia[]>>
 }
