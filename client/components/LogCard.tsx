@@ -12,7 +12,7 @@ export default function LogCard({ log }) {
   const formattedDate = format(new Date(log.date), 'dd MMM yyyy')
   
   return (
-    <div className="rounded-lg shadow p-4 bg-white space-y-1 max-w-80">
+    <div className="rounded-lg shadow p-4 bg-white space-y-1 max-w-96">
       <Link to={`/user/${log.username}/log/${log.id}`}><h3 className="text-xl font-bold">{log.objective}</h3></Link>
       {log.title && <p className="text-md text-gray-800 italic">{log.title}</p>}
       <p className="font-mono tracking-tight">{log.location}</p>
