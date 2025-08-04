@@ -4,13 +4,6 @@ import MediaUpload from './MediaUpload'
 import { ClimbLogFormData, ClimbLogFormProps, MediaUpdate, NewMedia } from '../../models/models'
 import { useState } from 'react'
 
-
-// const techStyleOptions = [
-//   { value: 'SRT', label: 'SRT' },
-//   { value: 'Pull-through', label: 'Pull-through' },
-//   { value: 'Non-technical', label: 'Non-technical' },
-// ]
-
 const labelStyle = 'block mb-1 font-medium'
 const inputStyle = 'w-full p-1.5 border rounded-md'
 
