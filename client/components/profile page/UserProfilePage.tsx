@@ -39,8 +39,11 @@ export default function UserProfilePage() {
 
   return (
     <div>
-      {user && <ProfileDetails user={user} />}
-      <ProfileSummaryStats logs={logs} />
+      
+      {user && <ProfileDetails user={user} logs={logs} />}
+      
+      {/* <ProfileSummaryStats logs={logs} /> */}
+      
       {/* <NotableSends logs={logs} /> */}
       <NavProfileFilter selected={filter} onChange={setFilter} />
       {/* <div className="bg-white shadow-lg rounded-lg p-6 max-w-4xl mx-auto my-4">
