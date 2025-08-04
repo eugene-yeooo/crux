@@ -17,7 +17,6 @@ export default function ClimbLogForm({
   setNewMediaFiles,
 }: ClimbLogFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false)
-  // const [newMediaFiles, setNewMediaFiles] = useState<NewMedia[]>([])
 
   const {
     register,
