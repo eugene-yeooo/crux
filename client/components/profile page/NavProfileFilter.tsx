@@ -26,7 +26,7 @@ export default function AdventureFilterNav({
               ${
                 isActive
                   ? 'bg-brandPrimary text-brandBlack cursor-default'
-                  : 'bg-white text-brandBlack shadow-sm hover:bg-brandBlack hover:text-brandPrimary transition-transform hover:scale-105'
+                  : 'bg-white text-brandBlack shadow-sm hover:bg-brandBlack hover:text-brandPrimary transition-transform hover:scale-105'              
               }`}
           >
             {label}
