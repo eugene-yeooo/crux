@@ -11,7 +11,7 @@ export default function EditCaveLog() {
 
   // State for retained media (existing media user keeps)
   const [retainedMedia, setRetainedMedia] = useState<ExistingMedia[]>([])
-  
+  const [newMediaFiles, setNewMediaFiles] = useState<NewMedia[]>([])
   
   // Initialize retained media once logData is loaded
   useEffect(() => {
@@ -84,6 +84,8 @@ export default function EditCaveLog() {
       submitLabel="Update Log"
       retainedMedia={retainedMedia}
       setRetainedMedia={setRetainedMedia}
+      newMediaFiles={newMediaFiles}
+      setNewMediaFiles={setNewMediaFiles}
     />
   )
 }
