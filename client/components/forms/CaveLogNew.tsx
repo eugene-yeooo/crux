@@ -1,5 +1,5 @@
 import CaveLogForm from './CaveLogForm'
-import { useCreateLog, useGetUserByAuthId, useUserProfile } from '../../hooks/api'
+import { useCreateLog, useUserProfile } from '../../hooks/api'
 import { CaveLogFormData, MediaUpdate, NewMedia } from '../../models/models'
 import { useState } from 'react'
 import { useAuth0 } from '@auth0/auth0-react'

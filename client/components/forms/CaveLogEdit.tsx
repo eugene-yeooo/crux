@@ -2,7 +2,7 @@ import { useParams } from 'react-router'
 import { useState, useEffect } from 'react'
 import CaveLogForm from './CaveLogForm'
 import { useLogById, useUpdateLog } from '../../hooks/api'
-import { CaveLogFormData, ExistingMedia, MediaUpdate } from '../../models/models'
+import { CaveLogFormData, ExistingMedia, MediaUpdate, NewMedia } from '../../models/models'
 
 export default function EditCaveLog() {
   const { username, logId } = useParams()

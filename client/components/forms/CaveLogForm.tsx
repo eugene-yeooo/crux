@@ -2,7 +2,7 @@ import { useForm, Controller } from 'react-hook-form'
 import Select from 'react-select'
 import SubmitButton from './SubmitButton'
 import MediaUpload from './MediaUpload'
-import { CaveLogFormData, CaveLogFormProps, MediaUpdate, NewMedia } from '../../models/models'
+import { CaveLogFormData, CaveLogFormProps, MediaUpdate } from '../../models/models'
 import { useState } from 'react'
 
 
@@ -22,9 +22,10 @@ export default function CaveLogForm({
   submitLabel = 'Log Cave',
   retainedMedia,
   setRetainedMedia,
+  newMediaFiles,
+  setNewMediaFiles,
 }: CaveLogFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [newMediaFiles, setNewMediaFiles] = useState<NewMedia[]>([])
 
   const {
     register,
