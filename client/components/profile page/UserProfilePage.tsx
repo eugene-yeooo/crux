@@ -7,7 +7,7 @@ import ProfileDetails from './ProfileDetails'
 import ProfileSummaryStats from './ProfileSummaryStats'
 import NavProfileFilter from './NavProfileFilter'
 import ProfileLogList from './ProfileLogList'
-import NotableSends from './NotableSends'
+// import NotableSends from './NotableSends'
 
 export default function UserProfilePage() {
   const { username } = useParams<{ username: string }>()

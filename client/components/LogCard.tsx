@@ -1,5 +1,6 @@
 import { Link } from "react-router"
 import { format } from 'date-fns'
+import { Key } from "react"
 
 export default function LogCard({ log }) {
   
@@ -11,7 +12,7 @@ export default function LogCard({ log }) {
   const formattedDate = format(new Date(log.date), 'dd MMM yyyy')
   
   return (
-    <div className="rounded-lg shadow p-4 bg-white space-y-1">
+    <div className="rounded-lg shadow p-4 bg-white space-y-1 max-w-80">
       <Link to={`/user/${log.username}/log/${log.id}`}><h3 className="text-xl font-bold">{log.objective}</h3></Link>
       {log.title && <p className="text-md text-gray-800 italic">{log.title}</p>}
       <p className="font-mono tracking-tight">{log.location}</p>
@@ -64,7 +65,7 @@ export default function LogCard({ log }) {
        {/* Media files */}
       {log.media && log.media.length > 0 && (
         <div className="flex flex-wrap gap-4 mt-2 pt-2">
-          {log.media.slice(0, 2).map((file, i) =>
+          {log.media.slice(0, 2).map((file: { type: string; url: string | undefined }, i: Key | null | undefined) =>
             file.type === 'image' ? (
               <img
                 key={i}

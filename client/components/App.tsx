@@ -18,7 +18,7 @@ function App() {
          <div className="w-64 shrink-0">
           <NavMain />
         </div>
-       <div className="w-full max-w-4xl">
+       <div className="w-full max-w-6xl">
           <Outlet />
         </div>
       </main>

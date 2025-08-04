@@ -11,7 +11,7 @@ export default function LogList({ logs }: { logs: Log[] }) {
   }
 
   return (
-    <div className="grid gap-4">
+    <div className="grid gap-4 grid-cols-3">
       {logs.map(log => (
         <LogCard key={log.id} log={log} />
       ))}
