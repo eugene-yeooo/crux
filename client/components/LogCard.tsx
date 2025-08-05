@@ -64,21 +64,21 @@ export default function LogCard({ log }) {
 
        {/* Media files */}
       {log.media && log.media.length > 0 && (
-        <div className="flex flex-wrap gap-4 mt-2 pt-2">
+        <div className="space-y-4 mt-4">
           {log.media.slice(0, 2).map((file: { type: string; url: string | undefined }, i: Key | null | undefined) =>
             file.type === 'image' ? (
               <img
                 key={i}
                 src={file.url}
                 alt={`Log media ${i + 1}`}
-                className="h-96 object-cover rounded"
+                className="w-full h-auto object-cover rounded"
               />
             ) : file.type === 'video' ? (
               // eslint-disable-next-line jsx-a11y/media-has-caption
               <video
                 key={i}
                 controls
-                className="w-60 rounded"
+                className="w-full rounded"
               >
                 <source src={file.url} type="video/mp4" />
                 Your browser does not support the video tag.
