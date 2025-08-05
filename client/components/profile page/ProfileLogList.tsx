@@ -11,9 +11,11 @@ export default function LogList({ logs }: { logs: Log[] }) {
   }
 
   return (
-    <div className="grid gap-4 grid-cols-3">
+    <div className="columns-1 sm:columns-2 lg:columns-3 gap-4">
       {logs.map(log => (
-        <LogCard key={log.id} log={log} />
+         <div key={log.id} className="break-inside-avoid mb-4">
+          <LogCard log={log} />
+        </div>
       ))}
     </div>
   )

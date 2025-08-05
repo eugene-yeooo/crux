@@ -13,6 +13,8 @@ export default function AdventureFilterNav({
         const label =
           type === 'all'
             ? 'All'
+            : type === 'alpine'
+            ? type.charAt(0).toUpperCase() + type.slice(1)
             : type.charAt(0).toUpperCase() + type.slice(1) + 's'
 
         const isActive = selected === type
