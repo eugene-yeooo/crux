@@ -1,15 +1,40 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import { Link } from "react-router"
 import { format } from 'date-fns'
 import { Key } from "react"
+import Lightbox from "yet-another-react-lightbox"
+import Video from "yet-another-react-lightbox/plugins/video"
+import "yet-another-react-lightbox/styles.css"
+import { useState } from 'react'
+
 
 export default function LogCard({ log }) {
   
+  const [index, setIndex] = useState(-1)
+
   const labelStyle = 'font-semibold'
 
   // console.log(log.media)
 
   
   const formattedDate = format(new Date(log.date), 'dd MMM yyyy')
+
+   // Map log.media to lightbox slides format
+  const slides = (log.media || []).map((file) => {
+    if (file.type === "image") {
+      return { type: "image", src: file.url || "" }
+    }
+    if (file.type === "video") {
+      return {
+        type: "video",
+        width: 1280,
+        height: 720,
+        sources: [{ src: file.url || "", type: "video/mp4", preload: 'auto', controls: true }],
+      }
+    }
+    return null
+  }).filter(Boolean)
   
   return (
     <div className="rounded-lg shadow p-4 bg-white space-y-1 max-w-96">
@@ -64,6 +89,7 @@ export default function LogCard({ log }) {
 
        {/* Media files */}
       {log.media && log.media.length > 0 && (
+        <>
         <div className="space-y-4 mt-4 h-auto">
           {log.media.slice(0, 2).map((file: { type: string; url: string | undefined }, i: Key | null | undefined) =>
             file.type === 'image' ? (
@@ -71,21 +97,34 @@ export default function LogCard({ log }) {
                 key={i}
                 src={file.url}
                 alt={`Log media ${i + 1}`}
-                className="w-full object-cover rounded"
+                className="w-full object-cover rounded cursor-pointer"
+                onClick={() => setIndex(i)}
               />
             ) : file.type === 'video' ? (
               // eslint-disable-next-line jsx-a11y/media-has-caption
               <video
                 key={i}
                 controls
-                className="w-full rounded"
+                className="w-full rounded cursor-pointer"
+                onClick={() => setIndex(i)}
               >
                 <source src={file.url} type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
             ) : null
           )}
-        </div>
+          </div>
+          
+          {/* Lightbox */}
+          <Lightbox
+            open={index >= 0}
+            close={() => setIndex(-1)}
+            slides={slides}
+            plugins={[Video]}
+            index={index}
+            onIndexChange={setIndex}
+          />
+      </>
       )}
 
     </div>
