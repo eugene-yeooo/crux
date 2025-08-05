@@ -23,7 +23,7 @@ export default function LogCard({ log }) {
 
       {/* Subtable-specific details */}
       {log.details && (
-        <div className="text-sm text-gray-700 space-y-1">
+        <div className="text-sm text-gray-700 space-y-1 pb-2">
           {log.type === 'cave' && (
             <>
               <p><span className={labelStyle}>Team:</span> {log.details.team}</p>
