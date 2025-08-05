@@ -1,9 +1,17 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import { Link } from "react-router"
 import { format } from 'date-fns'
 import { Key } from "react"
+import Lightbox from "yet-another-react-lightbox"
+import "yet-another-react-lightbox/styles.css"
+import { useState } from 'react'
+
 
 export default function LogCard({ log }) {
   
+  const [index, setIndex] = useState(-1)
+
   const labelStyle = 'font-semibold'
 
   // console.log(log.media)
@@ -64,6 +72,7 @@ export default function LogCard({ log }) {
 
        {/* Media files */}
       {log.media && log.media.length > 0 && (
+        <>
         <div className="space-y-4 mt-4 h-auto">
           {log.media.slice(0, 2).map((file: { type: string; url: string | undefined }, i: Key | null | undefined) =>
             file.type === 'image' ? (
@@ -72,6 +81,7 @@ export default function LogCard({ log }) {
                 src={file.url}
                 alt={`Log media ${i + 1}`}
                 className="w-full object-cover rounded"
+                onClick={() => setIndex(i)}
               />
             ) : file.type === 'video' ? (
               // eslint-disable-next-line jsx-a11y/media-has-caption
@@ -79,13 +89,21 @@ export default function LogCard({ log }) {
                 key={i}
                 controls
                 className="w-full rounded"
+                onClick={() => setIndex(i)}
               >
                 <source src={file.url} type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
             ) : null
           )}
-        </div>
+          </div>
+          <Lightbox
+            open={index >= 0}
+            close={() => setIndex(-1)}
+            slides={log.media.map((file) => ({ src: file.url }))}
+            index={index}
+          />
+      </>
       )}
 
     </div>
