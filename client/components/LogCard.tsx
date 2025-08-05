@@ -4,6 +4,7 @@ import { Link } from "react-router"
 import { format } from 'date-fns'
 import { Key } from "react"
 import Lightbox from "yet-another-react-lightbox"
+import Video from "yet-another-react-lightbox/plugins/video"
 import "yet-another-react-lightbox/styles.css"
 import { useState } from 'react'
 
@@ -18,6 +19,22 @@ export default function LogCard({ log }) {
 
   
   const formattedDate = format(new Date(log.date), 'dd MMM yyyy')
+
+   // Map log.media to lightbox slides format
+  const slides = (log.media || []).map((file) => {
+    if (file.type === "image") {
+      return { type: "image", src: file.url || "" }
+    }
+    if (file.type === "video") {
+      return {
+        type: "video",
+        width: 1280,
+        height: 720,
+        sources: [{ src: file.url || "", type: "video/mp4", preload: 'auto', controls: true }],
+      }
+    }
+    return null
+  }).filter(Boolean)
   
   return (
     <div className="rounded-lg shadow p-4 bg-white space-y-1 max-w-96">
@@ -80,7 +97,7 @@ export default function LogCard({ log }) {
                 key={i}
                 src={file.url}
                 alt={`Log media ${i + 1}`}
-                className="w-full object-cover rounded"
+                className="w-full object-cover rounded cursor-pointer"
                 onClick={() => setIndex(i)}
               />
             ) : file.type === 'video' ? (
@@ -88,7 +105,7 @@ export default function LogCard({ log }) {
               <video
                 key={i}
                 controls
-                className="w-full rounded"
+                className="w-full rounded cursor-pointer"
                 onClick={() => setIndex(i)}
               >
                 <source src={file.url} type="video/mp4" />
@@ -97,11 +114,15 @@ export default function LogCard({ log }) {
             ) : null
           )}
           </div>
+          
+          {/* Lightbox */}
           <Lightbox
             open={index >= 0}
             close={() => setIndex(-1)}
-            slides={log.media.map((file) => ({ src: file.url }))}
+            slides={slides}
+            plugins={[Video]}
             index={index}
+            onIndexChange={setIndex}
           />
       </>
       )}
