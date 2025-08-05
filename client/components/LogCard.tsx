@@ -13,7 +13,7 @@ export default function LogCard({ log }) {
   
   return (
     <div className="rounded-lg shadow p-4 bg-white space-y-1 max-w-96">
-      <Link to={`/user/${log.username}/log/${log.id}`}><h3 className="text-xl font-bold">{log.objective}{log.details.grade && <span> | {log.details.grade}</span>}</h3></Link>
+      <Link to={`/user/${log.username}/log/${log.id}`}><h3 className="text-xl font-bold">{log.objective}{log.details.grade && <span className="font-normal text-stone-700 font-mono text-lg">&nbsp;{log.details.grade}</span>}</h3></Link>
       {log.title && <p className="text-md text-gray-800 italic">{log.title}</p>}
       <p className="font-mono tracking-tight">{log.location}</p>
       <p className="text-sm font-mono ">{formattedDate}</p>
@@ -32,7 +32,7 @@ export default function LogCard({ log }) {
 
           {log.type === 'climb' && (
             <>
-              <p><span className={labelStyle}>Grade:</span> {log.details.grade}</p>
+              {/* <p><span className={labelStyle}>Grade:</span> {log.details.grade}</p> */}
               {/* <p><span className={labelStyle}>Style:</span> {log.details.style}</p>
               <p><span className={labelStyle}>Pitches:</span> {log.details.pitches}</p>
               <p><span className={labelStyle}>Height:</span> {log.details.height}</p> */}
