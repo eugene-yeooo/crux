@@ -129,3 +129,26 @@ export type ClimbLogFormProps = {
   newMediaFiles: NewMedia[]
   setNewMediaFiles: React.Dispatch<React.SetStateAction<NewMedia[]>>
 }
+
+// ----------- CANYONING ---------- //
+export interface CanyonLogFormData {
+  title: string
+  objective: string
+  grade: string | number
+  date: string
+  team: string
+  location: string
+  pitches: number
+  notes: string
+  media: NewMedia[] | ExistingMedia[]
+}
+
+export type CanyonLogFormProps = {
+  initialData?: Partial<ClimbLogFormData>
+  onSubmit: (formData: ClimbLogFormData, mediaFiles: MediaUpdate) => Promise<void>
+  submitLabel?: string
+  retainedMedia: ExistingMedia[]
+  setRetainedMedia: React.Dispatch<React.SetStateAction<ExistingMedia[]>>
+  newMediaFiles: NewMedia[]
+  setNewMediaFiles: React.Dispatch<React.SetStateAction<NewMedia[]>>
+}
