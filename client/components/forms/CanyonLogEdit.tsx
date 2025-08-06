@@ -1,10 +1,10 @@
 import { useParams } from 'react-router'
 import { useState, useEffect } from 'react'
-import ClimbLogForm from './ClimbLogForm'
 import { useLogById, useUpdateLog } from '../../hooks/api'
-import { ClimbLogFormData, ExistingMedia, MediaUpdate, NewMedia } from '../../models/models'
+import { ExistingMedia, MediaUpdate, NewMedia } from '../../models/models'
+import CanyonLogForm from './CanyonLogForm'
 
-export default function EditClimbLog() {
+export default function EditCanyonLog() {
   const { username, logId } = useParams()
   const { data: logData, isLoading } = useLogById(username!, Number(logId))
   const updateLog = useUpdateLog()
@@ -28,23 +28,19 @@ export default function EditClimbLog() {
  
   
   // Prepare initial form data, flattening nested details and tech_style parsing
-  const cleanInitialData: ClimbLogFormData = {
+  const cleanInitialData: CanyonLogFormData = {
     title: logData?.title ?? '',
     objective: logData?.objective ?? '',
     location: logData?.location ?? '',
     date: logData?.date ?? '',
     notes: logData?.notes ?? '',
     team: logData?.details?.team ?? '',
-    attempts: logData?.details?.attempts ?? '',
-    route_style: logData?.details?.route_style,
     media: retainedMedia, // media is handled separately via retainedMedia state and new files
     grade: logData?.details.grade ?? '',
-    send: logData?.details.send ?? '',
-    height: logData?.details.height ?? '',
-    pitches: logData?.details.pitches ?? '',
+
   }
 
-  const handleUpdate = async (formData: ClimbLogFormData, mediaFiles: MediaUpdate) => {
+  const handleUpdate = async (formData: CanyonLogFormData, mediaFiles: MediaUpdate) => {
     if (!logId || !logData) return
     const form = new FormData()
     const id = Number(logId)
@@ -54,22 +50,18 @@ export default function EditClimbLog() {
       objective: formData.objective,
       location: formData.location,
       date: formData.date,
-      type: 'climb',
+      type: 'canyon',
       notes: formData.notes,
     }
 
-    const climb = {
-      grade: formData.grade,
-      route_style: formData.route_style,
-      send: formData.send,
+    const canyon = {
+      grade: formData.grade,    
       team: formData.team,
-      attempts: formData.attempts,
-      height: formData.height,      
       pitches: formData.pitches,      
     }
     
 
-    form.append('data', JSON.stringify({ core, climb, media: { retained: mediaFiles.retained, added: mediaFiles.added } }))
+    form.append('data', JSON.stringify({ core, canyon, media: { retained: mediaFiles.retained, added: mediaFiles.added } }))
     
     mediaFiles.added.forEach((fileWrapper) => {
       form.append('media', fileWrapper.file) 
@@ -84,7 +76,7 @@ export default function EditClimbLog() {
   if (isLoading || !logData) return <p>Loading log...</p>
 
   return (
-    <ClimbLogForm
+    <CanyonLogForm
       initialData={cleanInitialData}
       onSubmit={handleUpdate}
       submitLabel="Update Log"
