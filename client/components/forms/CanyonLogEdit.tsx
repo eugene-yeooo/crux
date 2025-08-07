@@ -1,7 +1,7 @@
 import { useParams } from 'react-router'
 import { useState, useEffect } from 'react'
 import { useLogById, useUpdateLog } from '../../hooks/api'
-import { ExistingMedia, MediaUpdate, NewMedia } from '../../models/models'
+import { CanyonLogFormData, ExistingMedia, MediaUpdate, NewMedia } from '../../models/models'
 import CanyonLogForm from './CanyonLogForm'
 
 export default function EditCanyonLog() {
@@ -37,7 +37,7 @@ export default function EditCanyonLog() {
     team: logData?.details?.team ?? '',
     media: retainedMedia, // media is handled separately via retainedMedia state and new files
     grade: logData?.details.grade ?? '',
-
+    pitches: logData?.details.pitches
   }
 
   const handleUpdate = async (formData: CanyonLogFormData, mediaFiles: MediaUpdate) => {
