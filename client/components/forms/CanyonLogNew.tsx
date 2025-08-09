@@ -68,7 +68,7 @@ export default function LogCanyon() {
 
   return <CanyonLogForm 
     onSubmit={handleCreate} 
-    submitLabel="Log Climb" 
+    submitLabel="Log Canyon" 
     retainedMedia={[]} // empty since new log has no existing media
     setRetainedMedia={() => {}} // ^same
     newMediaFiles={newMediaFiles}
