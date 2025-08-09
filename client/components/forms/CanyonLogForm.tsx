@@ -116,7 +116,7 @@ export default function CanyonLogForm({
 
         <div>
           <label htmlFor="notes" className={labelStyle}>Notes</label>
-          <textarea id="notes" {...register('notes')} rows={4} className="w-full p-2 border rounded-md resize-none" placeholder="Route description, connies, choss, etc." />
+          <textarea id="notes" {...register('notes')} rows={4} className="w-full p-2 border rounded-md resize-none" placeholder="Route description, flow level, anchor conditions, etc." />
         </div>
 
         <MediaUpload
