@@ -1,12 +1,12 @@
 import { useCreateLog, useUserProfile } from '../../hooks/api'
-import { ClimbLogFormData, MediaUpdate, NewMedia } from '../../models/models'
+import { CanyonLogFormData, MediaUpdate, NewMedia } from '../../models/models'
 import { useState } from 'react'
 import { useAuth0 } from '@auth0/auth0-react'
-import ClimbLogForm from './ClimbLogForm'
+import CanyonLogForm from './CanyonLogForm'
 
 
 
-export default function LogClimb() {
+export default function LogCanyon() {
   const createLog = useCreateLog()
   const [newMediaFiles, setNewMediaFiles] = useState<NewMedia[]>([])
   const { user } = useAuth0()
@@ -16,7 +16,7 @@ export default function LogClimb() {
   // console.log(userId)
 
 
-  const handleCreate = async (formData: ClimbLogFormData, mediaFiles: MediaUpdate) => {
+  const handleCreate = async (formData: CanyonLogFormData, mediaFiles: MediaUpdate) => {
     // Prepare FormData to send files + JSON data
     const data = new FormData()
 
@@ -27,18 +27,14 @@ export default function LogClimb() {
       objective: formData.objective,
       location: formData.location,
       date: formData.date,
-      type: 'climb',
+      type: 'canyon',
       notes: formData.notes,
     }
 
     const climb = {
-      grade: formData.grade,
-      attempts: formData.attempts,
-      route_style: formData.route_style,
+      grade: formData.grade,    
       team: formData.team,
-      pitches: formData.pitches,
-      send: formData.send,
-      height: formData.height,
+      pitches: formData.pitches,      
     }
 
     const media = mediaFiles.added.map(({ file, caption }, index) => {
@@ -70,9 +66,9 @@ export default function LogClimb() {
     await createLog.mutateAsync(data)
   }
 
-  return <ClimbLogForm 
+  return <CanyonLogForm 
     onSubmit={handleCreate} 
-    submitLabel="Log Climb" 
+    submitLabel="Log Canyon" 
     retainedMedia={[]} // empty since new log has no existing media
     setRetainedMedia={() => {}} // ^same
     newMediaFiles={newMediaFiles}
