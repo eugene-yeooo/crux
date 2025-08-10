@@ -117,6 +117,13 @@ export async function addLogClimb(logId: number, climbData: any, trx: Knex.Trans
   })
 }
 
+export async function addLogCanyon(logId: number, canyonData: any, trx: Knex.Transaction) {
+  return trx('log_canyons').insert({
+    log_id: logId,
+    ...canyonData,
+  })
+}
+
 // add more log types here
 
 export async function addMedia(
