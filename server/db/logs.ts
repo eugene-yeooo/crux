@@ -159,6 +159,9 @@ export async function addFullLog(data: any) {
       case 'climb':
         if (data.climb) await addLogClimb(logId, data.climb, trx)
         break
+      case 'canyon':
+        if (data.canyon) await addLogCanyon(logId, data.canyon, trx)
+        break
       // More types...
     }
 
