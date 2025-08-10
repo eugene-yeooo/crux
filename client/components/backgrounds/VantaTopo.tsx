@@ -21,11 +21,11 @@ export default function VantaTopology() {
           minWidth: 200.00,
           scale: 1.00,
           scaleMobile: 1.00,
-          // color: 0x63b8a7, // teal
-          color: 0x0, // black
-          backgroundColor: 0xffffff, // white
+          color: 0x63b8a7, // teal
+          // color: 0x0, // black
+          // backgroundColor: 0xffffff, // white
           // backgroundColor: 0xd9d9d9, // grey
-          // backgroundColor: 0x1b1d1d, // black
+          backgroundColor: 0x1b1d1d, // light black
         })
       } catch (err) {
         console.error('[VANTA.TOPOLOGY] Init error:', err)
