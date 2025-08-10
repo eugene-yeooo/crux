@@ -19,7 +19,7 @@ export async function getLogsByUsername(username: string) {
   // Step 2: Collect log IDs by type (returns an array)
   const caveLogIds = baseLogs.filter(log => log.type === 'cave').map(log => log.id)
   const climbLogIds = baseLogs.filter(log => log.type === 'climb').map(log => log.id)
-  // const canyonLogIds = baseLogs.filter(log => log.type === 'canyon').map(log => log.id)
+  const canyonLogIds = baseLogs.filter(log => log.type === 'canyon').map(log => log.id)
   // const alpineLogIds = baseLogs.filter(log => log.type === 'alpine').map(log => log.id)
   // const diveLogIds = baseLogs.filter(log => log.type === 'dive').map(log => log.id)
 
@@ -30,8 +30,8 @@ export async function getLogsByUsername(username: string) {
   const climbLogs = await connection('log_climbs').whereIn('log_id', climbLogIds)
   const climbMap = Object.fromEntries(climbLogs.map(log => [log.log_id, log]))
 
-  // const canyonLogs = await connection('log-canyons').whereIn('log_id', canyonLogIds)
-  // const canyonMap = Object.fromEntries(canyonLogs.map(log => [log.log_id, log]))
+  const canyonLogs = await connection('log-canyons').whereIn('log_id', canyonLogIds)
+  const canyonMap = Object.fromEntries(canyonLogs.map(log => [log.log_id, log]))
 
   // const alpineLogs = await connection('log-alpine').whereIn('log_id', alpineLogIds)
   // const alpineMap = Object.fromEntries(alpineLogs.map(log => [log.log_id, log]))
@@ -46,7 +46,7 @@ export async function getLogsByUsername(username: string) {
     details:
       log.type === 'cave' ? caveMap[log.id] ?? null
       : log.type === 'climb' ? climbMap[log.id] ?? null
-      // : log.type === 'canyon' ? canyonMap[log.id] ?? null
+      : log.type === 'canyon' ? canyonMap[log.id] ?? null
       // : log.type === 'alpine' ? alpineMap[log.id] ?? null
       // : log.type === 'dive' ? diveMap[log.id] ?? null
       : null,
