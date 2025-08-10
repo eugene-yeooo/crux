@@ -32,9 +32,6 @@ const routes = createRoutesFromElements(
     <Route path="log-nav/log-climb" element={<ProtectedRoute><ClimbLogNew /></ProtectedRoute>} />
     <Route path="log-nav/log-canyon" element={<ProtectedRoute><CanyonLogNew /></ProtectedRoute>} />
 
-      {/* <Route path="log-climb" element={<LogClimb />} />
-      <Route path="log-canyon" element={<LogCanyon />} />
-      <Route path="log-dive" element={<LogDive />} /> */}
 
     {/* User profile with dynamic username param */}
     <Route path="user/:username" element={<UserProfilePage />} />
