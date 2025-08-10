@@ -30,7 +30,7 @@ export async function getLogsByUsername(username: string) {
   const climbLogs = await connection('log_climbs').whereIn('log_id', climbLogIds)
   const climbMap = Object.fromEntries(climbLogs.map(log => [log.log_id, log]))
 
-  const canyonLogs = await connection('log-canyons').whereIn('log_id', canyonLogIds)
+  const canyonLogs = await connection('log_canyons').whereIn('log_id', canyonLogIds)
   const canyonMap = Object.fromEntries(canyonLogs.map(log => [log.log_id, log]))
 
   // const alpineLogs = await connection('log-alpine').whereIn('log_id', alpineLogIds)
