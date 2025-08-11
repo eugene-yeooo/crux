@@ -264,6 +264,9 @@ export async function updateFullLog(logId: number, data: any) {
       case 'climb' :
         if (data.climb) await updateLogClimb(logId, data.climb, trx)
         break
+      case 'canyon' :
+        if (data.canyon) await updateLogCanyon(logId, data.canyon, trx)
+        break
       //more types here
     }
 
