@@ -194,6 +194,11 @@ export async function updateLogClimb(logId: number, climbData: unknown, trx: Kne
   return trx('log_climbs').where({ log_id: logId }).update(climbData)
 }
 
+export async function updateLogCanyon(logId: number, canyonData: unknown, trx: Knex.Transaction) {
+  return trx('log_canyons').where({ log_id: logId }).update(canyonData)
+}
+
+
 // add more log types here
 
 export async function updateMedia(
