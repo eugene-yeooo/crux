@@ -36,7 +36,8 @@ const routes = createRoutesFromElements(
     {/* User profile with dynamic username param */}
     <Route path="user/:username" element={<UserProfilePage />} />
         <Route path="user/:username/log/:logId" element={<LogPage />} />
-        <Route path="user/:username/log/:logId/edit" element={<ClimbLogEdit />} />
+        <Route path="user/:username/log/:logId/edit-cave" element={<CaveLogEdit />} />
+        <Route path="user/:username/log/:logId/edit-climb" element={<ClimbLogEdit />} />
         {/* will need conditional for log type */}
     
     {/* <Route path='edit/:logId' element={<EditLog />} /> */}
