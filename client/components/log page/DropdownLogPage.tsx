@@ -10,7 +10,7 @@ interface Props {
   onInitDelete: () => void
 }
 
-function LogDropdownMenu({ logId, logType, onInitDelete }: Props, ref: React.Ref<HTMLDivElement>) {
+function LogDropdownMenu({ logId, logType, onInitDelete }: Props) {
   
   const { user } = useAuth0()
   

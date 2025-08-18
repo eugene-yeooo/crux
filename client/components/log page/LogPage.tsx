@@ -10,7 +10,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 
 export default function LogPage() {
   const { username, logId } = useParams()
-  const [logMenu, setLogMenu] = useState(false)
+  // const [logMenu, setLogMenu] = useState(false)
   const [showConfirm, setShowConfirm] = useState(false)
   const { data: log, isLoading, error } = useLogById(username!, Number(logId))
   const menuRef = useRef<HTMLDivElement>(null)
@@ -29,24 +29,24 @@ export default function LogPage() {
   }, [])
 
   // handles clicking out of log dropdown menu
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
-        setLogMenu(false)
-      }
-    }
-    if (logMenu) {
-      document.addEventListener('mousedown', handleClickOutside)
-    }
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
-    }
-  }, [logMenu])
+  // useEffect(() => {
+  //   const handleClickOutside = (e: MouseEvent) => {
+  //     if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+  //       setLogMenu(false)
+  //     }
+  //   }
+  //   if (logMenu) {
+  //     document.addEventListener('mousedown', handleClickOutside)
+  //   }
+  //   return () => {
+  //     document.removeEventListener('mousedown', handleClickOutside)
+  //   }
+  // }, [logMenu])
   
   if (isLoading) return <p>Loading...</p>
   if (error || !log) return <p>Error loading log.</p>
 
-  const toggleMenu = () => setLogMenu(!logMenu)
+  // const toggleMenu = () => setLogMenu(!logMenu)
 
   const handleDelete = () => {
     deleteLog.mutate(log.id)
@@ -55,8 +55,6 @@ export default function LogPage() {
 
   const handleCancel = () => {
     setShowConfirm(false)
-    
-    setLogMenu(false)
   }
   
   return (
