@@ -22,7 +22,7 @@ export default function LogPage() {
   
   const isOwner = isAuthenticated && log?.auth0_id === user?.sub //checks if user is authorized to edit log
 
-  // console.log(log)
+  console.log(log)
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -120,7 +120,7 @@ export default function LogPage() {
               <p><span className={labelStyle}>Grade:</span> {log.details.grade}</p>
               <p><span className={labelStyle}>Style:</span> {log.details.style}</p>
               <p><span className={labelStyle}>Pitches:</span> {log.details.pitches}</p>
-              <p><span className={labelStyle}>Height:</span> {log.details.height}</p>
+              <p><span className={labelStyle}>Height:</span> {log.details.height}m</p>
             </>
           )}
           {log.type === 'canyon' && (
