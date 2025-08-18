@@ -22,7 +22,7 @@ export default function LogPage() {
   
   const isOwner = isAuthenticated && log?.auth0_id === user?.sub //checks if user is authorized to edit log
 
-  console.log(log)
+  // console.log(log)
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -68,10 +68,10 @@ export default function LogPage() {
             <h1 className="text-2xl font-bold">{log.objective}</h1>
             
           {isOwner && (<div>
-              <button onClick={toggleMenu} className="ml-3 p-1 rounded hover:bg-gray-200" aria-label='Edit log'>
+              {/* <button onClick={toggleMenu} className="ml-3 p-1 rounded hover:bg-gray-200" aria-label='Edit log'>
                 <Pencil size={20} className="text-gray-400 hover:text-black" />
-              </button>
-              {logMenu && <LogDropdownMenu ref={menuRef} logId={log.id} onInitDelete={() => setShowConfirm(true)} />}
+              </button> */}
+              <LogDropdownMenu ref={menuRef} logId={log.id} logType={log.type} onInitDelete={() => setShowConfirm(true)} />
             </div>)}
 
           </div>
