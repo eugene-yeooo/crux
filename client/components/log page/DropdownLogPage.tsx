@@ -1,3 +1,4 @@
+import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
 import { Link } from 'react-router'
 import { Edit3, Trash2 } from 'lucide-react'
 import { forwardRef } from 'react'
@@ -5,17 +6,18 @@ import { useAuth0 } from '@auth0/auth0-react'
 
 interface Props {
   logId: number
+  logType: string
   onInitDelete: () => void
 }
 
-function LogDropdownMenu({ logId, onInitDelete }: Props, ref: React.Ref<HTMLDivElement>) {
+function LogDropdownMenu({ logId, logType, onInitDelete }: Props, ref: React.Ref<HTMLDivElement>) {
   
   const { user } = useAuth0()
   
   return (
     <div ref={ref} className="absolute top-6 left-64 bg-white border shadow rounded w-40 py-2">
       <Link
-        to={`/user/${user?.nickname}/log/${logId}/edit`}
+        to={`/user/${user?.nickname}/log/${logId}/edit-${logType}`}
         className="flex items-center px-4 py-2 text-sm hover:bg-gray-100"
       >
         <Edit3 size={16} className="mr-2" /> Edit Log
