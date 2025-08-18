@@ -68,9 +68,9 @@ export default function LogPage() {
             <h1 className="text-2xl font-bold">{log.objective}</h1>
             
           {isOwner && (<div>
-              <button onClick={toggleMenu} className="ml-3 p-1 rounded hover:bg-gray-200" aria-label='Edit log'>
+              {/* <button onClick={toggleMenu} className="ml-3 p-1 rounded hover:bg-gray-200" aria-label='Edit log'>
                 <Pencil size={20} className="text-gray-400 hover:text-black" />
-              </button>
+              </button> */}
               {logMenu && <LogDropdownMenu ref={menuRef} logId={log.id} logType={log.type} onInitDelete={() => setShowConfirm(true)} />}
             </div>)}
 
