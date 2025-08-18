@@ -118,7 +118,7 @@ export default function LogPage() {
           {log.type === 'climb' && (
             <>
               <p><span className={labelStyle}>Grade:</span> {log.details.grade}</p>
-              <p><span className={labelStyle}>Style:</span> {log.details.style}</p>
+              <p><span className={labelStyle}>Style:</span> {log.details.route_style}</p>
               <p><span className={labelStyle}>Pitches:</span> {log.details.pitches}</p>
               <p><span className={labelStyle}>Height:</span> {log.details.height}m</p>
             </>
