@@ -71,7 +71,7 @@ export default function LogPage() {
               {/* <button onClick={toggleMenu} className="ml-3 p-1 rounded hover:bg-gray-200" aria-label='Edit log'>
                 <Pencil size={20} className="text-gray-400 hover:text-black" />
               </button> */}
-              {logMenu && <LogDropdownMenu ref={menuRef} logId={log.id} logType={log.type} onInitDelete={() => setShowConfirm(true)} />}
+              <LogDropdownMenu ref={menuRef} logId={log.id} logType={log.type} onInitDelete={() => setShowConfirm(true)} />
             </div>)}
 
           </div>
