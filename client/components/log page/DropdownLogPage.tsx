@@ -28,8 +28,9 @@ function LogDropdownMenu({ logId, logType, onInitDelete }: Props, ref: React.Ref
           <DropdownMenu.Portal>
             <DropdownMenu.Content
               className="z-50 w-40 rounded border bg-white py-2 shadow-md"
-              sideOffset={32.5}
-              align="end"
+              side="right"
+              sideOffset={2.5}
+              align="start"
             >
               <DropdownMenu.Item asChild>
                 <Link
