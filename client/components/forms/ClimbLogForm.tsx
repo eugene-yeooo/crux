@@ -76,7 +76,7 @@ export default function ClimbLogForm({
 
   return (
     <div className="bg-white rounded-xl shadow-md p-6 max-w-5xl mx-10 mb-6 px-14">
-      <h1 className="text-2xl font-bold text-brandBlack text-center mb-6">Log a Climb</h1>
+      <h1 className="text-3xl font-bold text-brandBlack text-center mb-6">Log a Climb</h1>
       <form onSubmit={handleSubmit(onFormSubmit)} className="space-y-5">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* <div>
