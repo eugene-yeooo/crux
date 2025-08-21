@@ -8,7 +8,7 @@ The platform enables users to keep detailed records of their logs, upload media,
 
 This project began as a personal initiative to combine my love for outdoor sports with web development. It’s an ongoing full-stack project where I’ve built the database structure, authentication, media handling, and much of the frontend UI.
 
-## Features
+## Features (work in progress)
 
 - **Logs**: Record adventures across multiple sports with discipline-specific details (e.g. climbing grades, cave technical styles, canyon descent notes).
 - **Media Uploads**: Add photos and videos with captions to your logs to bring them to life.
@@ -19,6 +19,8 @@ This project began as a personal initiative to combine my love for outdoor sport
 - **Authentication**: Secure login and account management with JWT-based auth.
 - **Community Focus**: Designed to help adventurers document, inspire, and connect.
 - **AI-Powered Objective Discovery**: Integrating **Gemini AI** into Crux’s **Explore** page to help adventurers discover new outdoor objectives in new locations. By combining AI-driven recommendations with community logs, users will be able to search and receive tailored suggestions for climbs, caves, canyons, and alpine routes that match their interests, skill level, and travel goals. This feature aims to make the Explore page not just a feed of recent activity, but an intelligent guide to new adventures.
+- **Log Mapping**: An **interactive map** where user logs are displayed as pins at their recorded locations. Each pin expands into a preview showing activity type, photos, captions, and log details, making it easy to visually explore the adventures of the Crux community.
+
 
 
 ## Technology Stack
