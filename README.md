@@ -10,11 +10,10 @@ This project began as a personal initiative to combine my love for outdoor sport
 
 ## Features (work in progress)
 
-- **Logs**: Record adventures across multiple sports with discipline-specific details (e.g. climbing grades, cave technical styles, canyon descent notes).
-- **Media Uploads**: Add photos and videos with captions to your logs to bring them to life.
+- **Logs**: Record adventures across multiple sports with discipline-specific details (e.g. climbing grades, cave technical styles, canyon descent notes). Dedicated pages for each log with full notes, stats, and media.
+- **Media Uploads**: Add photos and videos with captions to your logs
 - **User Profiles**: Create a personal profile showcasing your adventure history and media.
 - **Log Feed**: Browse logs from yourself and others, filterable by sport or activity.
-- **Log Details**: View a dedicated page for each log with full notes, stats, and media.
 - **Editing & Updates**: Update past logs and manage uploaded media with previews, add/remove, and captions.
 - **Authentication**: Secure login and account management with JWT-based auth.
 - **Community Focus**: Designed to help adventurers document, inspire, and connect.
