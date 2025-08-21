@@ -12,11 +12,9 @@ This project began as a personal initiative to combine my love for outdoor sport
 
 - **Logs**: Record adventures across multiple sports with discipline-specific details (e.g. climbing grades, cave technical styles, canyon descent notes). Dedicated pages for each log with full notes, stats, and media.
 - **Media Uploads**: Add photos and videos with captions to your logs
-- **User Profiles**: Create a personal profile showcasing your adventure history and media.
-- **Log Feed**: Browse logs from yourself and others, filterable by sport or activity.
+- **Log Feed & User Profiles**: Browse logs from yourself and others, filterable by sport or activity, showcasing adventure history and media.
 - **Editing & Updates**: Update past logs and manage uploaded media with previews, add/remove, and captions.
 - **Authentication**: Secure login and account management with JWT-based auth.
-- **Community Focus**: Designed to help adventurers document, inspire, and connect.
 - **AI-Powered Objective Discovery**: Integrating **Gemini AI** into Crux’s **Explore** page to help adventurers discover new outdoor objectives in new locations. Search and receive tailored suggestions for climbs, caves, canyons, and alpine routes that match their interests, skill level, and travel goals.
 - **Interactive Map**: Where user logs are displayed as pins at their recorded locations. Each pin will expand into a preview showing activity type, photos, captions, and log details, making it easy to visually explore the adventures of the Crux community.
 
