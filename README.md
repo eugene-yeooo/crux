@@ -18,7 +18,7 @@ This project began as a personal initiative to combine my love for outdoor sport
 - **Authentication**: Secure login and account management with JWT-based auth.
 - **Community Focus**: Designed to help adventurers document, inspire, and connect.
 - **AI-Powered Objective Discovery**: Integrating **Gemini AI** into Crux’s **Explore** page to help adventurers discover new outdoor objectives in new locations. Search and receive tailored suggestions for climbs, caves, canyons, and alpine routes that match their interests, skill level, and travel goals.
-- **Log Mapping**: An **interactive map** where user logs are displayed as pins at their recorded locations. Each pin expands into a preview showing activity type, photos, captions, and log details, making it easy to visually explore the adventures of the Crux community.
+- **Interactive Map**: Where user logs are displayed as pins at their recorded locations. Each pin will expand into a preview showing activity type, photos, captions, and log details, making it easy to visually explore the adventures of the Crux community.
 
 
 
