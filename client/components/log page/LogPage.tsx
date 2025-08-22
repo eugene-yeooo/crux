@@ -8,7 +8,9 @@ import ConfirmDelete from './ConfirmDelete';
 import { useAuth0 } from '@auth0/auth0-react';
 import Lightbox from "yet-another-react-lightbox"
 import Video from "yet-another-react-lightbox/plugins/video"
+import type { Slide } from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css"
+
 
 export default function LogPage() {
   const { username, logId } = useParams()
@@ -47,20 +49,22 @@ export default function LogPage() {
   }
 
   // Map log.media to lightbox slides format
-  const slides = (log.media || []).map((file) => {
+  const slides: Slide[] = (log.media || []).reduce<Slide[]>((acc, file) => {
     if (file.type === "image") {
-      return { type: "image", src: file.url || "" }
-    }
-    if (file.type === "video") {
-      return {
+      acc.push({ type: "image", src: file.url || "" });
+    } else if (file.type === "video") {
+      acc.push({
         type: "video",
         width: 1280,
         height: 720,
-        sources: [{ src: file.url || "", type: "video/mp4", preload: 'auto', controls: true }],
-      }
+        sources: [{ src: file.url || "", type: "video/mp4" }],
+        preload: "auto", 
+        controls: true
+      });
     }
-    return null
-  }).filter(Boolean)
+    return acc;
+  }, []);
+
   
   return (
     <div className="relative rounded-lg shadow p-6 bg-white space-y-2 max-w-6xl mx-auto">
@@ -149,6 +153,7 @@ export default function LogPage() {
           {log.media.map((file, i) => (
             <div key={i} className="items-center">
               {file.type === 'image' && (
+                // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
                 <img
                   src={file.url}
                   alt={file.caption || `Media ${i + 1}`}
@@ -175,7 +180,7 @@ export default function LogPage() {
             slides={slides}
             plugins={[Video]}
             index={index}
-            onIndexChange={setIndex}
+            // onIndexChange={setIndex}
           />
         </div>
       )}
