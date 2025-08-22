@@ -2,7 +2,6 @@ import { Link, useNavigate, useParams } from 'react-router'
 import { useLogById } from '../../hooks/api'
 import { useEffect, useRef, useState } from 'react'
 import { format } from 'date-fns'
-import { Pencil } from 'lucide-react';
 import LogDropdownMenu from './DropdownLogPage';
 import { useDeleteLog } from '../../hooks/api';
 import ConfirmDelete from './ConfirmDelete';

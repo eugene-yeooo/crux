@@ -1,7 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import express from 'express'
 import * as db from '../db/logs'
 import checkJWT from '../middleware/auth.config'
-import knex from '../db/connection'
 import mediaUpload from '../middleware/multer.config'
 
 const router = express.Router()
@@ -47,7 +47,7 @@ router.delete('/delete-log/:logId', async (req, res) => {
 // POST /api/create-log
 router.post('/create-log', checkJWT, mediaUpload.any(), async (req, res) => {
   
-  const files = req.files as Express.Multer.File[]
+  // const files = req.files as Express.Multer.File[]
   console.log(req.files)
 
 
