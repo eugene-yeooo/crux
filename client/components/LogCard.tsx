@@ -3,15 +3,16 @@
 import { Link } from "react-router"
 import { format } from 'date-fns'
 import { Key } from "react"
-import Lightbox from "yet-another-react-lightbox"
+import Lightbox, { Slide } from "yet-another-react-lightbox"
 import Video from "yet-another-react-lightbox/plugins/video"
 import "yet-another-react-lightbox/styles.css"
 import { useState } from 'react'
 import Captions from "yet-another-react-lightbox/plugins/captions";
 import "yet-another-react-lightbox/plugins/captions.css";
+import { Log } from "../models/models"
 
 
-export default function LogCard({ log }) {
+export default function LogCard({ log }: { log: Log }) {
   
   const [index, setIndex] = useState(-1)
 
@@ -23,23 +24,22 @@ export default function LogCard({ log }) {
   const formattedDate = format(new Date(log.date), 'dd MMM yyyy')
 
    // Map log.media to lightbox slides format
-  const slides = (log.media || []).map((file) => {
+  const slides: Slide[] = (log.media || []).reduce<Slide[]>((acc, file) => {
     if (file.type === "image") {
-      return { type: "image", src: file.url || "", description: file.caption || "" }
-    }
-    if (file.type === "video") {
-      return {
+      acc.push({ type: "image", src: file.url || "", description: file.caption || "", });
+    } else if (file.type === "video") {
+      acc.push({
         type: "video",
         width: 1280,
         height: 720,
         sources: [{ src: file.url || "", type: "video/mp4" }],
-        preload: 'auto', 
+        preload: "auto", 
         controls: true,
         description: file.caption || "",
-      }
+      });
     }
-    return null
-  }).filter(Boolean)
+    return acc;
+  }, []);
   
   return (
     <div className="rounded-lg shadow p-4 bg-white space-y-1 max-w-96">
