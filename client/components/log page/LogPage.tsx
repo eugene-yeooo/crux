@@ -152,13 +152,13 @@ export default function LogPage() {
                 <img
                   src={file.url}
                   alt={file.caption || `Media ${i + 1}`}
-                  className="h-96 object-cover rounded shadow"
+                  className="h-96 object-cover rounded shadow cursor-pointer"
                   onClick={() => setIndex(i)}
                 />
               )}
               {file.type === 'video' && (
                 // eslint-disable-next-line jsx-a11y/media-has-caption
-                <video controls className="w-60 rounded shadow" onClick={() => setIndex(i)}>
+                <video controls className="w-60 rounded shadow cursor-pointer" onClick={() => setIndex(i)}>
                   <source src={file.url} type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
