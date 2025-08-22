@@ -9,9 +9,10 @@ import "yet-another-react-lightbox/styles.css"
 import { useState } from 'react'
 import Captions from "yet-another-react-lightbox/plugins/captions";
 import "yet-another-react-lightbox/plugins/captions.css";
+import { Log } from "../models/models"
 
 
-export default function LogCard({ log }) {
+export default function LogCard({ log }: { log: Log }) {
   
   const [index, setIndex] = useState(-1)
 
@@ -23,7 +24,7 @@ export default function LogCard({ log }) {
   const formattedDate = format(new Date(log.date), 'dd MMM yyyy')
 
    // Map log.media to lightbox slides format
-  const slides = (log.media || []).map((file) => {
+  const slides = (log.media || []).map((file: { type: string; url: unknown; caption: unknown }) => {
     if (file.type === "image") {
       return { type: "image", src: file.url || "", description: file.caption || "" }
     }
