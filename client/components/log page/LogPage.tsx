@@ -21,6 +21,7 @@ export default function LogPage() {
   const deleteLog = useDeleteLog()
   const navigate = useNavigate()
   const { isAuthenticated, user } = useAuth0()
+  const [index, setIndex] = useState(-1)
   
   const isOwner = isAuthenticated && log?.auth0_id === user?.sub //checks if user is authorized to edit log
 
@@ -44,6 +45,22 @@ export default function LogPage() {
   const handleCancel = () => {
     setShowConfirm(false)
   }
+
+  // Map log.media to lightbox slides format
+  const slides = (log.media || []).map((file) => {
+    if (file.type === "image") {
+      return { type: "image", src: file.url || "" }
+    }
+    if (file.type === "video") {
+      return {
+        type: "video",
+        width: 1280,
+        height: 720,
+        sources: [{ src: file.url || "", type: "video/mp4", preload: 'auto', controls: true }],
+      }
+    }
+    return null
+  }).filter(Boolean)
   
   return (
     <div className="relative rounded-lg shadow p-6 bg-white space-y-2 max-w-6xl mx-auto">
@@ -136,11 +153,12 @@ export default function LogPage() {
                   src={file.url}
                   alt={file.caption || `Media ${i + 1}`}
                   className="h-96 object-cover rounded shadow"
+                  onClick={() => setIndex(i)}
                 />
               )}
               {file.type === 'video' && (
                 // eslint-disable-next-line jsx-a11y/media-has-caption
-                <video controls className="w-60 rounded shadow">
+                <video controls className="w-60 rounded shadow" onClick={() => setIndex(i)}>
                   <source src={file.url} type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
@@ -150,6 +168,15 @@ export default function LogPage() {
               )}
             </div>
           ))}
+
+          <Lightbox
+            open={index >= 0}
+            close={() => setIndex(-1)}
+            slides={slides}
+            plugins={[Video]}
+            index={index}
+            onIndexChange={setIndex}
+          />
         </div>
       )}
     </div>
