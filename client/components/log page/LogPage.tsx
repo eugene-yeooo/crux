@@ -2,11 +2,17 @@ import { Link, useNavigate, useParams } from 'react-router'
 import { useLogById } from '../../hooks/api'
 import { useEffect, useRef, useState } from 'react'
 import { format } from 'date-fns'
-import { Pencil } from 'lucide-react';
 import LogDropdownMenu from './DropdownLogPage';
 import { useDeleteLog } from '../../hooks/api';
 import ConfirmDelete from './ConfirmDelete';
 import { useAuth0 } from '@auth0/auth0-react';
+import Lightbox from "yet-another-react-lightbox"
+import Video from "yet-another-react-lightbox/plugins/video"
+import type { Slide } from "yet-another-react-lightbox";
+import "yet-another-react-lightbox/styles.css"
+import Captions from "yet-another-react-lightbox/plugins/captions";
+import "yet-another-react-lightbox/plugins/captions.css";
+
 
 export default function LogPage() {
   const { username, logId } = useParams()
@@ -19,6 +25,7 @@ export default function LogPage() {
   const deleteLog = useDeleteLog()
   const navigate = useNavigate()
   const { isAuthenticated, user } = useAuth0()
+  const [index, setIndex] = useState(-1)
   
   const isOwner = isAuthenticated && log?.auth0_id === user?.sub //checks if user is authorized to edit log
 
@@ -28,25 +35,11 @@ export default function LogPage() {
     window.scrollTo(0, 0)
   }, [])
 
-  // handles clicking out of log dropdown menu
-  // useEffect(() => {
-  //   const handleClickOutside = (e: MouseEvent) => {
-  //     if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
-  //       setLogMenu(false)
-  //     }
-  //   }
-  //   if (logMenu) {
-  //     document.addEventListener('mousedown', handleClickOutside)
-  //   }
-  //   return () => {
-  //     document.removeEventListener('mousedown', handleClickOutside)
-  //   }
-  // }, [logMenu])
+
   
   if (isLoading) return <p>Loading...</p>
   if (error || !log) return <p>Error loading log.</p>
 
-  // const toggleMenu = () => setLogMenu(!logMenu)
 
   const handleDelete = () => {
     deleteLog.mutate(log.id)
@@ -56,6 +49,25 @@ export default function LogPage() {
   const handleCancel = () => {
     setShowConfirm(false)
   }
+
+  // Map log.media to lightbox slides format
+  const slides: Slide[] = (log.media || []).reduce<Slide[]>((acc, file) => {
+    if (file.type === "image") {
+      acc.push({ type: "image", src: file.url || "", description: file.caption || "", });
+    } else if (file.type === "video") {
+      acc.push({
+        type: "video",
+        width: 1280,
+        height: 720,
+        sources: [{ src: file.url || "", type: "video/mp4" }],
+        preload: "auto", 
+        controls: true,
+        description: file.caption || "",
+      });
+    }
+    return acc;
+  }, []);
+
   
   return (
     <div className="relative rounded-lg shadow p-6 bg-white space-y-2 max-w-6xl mx-auto">
@@ -66,9 +78,6 @@ export default function LogPage() {
             <h1 className="text-2xl font-bold">{log.objective}</h1>
             
           {isOwner && (<div>
-              {/* <button onClick={toggleMenu} className="ml-3 p-1 rounded hover:bg-gray-200" aria-label='Edit log'>
-                <Pencil size={20} className="text-gray-400 hover:text-black" />
-              </button> */}
               <LogDropdownMenu ref={menuRef} logId={log.id} logType={log.type} onInitDelete={() => setShowConfirm(true)} />
             </div>)}
 
@@ -147,15 +156,17 @@ export default function LogPage() {
           {log.media.map((file, i) => (
             <div key={i} className="items-center">
               {file.type === 'image' && (
+                // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
                 <img
                   src={file.url}
                   alt={file.caption || `Media ${i + 1}`}
-                  className="h-96 object-cover rounded shadow"
+                  className="h-96 object-cover rounded shadow cursor-pointer"
+                  onClick={() => setIndex(i)}
                 />
               )}
               {file.type === 'video' && (
                 // eslint-disable-next-line jsx-a11y/media-has-caption
-                <video controls className="w-60 rounded shadow">
+                <video controls className="w-60 rounded shadow cursor-pointer" onClick={() => setIndex(i)}>
                   <source src={file.url} type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
@@ -165,6 +176,25 @@ export default function LogPage() {
               )}
             </div>
           ))}
+
+          <Lightbox
+            open={index >= 0}
+            close={() => setIndex(-1)}
+            slides={slides}
+            plugins={[Video, Captions]}
+            index={index}
+            captions={{ descriptionTextAlign: "center", descriptionMaxLines: 1 }}
+            styles={{
+              captionsDescription: {
+                fontFamily:
+                  'ui-monospace, monospace',
+                fontSize: "1rem",
+                fontStyle: "italic",
+                color: "#fff",
+                marginBottom: "0.5rem",
+              },
+            }}
+          />
         </div>
       )}
     </div>

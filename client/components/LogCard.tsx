@@ -7,6 +7,8 @@ import Lightbox from "yet-another-react-lightbox"
 import Video from "yet-another-react-lightbox/plugins/video"
 import "yet-another-react-lightbox/styles.css"
 import { useState } from 'react'
+import Captions from "yet-another-react-lightbox/plugins/captions";
+import "yet-another-react-lightbox/plugins/captions.css";
 
 
 export default function LogCard({ log }) {
@@ -23,14 +25,17 @@ export default function LogCard({ log }) {
    // Map log.media to lightbox slides format
   const slides = (log.media || []).map((file) => {
     if (file.type === "image") {
-      return { type: "image", src: file.url || "" }
+      return { type: "image", src: file.url || "", description: file.caption || "" }
     }
     if (file.type === "video") {
       return {
         type: "video",
         width: 1280,
         height: 720,
-        sources: [{ src: file.url || "", type: "video/mp4", preload: 'auto', controls: true }],
+        sources: [{ src: file.url || "", type: "video/mp4" }],
+        preload: 'auto', 
+        controls: true,
+        description: file.caption || "",
       }
     }
     return null
@@ -120,9 +125,19 @@ export default function LogCard({ log }) {
             open={index >= 0}
             close={() => setIndex(-1)}
             slides={slides}
-            plugins={[Video]}
+            plugins={[Video, Captions]}
             index={index}
-            onIndexChange={setIndex}
+            captions={{ descriptionTextAlign: "center", descriptionMaxLines: 1 }}
+            styles={{
+              captionsDescription: {
+                fontFamily:
+                  'ui-monospace, monospace',
+                fontSize: "1rem",
+                fontStyle: "italic",
+                color: "#fff",
+                marginBottom: "0.5rem",
+              },
+            }}
           />
       </>
       )}

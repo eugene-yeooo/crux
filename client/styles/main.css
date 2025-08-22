@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  /* Override Lightbox caption styles */
+  .yarl__caption {
+    @apply font-mono text-xs italic text-center mt-2 text-gray-700;
+  }
+}
