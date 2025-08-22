@@ -6,6 +6,9 @@ import LogDropdownMenu from './DropdownLogPage';
 import { useDeleteLog } from '../../hooks/api';
 import ConfirmDelete from './ConfirmDelete';
 import { useAuth0 } from '@auth0/auth0-react';
+import Lightbox from "yet-another-react-lightbox"
+import Video from "yet-another-react-lightbox/plugins/video"
+import "yet-another-react-lightbox/styles.css"
 
 export default function LogPage() {
   const { username, logId } = useParams()
@@ -27,25 +30,11 @@ export default function LogPage() {
     window.scrollTo(0, 0)
   }, [])
 
-  // handles clicking out of log dropdown menu
-  // useEffect(() => {
-  //   const handleClickOutside = (e: MouseEvent) => {
-  //     if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
-  //       setLogMenu(false)
-  //     }
-  //   }
-  //   if (logMenu) {
-  //     document.addEventListener('mousedown', handleClickOutside)
-  //   }
-  //   return () => {
-  //     document.removeEventListener('mousedown', handleClickOutside)
-  //   }
-  // }, [logMenu])
+
   
   if (isLoading) return <p>Loading...</p>
   if (error || !log) return <p>Error loading log.</p>
 
-  // const toggleMenu = () => setLogMenu(!logMenu)
 
   const handleDelete = () => {
     deleteLog.mutate(log.id)
@@ -65,9 +54,6 @@ export default function LogPage() {
             <h1 className="text-2xl font-bold">{log.objective}</h1>
             
           {isOwner && (<div>
-              {/* <button onClick={toggleMenu} className="ml-3 p-1 rounded hover:bg-gray-200" aria-label='Edit log'>
-                <Pencil size={20} className="text-gray-400 hover:text-black" />
-              </button> */}
               <LogDropdownMenu ref={menuRef} logId={log.id} logType={log.type} onInitDelete={() => setShowConfirm(true)} />
             </div>)}
 
