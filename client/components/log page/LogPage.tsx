@@ -10,6 +10,8 @@ import Lightbox from "yet-another-react-lightbox"
 import Video from "yet-another-react-lightbox/plugins/video"
 import type { Slide } from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css"
+import Captions from "yet-another-react-lightbox/plugins/captions";
+import "yet-another-react-lightbox/plugins/captions.css";
 
 
 export default function LogPage() {
@@ -51,7 +53,7 @@ export default function LogPage() {
   // Map log.media to lightbox slides format
   const slides: Slide[] = (log.media || []).reduce<Slide[]>((acc, file) => {
     if (file.type === "image") {
-      acc.push({ type: "image", src: file.url || "" });
+      acc.push({ type: "image", src: file.url || "", description: file.caption || "", });
     } else if (file.type === "video") {
       acc.push({
         type: "video",
@@ -59,7 +61,8 @@ export default function LogPage() {
         height: 720,
         sources: [{ src: file.url || "", type: "video/mp4" }],
         preload: "auto", 
-        controls: true
+        controls: true,
+        description: file.caption || "",
       });
     }
     return acc;
@@ -178,9 +181,19 @@ export default function LogPage() {
             open={index >= 0}
             close={() => setIndex(-1)}
             slides={slides}
-            plugins={[Video]}
+            plugins={[Video, Captions]}
             index={index}
-            // onIndexChange={setIndex}
+            captions={{ descriptionTextAlign: "center", descriptionMaxLines: 1 }}
+            styles={{
+              captionsDescription: {
+                fontFamily:
+                  'ui-monospace, monospace',
+                fontSize: "1rem",
+                fontStyle: "italic",
+                color: "#fff",
+                marginBottom: "0.5rem",
+              },
+            }}
           />
         </div>
       )}
