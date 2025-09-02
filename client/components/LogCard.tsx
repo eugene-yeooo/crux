@@ -147,6 +147,12 @@ export default function LogCard({ log }: { log: Log }) {
           )}
           </div>
           </Swiper>
+          <button className="custom-prev absolute top-1/2 -left-3 z-10 transform -translate-y-1/2">
+            <ChevronLeft className="text-black" size={50} />
+          </button>
+          <button className="custom-next absolute top-1/2 -right-3 z-10 transform -translate-y-1/2">
+            <ChevronRight className="text-black" size={50} />
+          </button>
           
           {/* Lightbox */}
           <Lightbox
