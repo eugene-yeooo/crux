@@ -11,6 +11,19 @@ import Captions from "yet-another-react-lightbox/plugins/captions";
 import "yet-another-react-lightbox/plugins/captions.css";
 import { Log } from "../models/models"
 
+// import { Swiper, SwiperSlide } from 'swiper/react'
+// import 'swiper/css'
+// import 'swiper/css/navigation'
+// import 'swiper/css/pagination'
+// import {
+//   FreeMode,
+//   Mousewheel,
+//   Navigation,
+//   Pagination,
+//   Scrollbar,
+// } from 'swiper/modules'
+// import { ChevronLeft, ChevronRight } from 'lucide-react'
+
 
 export default function LogCard({ log }: { log: Log }) {
   
@@ -24,7 +37,7 @@ export default function LogCard({ log }: { log: Log }) {
   const formattedDate = format(new Date(log.date), 'dd MMM yyyy')
 
    // Map log.media to lightbox slides format
-  const slides: Slide[] = (log.media || []).reduce<Slide[]>((acc, file) => {
+  const slides: Slide[] = (log.media.sort((a,b) => a.mediaId - b.mediaId) || []).reduce<Slide[]>((acc, file) => {
     if (file.type === "image") {
       acc.push({ type: "image", src: file.url || "", description: file.caption || "", });
     } else if (file.type === "video") {
@@ -92,11 +105,58 @@ export default function LogCard({ log }: { log: Log }) {
       )}
       
 
-       {/* Media files */}
+      {/* Media files */}
+      
       {log.media && log.media.length > 0 && (
-        <>
         <div className="space-y-4 mt-4 h-auto">
-          {log.media.slice(0, 2).map((file: { type: string; url: string | undefined }, i: Key | null | undefined) =>
+          {[...log.media]
+          .sort((a,b) => a.mediaId - b.mediaId)
+          .slice(0, 1).map((file: {
+            mediaId: number
+            caption: string; type: string; url: string | undefined 
+          }, i: Key | null | undefined) =>
+            file.type === 'image' ? (
+              <img
+                key={file.mediaId}
+                src={file.url}
+                alt={file.caption}
+                className="w-full object-cover rounded cursor-pointer"
+                onClick={() => setIndex(i)}
+              />
+            ) : file.type === 'video' ? (
+              // eslint-disable-next-line jsx-a11y/media-has-caption
+              <video
+                key={file.mediaId}
+                controls
+                className="w-full rounded cursor-pointer"
+                onClick={() => setIndex(i)}
+              >
+                <source src={file.url} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            ) : null
+          )}
+          </div>
+      )}
+
+      {/* {log.media && log.media.length > 1 && (
+        <>
+        <Swiper
+          modules={[FreeMode, Mousewheel, Navigation, Pagination, Scrollbar]}
+          spaceBetween={10}
+          slidesPerView={2}
+          navigation={{
+            nextEl: '.custom-next',
+            prevEl: '.custom-prev',
+          }}
+          grabCursor={true}
+          freeMode={true}
+          pagination={{ clickable: true }}
+          mousewheel={true}
+          className="relative w-[600px] h-64 rounded"
+        >
+        <SwiperSlide className="mt-4 h-auto">
+          {log.media.map((file: { type: string; url: string | undefined }, i: Key | null | undefined) =>
             file.type === 'image' ? (
               <img
                 key={i}
@@ -118,9 +178,19 @@ export default function LogCard({ log }: { log: Log }) {
               </video>
             ) : null
           )}
-          </div>
-          
-          {/* Lightbox */}
+          </SwiperSlide>
+          </Swiper>
+          <button className="custom-prev absolute top-1/2 -left-3 z-10 transform -translate-y-1/2">
+            <ChevronLeft className="text-black" size={50} />
+          </button>
+          <button className="custom-next absolute top-1/2 -right-3 z-10 transform -translate-y-1/2">
+            <ChevronRight className="text-black" size={50} />
+          </button>       
+      </>
+      )} */}
+
+
+      {/* Lightbox */}
           <Lightbox
             open={index >= 0}
             close={() => setIndex(-1)}
@@ -139,8 +209,6 @@ export default function LogCard({ log }: { log: Log }) {
               },
             }}
           />
-      </>
-      )}
 
     </div>
   )

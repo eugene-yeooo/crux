@@ -18,8 +18,6 @@ export default function UserProfilePage() {
     error: profileError,
   } = useUserProfile(username)
   
-  // console.log(profileData)
-
   const {
     data: logData,
     isLoading: loadingLogs,
@@ -30,6 +28,7 @@ export default function UserProfilePage() {
 
   const user = profileData?.user
   const logs: Log[] = logData?.logs ?? []
+  // console.log(logs)
 
   const filteredLogs =
     filter === 'all'
