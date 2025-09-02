@@ -37,7 +37,7 @@ export default function LogCard({ log }: { log: Log }) {
   const formattedDate = format(new Date(log.date), 'dd MMM yyyy')
 
    // Map log.media to lightbox slides format
-  const slides: Slide[] = (log.media || []).reduce<Slide[]>((acc, file) => {
+  const slides: Slide[] = (log.media.sort((a,b) => a.mediaId - b.mediaId) || []).reduce<Slide[]>((acc, file) => {
     if (file.type === "image") {
       acc.push({ type: "image", src: file.url || "", description: file.caption || "", });
     } else if (file.type === "video") {
@@ -112,11 +112,12 @@ export default function LogCard({ log }: { log: Log }) {
           {[...log.media]
           .sort((a,b) => a.mediaId - b.mediaId)
           .slice(0, 1).map((file: {
+            mediaId: number
             caption: string; type: string; url: string | undefined 
           }, i: Key | null | undefined) =>
             file.type === 'image' ? (
               <img
-                key={i}
+                key={file.mediaId}
                 src={file.url}
                 alt={file.caption}
                 className="w-full object-cover rounded cursor-pointer"
@@ -125,7 +126,7 @@ export default function LogCard({ log }: { log: Log }) {
             ) : file.type === 'video' ? (
               // eslint-disable-next-line jsx-a11y/media-has-caption
               <video
-                key={i}
+                key={file.mediaId}
                 controls
                 className="w-full rounded cursor-pointer"
                 onClick={() => setIndex(i)}
