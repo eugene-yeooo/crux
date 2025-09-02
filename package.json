@@ -48,6 +48,7 @@
     "react-tsparticles": "^2.12.2",
     "sqlite3": "^5.1.7",
     "superagent": "^10.2.1",
+    "swiper": "^11.2.10",
     "three": "^0.135.0",
     "tsparticles": "^3.8.1",
     "vanta": "^0.5.24",

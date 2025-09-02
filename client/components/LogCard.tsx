@@ -11,6 +11,19 @@ import Captions from "yet-another-react-lightbox/plugins/captions";
 import "yet-another-react-lightbox/plugins/captions.css";
 import { Log } from "../models/models"
 
+import { Swiper, SwiperSlide } from 'swiper/react'
+import 'swiper/css'
+import 'swiper/css/navigation'
+import 'swiper/css/pagination'
+import {
+  FreeMode,
+  Mousewheel,
+  Navigation,
+  Pagination,
+  Scrollbar,
+} from 'swiper/modules'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
+
 
 export default function LogCard({ log }: { log: Log }) {
   
