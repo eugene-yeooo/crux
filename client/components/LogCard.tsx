@@ -108,6 +108,20 @@ export default function LogCard({ log }: { log: Log }) {
        {/* Media files */}
       {log.media && log.media.length > 0 && (
         <>
+        <Swiper
+          modules={[FreeMode, Mousewheel, Navigation, Pagination, Scrollbar]}
+          spaceBetween={10}
+          slidesPerView={2}
+          navigation={{
+            nextEl: '.custom-next',
+            prevEl: '.custom-prev',
+          }}
+          grabCursor={true}
+          freeMode={true}
+          pagination={{ clickable: true }}
+          mousewheel={true}
+          className="relative w-[600px] h-64 rounded"
+        >
         <div className="space-y-4 mt-4 h-auto">
           {log.media.slice(0, 2).map((file: { type: string; url: string | undefined }, i: Key | null | undefined) =>
             file.type === 'image' ? (
@@ -132,6 +146,7 @@ export default function LogCard({ log }: { log: Log }) {
             ) : null
           )}
           </div>
+          </Swiper>
           
           {/* Lightbox */}
           <Lightbox
