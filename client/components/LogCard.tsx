@@ -11,18 +11,18 @@ import Captions from "yet-another-react-lightbox/plugins/captions";
 import "yet-another-react-lightbox/plugins/captions.css";
 import { Log } from "../models/models"
 
-import { Swiper, SwiperSlide } from 'swiper/react'
-import 'swiper/css'
-import 'swiper/css/navigation'
-import 'swiper/css/pagination'
-import {
-  FreeMode,
-  Mousewheel,
-  Navigation,
-  Pagination,
-  Scrollbar,
-} from 'swiper/modules'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+// import { Swiper, SwiperSlide } from 'swiper/react'
+// import 'swiper/css'
+// import 'swiper/css/navigation'
+// import 'swiper/css/pagination'
+// import {
+//   FreeMode,
+//   Mousewheel,
+//   Navigation,
+//   Pagination,
+//   Scrollbar,
+// } from 'swiper/modules'
+// import { ChevronLeft, ChevronRight } from 'lucide-react'
 
 
 export default function LogCard({ log }: { log: Log }) {
@@ -31,7 +31,7 @@ export default function LogCard({ log }: { log: Log }) {
 
   const labelStyle = 'font-semibold'
 
-  // console.log(log.media)
+  console.log(log.media)
 
   
   const formattedDate = format(new Date(log.date), 'dd MMM yyyy')
@@ -107,15 +107,16 @@ export default function LogCard({ log }: { log: Log }) {
 
       {/* Media files */}
       
-      {log.media && log.media.length === 1 && (
-        <>
+      {log.media && log.media.length > 0 && (
         <div className="space-y-4 mt-4 h-auto">
-          {log.media.slice(0, 2).map((file: { type: string; url: string | undefined }, i: Key | null | undefined) =>
+          {log.media.slice(0, 1).map((file: {
+            caption: string; type: string; url: string | undefined 
+          }, i: Key | null | undefined) =>
             file.type === 'image' ? (
               <img
                 key={i}
                 src={file.url}
-                alt={`Log media ${i + 1}`}
+                alt={file.caption}
                 className="w-full object-cover rounded cursor-pointer"
                 onClick={() => setIndex(i)}
               />
@@ -133,10 +134,9 @@ export default function LogCard({ log }: { log: Log }) {
             ) : null
           )}
           </div>
-          </>
       )}
 
-      {log.media && log.media.length > 0 && (
+      {/* {log.media && log.media.length > 1 && (
         <>
         <Swiper
           modules={[FreeMode, Mousewheel, Navigation, Pagination, Scrollbar]}
@@ -184,7 +184,7 @@ export default function LogCard({ log }: { log: Log }) {
             <ChevronRight className="text-black" size={50} />
           </button>       
       </>
-      )}
+      )} */}
 
 
       {/* Lightbox */}
