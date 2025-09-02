@@ -31,7 +31,7 @@ export default function LogCard({ log }: { log: Log }) {
 
   const labelStyle = 'font-semibold'
 
-  console.log(log.media)
+  // console.log(log.media)
 
   
   const formattedDate = format(new Date(log.date), 'dd MMM yyyy')
@@ -109,7 +109,9 @@ export default function LogCard({ log }: { log: Log }) {
       
       {log.media && log.media.length > 0 && (
         <div className="space-y-4 mt-4 h-auto">
-          {log.media.slice(0, 1).map((file: {
+          {[...log.media]
+          .sort((a,b) => a.mediaId - b.mediaId)
+          .slice(0, 1).map((file: {
             caption: string; type: string; url: string | undefined 
           }, i: Key | null | undefined) =>
             file.type === 'image' ? (

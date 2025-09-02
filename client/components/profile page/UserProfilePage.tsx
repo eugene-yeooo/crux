@@ -28,7 +28,7 @@ export default function UserProfilePage() {
 
   const user = profileData?.user
   const logs: Log[] = logData?.logs ?? []
-  console.log(logs)
+  // console.log(logs)
 
   const filteredLogs =
     filter === 'all'
