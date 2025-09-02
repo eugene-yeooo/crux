@@ -106,6 +106,8 @@ export default function LogCard({ log }: { log: Log }) {
       
 
        {/* Media files */}
+
+
       {log.media && log.media.length > 0 && (
         <>
         <Swiper
@@ -122,8 +124,8 @@ export default function LogCard({ log }: { log: Log }) {
           mousewheel={true}
           className="relative w-[600px] h-64 rounded"
         >
-        <div className="space-y-4 mt-4 h-auto">
-          {log.media.slice(0, 2).map((file: { type: string; url: string | undefined }, i: Key | null | undefined) =>
+        <SwiperSlide className="mt-4 h-auto">
+          {log.media.map((file: { type: string; url: string | undefined }, i: Key | null | undefined) =>
             file.type === 'image' ? (
               <img
                 key={i}
@@ -145,7 +147,7 @@ export default function LogCard({ log }: { log: Log }) {
               </video>
             ) : null
           )}
-          </div>
+          </SwiperSlide>
           </Swiper>
           <button className="custom-prev absolute top-1/2 -left-3 z-10 transform -translate-y-1/2">
             <ChevronLeft className="text-black" size={50} />
@@ -154,7 +156,11 @@ export default function LogCard({ log }: { log: Log }) {
             <ChevronRight className="text-black" size={50} />
           </button>
           
-          {/* Lightbox */}
+          
+      </>
+      )}
+      
+      {/* Lightbox */}
           <Lightbox
             open={index >= 0}
             close={() => setIndex(-1)}
@@ -173,8 +179,6 @@ export default function LogCard({ log }: { log: Log }) {
               },
             }}
           />
-      </>
-      )}
 
     </div>
   )
