@@ -105,8 +105,36 @@ export default function LogCard({ log }: { log: Log }) {
       )}
       
 
-       {/* Media files */}
-
+      {/* Media files */}
+      
+      {log.media && log.media.length === 1 && (
+        <>
+        <div className="space-y-4 mt-4 h-auto">
+          {log.media.slice(0, 2).map((file: { type: string; url: string | undefined }, i: Key | null | undefined) =>
+            file.type === 'image' ? (
+              <img
+                key={i}
+                src={file.url}
+                alt={`Log media ${i + 1}`}
+                className="w-full object-cover rounded cursor-pointer"
+                onClick={() => setIndex(i)}
+              />
+            ) : file.type === 'video' ? (
+              // eslint-disable-next-line jsx-a11y/media-has-caption
+              <video
+                key={i}
+                controls
+                className="w-full rounded cursor-pointer"
+                onClick={() => setIndex(i)}
+              >
+                <source src={file.url} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            ) : null
+          )}
+          </div>
+          </>
+      )}
 
       {log.media && log.media.length > 0 && (
         <>
@@ -154,12 +182,11 @@ export default function LogCard({ log }: { log: Log }) {
           </button>
           <button className="custom-next absolute top-1/2 -right-3 z-10 transform -translate-y-1/2">
             <ChevronRight className="text-black" size={50} />
-          </button>
-          
-          
+          </button>       
       </>
       )}
-      
+
+
       {/* Lightbox */}
           <Lightbox
             open={index >= 0}
